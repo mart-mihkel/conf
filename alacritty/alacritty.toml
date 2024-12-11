@@ -1,0 +1,13 @@
+[window]
+decorations = "None"
+
+[font]
+normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
+size = 6
+
+[colors]
+cursor = { text = "#0d0e0c", cursor = "#c8b6b8" }
+
+[colors.primary]
+background = "#f8f8f8"
+foreground = "#6b6b6b"

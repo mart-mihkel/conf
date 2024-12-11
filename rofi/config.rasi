@@ -1,0 +1,58 @@
+configuration {
+  font: "JetbrainsMono Nerd Font 10";
+  terminal: "alacritty";  
+
+  timeout {
+    action: "kb-cancel";
+    delay:  0;
+  }
+
+  filebrowser {
+    directories-first: true;
+    sorting-method: "name";
+  }
+}
+
+* {
+  background-color: none;
+  background: none;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+}
+
+window {
+  height: 20em;
+  width: 12em;
+
+  padding: 0;
+  margin: 0;
+
+  border: 1px;
+}
+
+inputbar {
+  children: [entry];
+}
+
+entry {
+  placeholder: "";
+}
+
+listview {
+  scrollbar: false;
+
+  padding: 0;
+
+  border: 1 0 0 0;
+}
+
+element alternate normal {
+  background-color: #ffffff;
+}
+
+element selected normal {
+  text-color: #ffffff;
+}

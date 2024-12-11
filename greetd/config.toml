@@ -1,0 +1,10 @@
+[terminal]
+vt = 1
+
+[default_session]
+command = "bash --norc"
+user = "mart"
+
+[initial_session]
+command = "startx"
+user = "mart"
