@@ -3,7 +3,7 @@ return {
     lazy = false,
     priority = 1024,
     config = function()
-        local black = { base = "#181818", bright = "#6b6b6b" }
+        local black = { base = "#000000", bright = "#6b6b6b" }
 
         require("github-theme").setup({
             options = {

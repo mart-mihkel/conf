@@ -7,16 +7,18 @@ if [[ -r /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 fi
 
-if [[ -z $TMUX ]]; then
-    tmux attach-session -t $HOSTNAME || tmux new-session -s $HOSTNAME
-fi
-
 alias vim="nvim"
+alias neofetch="fastfetch --config neofetch"
+
 alias ls="ls --color=auto"
-alias ll="ls --color=auto -la"
+alias la="ls --color=auto -la"
+alias ll="ls --color=auto -lA"
+
 alias grep="grep --color=auto"
+
 alias headset="bluetoothctl connect 14:3F:A6:DA:AA:00"
 alias wake-jaam="ssh kubujuss@alajaam.risuhunnik.xyz 'wol --port=9 9C:6B:00:13:EE:B0'"
 
+bind 'set completion-ignore-case on'
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'

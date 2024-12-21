@@ -1,12 +1,9 @@
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
+        "williamboman/mason.nvim",
         "hrsh7th/nvim-cmp",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
         local lspconfig = require("lspconfig")
@@ -20,10 +17,13 @@ return {
         require("mason-lspconfig").setup({
             handlers = {
                 function(server)
-                    require("lspconfig")[server].setup({ capabilities = capabilities })
+                    lspconfig[server].setup({
+                        capabilities = capabilities,
+                    })
                 end,
                 ["rust_analyzer"] = function()
-                    require("lspconfig").rust_analyzer.setup({
+                    lspconfig.rust_analyzer.setup({
+                        capabilities = capabilities,
                         settings = {
                             ["rust-analyzer"] = {
                                 cargo = { features = "all" },
@@ -32,7 +32,7 @@ return {
                     })
                 end,
                 ["lua_ls"] = function()
-                    require("lspconfig").lua_ls.setup({
+                    lspconfig.lua_ls.setup({
                         capabilities = capabilities,
                         settings = {
                             Lua = {
@@ -47,25 +47,8 @@ return {
             },
         })
 
-        local cmp = require("cmp")
-        cmp.setup({
-            completion = { completeopt = "menu,menuone,noinsert" },
-            mapping = cmp.mapping.preset.insert({
-                ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                ["<C-n>"] = cmp.mapping.select_next_item(),
-                ["<C-p>"] = cmp.mapping.select_prev_item(),
-                ["<C-Space>"] = cmp.mapping.complete({}),
-            }),
-            sources = {
-                { name = "nvim_lsp" },
-                { name = "buffer" },
-                { name = "path" },
-            },
-        })
-
         vim.api.nvim_create_autocmd("LspAttach", {
-            desc = "lsp keymaps",
+            desc = "LSP keymaps",
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
             callback = function(event)
                 local builtin = require("telescope.builtin")

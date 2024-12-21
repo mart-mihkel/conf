@@ -25,32 +25,39 @@ configuration {
 }
 
 window {
-  height: 32em;
-  width: 16em;
+  location: north;
+  anchor: north;
+
+  width: 100%;
 
   padding: 0;
   margin: 0;
 
-  border: 1;
+  border: 0 1 1 1;
+
+  children: [ horibox ];
 }
 
-inputbar {
-  children: [entry];
+horibox {
+  orientation: horizontal;
+  children: [ entry, listview ];
 }
 
 entry {
   placeholder: "󰍉";
+  expand: false;
+  width: 10em;
 }
 
 listview {
-  scrollbar: false;
+  layout: horizontal;
 
   padding: 0;
   border: 0;
 }
 
 element {
-  padding: 2;
+  padding: 0 0.25em;
 }
 
 element alternate normal {

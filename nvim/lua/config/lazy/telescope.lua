@@ -7,15 +7,7 @@ return {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
     },
     config = function()
-        require("telescope").setup({
-            defaults = {
-                borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
-                layout_config = {
-                    width = { padding = 0 },
-                    height = { padding = 0 },
-                },
-            },
-        })
+        require("telescope").setup()
 
         pcall(require("telescope").load_extension, "fzf")
 

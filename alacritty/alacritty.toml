@@ -1,13 +1,14 @@
 [window]
-decorations = "None"
+dynamic_padding = true
+opacity = 0.8
 
 [font]
 normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
-size = 6
+size = 11
 
 [colors]
 cursor = { text = "#0d0e0c", cursor = "#c8b6b8" }
 
 [colors.primary]
-background = "#f8f8f8"
+background = "#ffffff"
 foreground = "#6b6b6b"

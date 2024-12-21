@@ -3,25 +3,25 @@
 BOLDGREEN="\e[1;32m"
 ENDCOLOR="\e[0m"
 
-USER="mart"
+if [[ -z $1 ]]; then
+    echo "setup USER"
+    exit 1
+fi
+
+USER="$1"
 HOME="/home/$USER"
 CONF="$HOME/.config"
 DOTS="$HOME/git/dotfiles"
 
-GITNAME="mart-mihkel"
-GITMAIL="mart.mihkel.aun@gmail.com"
-
 PKGS_CORE="base base-devel linux-lts linux-firmware intel-ucode"
-PKGS_COMMON="sudo man-db bash-completion git curl wget neovim vim tmux openssl openssh networkmanager intel-undervolt auto-cpufreq wol"
-PKGS_EXTRA="neofetch ripgrep cargo cmake make nodejs gcc uv docker docker-compose docker-buildx containerd unzip zip cloudflared"
-PKGS_I3="i3 xorg-server xorg-xinit xorg-xset xorg-xrandr xclip autotiling gammastep greetd maim rofi rofi-emoji"
-PKGS_HARDWARE="pamixer pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils ccid pcsclite brightnessctl"
-PKGS_DESKTOP="noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono-nerd firefox qdigidoc4"
+PKGS_COMMON="sudo man-db bash-completion git curl wget neovim vim tmux openssl openssh networkmanager intel-undervolt auto-cpufreq wol net-tools"
+PKGS_EXTRA="fastfetch ripgrep cargo cmake make nodejs gcc uv jq zip unzip cloudflared tree docker docker-compose docker-buildx containerd"
 
 if ! id -u aur > /dev/null 2>&1; then
     echo -e "[${BOLDGREEN}aur user${ENDCOLOR}]"
 
     useradd -m aur
+
     echo "aur   ALL = (root) NOPASSWD: /usr/bin/makepkg, /usr/bin/pacman" > /etc/sudoers.d/aur
 fi
 
@@ -42,7 +42,7 @@ fi
 
 echo -e "[${BOLDGREEN}packages${ENDCOLOR}]"
 
-su aur -c "yay -S --needed --noconfirm $PKGS_CORE $PKGS_COMMON $PKGS_EXTRA $PKGS_I3 $PKGS_HARDWARE $PKGS_DESKTOP"
+su aur -c "yay -S --needed --noconfirm $PKGS_CORE $PKGS_COMMON $PKGS_EXTRA"
 
 echo -e "[${BOLDGREEN}groups${ENDCOLOR}]"
 
@@ -55,30 +55,18 @@ usermod -a -G network $USER
 
 echo -e "[${BOLDGREEN}services${ENDCOLOR}]"
 
-systemctl enable pcscd.service
 systemctl enable docker.service
 systemctl enable NetworkManager
-systemctl enable bluetooth.service
 systemctl enable intel-undervolt.service
 
-auto-cpufreq --install
+auto_cpufreq --install
 
 echo -e "[${BOLDGREEN}configs${ENDCOLOR}]"
-
-git config --global user.name $GITNAME
-git config --global user.email $GITMAIL
-git config --global core.editor nvim
 
 ln -sf $DOTS/greetd/config.toml /etc/greetd/config.toml
 
 su "$USER" -c "
-    ln -sf $DOTS/xorg/.xinitrc $HOME/.xinitrc
     ln -sf $DOTS/bash/.bashrc $HOME/.bashrc
-    ln -sf $DOTS/alacritty $CONF
-    ln -sf $DOTS/i3blocks $CONF
-    ln -sf $DOTS/rofi $CONF
     ln -sf $DOTS/nvim $CONF
     ln -sf $DOTS/tmux $CONF
-    ln -sf $DOTS/i3 $CONF
 "
-
