@@ -1,0 +1,67 @@
+configuration {
+  font: "JetbrainsMono Nerd Font 10";
+  terminal: "alacritty";  
+
+  timeout {
+    action: "kb-cancel";
+    delay:  0;
+  }
+
+  filebrowser {
+    directories-first: true;
+    sorting-method: "name";
+  }
+}
+
+* {
+  background-color: transparent;
+  background: none;
+
+  padding: 0;
+  margin: 0;
+
+  border-radius: 0;
+  border: 0;
+}
+
+window {
+  height: 24em;
+  width: 12em;
+
+  padding: 0.25em;
+  margin: 0;
+
+  background-color: #ffffffcc;
+  border: 1;
+}
+
+inputbar {
+  children: [entry];
+}
+
+entry {
+  placeholder: "󰍉";
+}
+
+listview {
+  scrollbar: false;
+
+  padding: 0;
+  border: 0;
+}
+
+element {
+  padding: 2;
+  background-color: #ffffff00;
+}
+
+element alternate normal {
+  background-color: #ffffff00;
+}
+
+element selected normal {
+  text-color: #000000;
+  background-color: #d8d8d8cc;
+}
+
+// vim: ft=rasi

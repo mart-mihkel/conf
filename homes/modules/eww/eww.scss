@@ -1,0 +1,96 @@
+$base: #ffffff;
+$text: #000000;
+$other: #8e8e8e;
+$gray: #6b6b6b;
+
+$red: #ac4242;
+$green: #90a959;
+$blue: #6a9fb5;
+$cyan: #75b5aa;
+
+* {
+  all: unset;
+}
+
+.bar,
+.tooltip,
+.powermenu {
+  font-family: "JetbrainsMono Nerd Font";
+
+  background-color: $base;
+  border-color: $text;
+  color: $text;
+
+  opacity: 0.8;
+}
+
+.bar {
+  border-bottom: 1px solid;
+}
+
+.tooltip {
+  border: 1px solid;
+
+  padding: 0.25rem 0.5rem;
+}
+
+.powermenu {
+  font-size: 2rem;
+
+  border: 1px solid;
+
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.icon {
+  padding: 0 0.5rem;
+}
+
+.mic {
+  .icon.running {
+    color: $red;
+  }
+}
+
+.battery {
+  .icon.critical {
+    color: $red;
+  }
+}
+
+.shutdown.hover {
+  color: $red;
+}
+
+.reboot.hover {
+  color: $green;
+}
+
+.suspend.hover {
+  color: $blue;
+}
+
+.lock.hover {
+  color: $cyan;
+}
+
+.close.hover {
+  color: $gray;
+}
+
+.tray image {
+  -gtk-icon-transform: scale(0.5);
+}
+
+scale trough {
+  background-color: $other;
+  border-radius: 2px;
+  min-height: 0.3rem;
+  min-width: 4rem;
+}
+
+scale trough highlight {
+  background-color: $text;
+  border-radius: 2px;
+}

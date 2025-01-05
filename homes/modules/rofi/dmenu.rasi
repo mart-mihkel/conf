@@ -1,0 +1,73 @@
+configuration {
+  font: "JetbrainsMono Nerd Font 10";
+  terminal: "alacritty";  
+
+  timeout {
+    action: "kb-cancel";
+    delay:  0;
+  }
+
+  filebrowser {
+    directories-first: true;
+    sorting-method: "name";
+  }
+}
+
+* {
+  background-color: transparent;
+  background: none;
+
+  padding: 0;
+  margin: 0;
+
+  border-radius: 0;
+  border: 0;
+}
+
+window {
+  location: north;
+  anchor: north;
+
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+
+  background-color: #ffffffcc;
+  border: 0 1 1 1;
+
+  children: [ horibox ];
+}
+
+horibox {
+  orientation: horizontal;
+  children: [ entry, listview ];
+}
+
+entry {
+  placeholder: "󰍉";
+  expand: false;
+  width: 10em;
+}
+
+listview {
+  layout: horizontal;
+
+  padding: 0;
+  border: 0;
+}
+
+element {
+  padding: 0 0.25em;
+}
+
+element alternate normal {
+  background-color: #ffffff00;
+}
+
+element selected normal {
+  text-color: #000000;
+  background-color: #d8d8d800;
+}
+
+// vim: ft=rasi
