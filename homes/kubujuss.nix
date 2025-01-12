@@ -6,6 +6,7 @@
     ./modules/git.nix
 
     ./modules/alacritty
+    ./modules/dunst
     ./modules/nvim
     ./modules/hypr
     ./modules/rofi
