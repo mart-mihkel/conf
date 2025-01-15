@@ -1,20 +1,20 @@
-vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking text",
-    group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when yanking text',
+    group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
     callback = function()
         vim.highlight.on_yank()
     end,
 })
 
 local border = {
-    { "╭", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╮", "FloatBorder" },
-    { "│", "FloatBorder" },
-    { "╯", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╰", "FloatBorder" },
-    { "│", "FloatBorder" },
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
 }
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
