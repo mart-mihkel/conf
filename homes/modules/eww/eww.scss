@@ -47,6 +47,17 @@ $cyan: #75b5aa;
   padding: 0 0.5rem;
 }
 
+.workspace {
+  .icon {
+    color: $gray;
+  }
+
+  .icon.active {
+    color: $text;
+    font-weight: bold;
+  }
+}
+
 .mic {
   .icon.running {
     color: $red;

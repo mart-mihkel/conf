@@ -54,17 +54,8 @@
       (button :class "workspace"
         :onclick "hyprctl dispatch workspace ${wsp.id}"
         (box
-          ;(label :class "icon" :text "${wsp.id == active-wsp ? '󰬺' : ''}"))))))
-          (label :class "icon" :text "${  wsp.id == 1 ? (active-wsp == 1 ? '󰲠' : '󰬺')
-                                        : wsp.id == 2 ? (active-wsp == 2 ? '󰲢' : '󰬻')
-                                        : wsp.id == 3 ? (active-wsp == 3 ? '󰲤' : '󰬼')
-                                        : wsp.id == 4 ? (active-wsp == 4 ? '󰲦' : '󰬽')
-                                        : wsp.id == 5 ? (active-wsp == 5 ? '󰲨' : '󰬾')
-                                        : wsp.id == 6 ? (active-wsp == 6 ? '󰲪' : '󰬿')
-                                        : wsp.id == 7 ? (active-wsp == 7 ? '󰲬' : '󰭀')
-                                        : wsp.id == 8 ? (active-wsp == 8 ? '󰲮' : '󰭁')
-                                        : wsp.id == 9 ? (active-wsp == 9 ? '󰲰' : '󰭂')
-                                        : '󰲲' }"))))))
+          (label :class "icon ${wsp.id == active-wsp ? 'active' : ''}" 
+            :text "${wsp.id}"))))))
 
 ; ━━━━ tray ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
 
