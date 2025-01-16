@@ -20,7 +20,7 @@ configuration {
   padding: 0;
   margin: 0;
 
-  border-radius: 0;
+  border-radius: 8;
   border: 0;
 }
 
@@ -31,7 +31,7 @@ window {
   padding: 0.25em;
   margin: 0;
 
-  background-color: #ffffffcc;
+  background-color: #ffffffe6;
   border: 1;
 }
 
@@ -61,7 +61,7 @@ element alternate normal {
 
 element selected normal {
   text-color: #000000;
-  background-color: #d8d8d8cc;
+  background-color: #d8d8d8e6;
 }
 
 // vim: ft=rasi

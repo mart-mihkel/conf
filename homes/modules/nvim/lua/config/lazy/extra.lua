@@ -1,7 +1,21 @@
 return {
     { 'tpope/vim-sleuth' },
     { 'RRethy/base16-nvim', },
-    { 'folke/tokyonight.nvim' },
+    {
+        'projekt0n/github-nvim-theme',
+        config = function()
+            require('github-theme').setup({
+                options = { hide_end_of_buffer = false },
+                palettes = {
+                    github_light_high_contrast = {
+                        blue = { base = '#000000', bright = '#6b6b6b' },
+                    },
+                },
+            })
+
+            vim.cmd 'colorscheme github_light_high_contrast'
+        end,
+    },
     {
         'folke/todo-comments.nvim',
         event = 'VimEnter',
@@ -22,25 +36,6 @@ return {
                     signs = { add = '+', change = '~', delete = '-' }
                 }
             })
-        end,
-    },
-    {
-        'projekt0n/github-nvim-theme',
-        lazy = false,
-        priority = 1024,
-        config = function()
-            require('github-theme').setup({
-                options = {
-                    hide_end_of_buffer = false,
-                },
-                palettes = {
-                    github_light_high_contrast = {
-                        blue = { base = '#000000', bright = '#6b6b6b' },
-                    },
-                },
-            })
-
-            vim.cmd 'colorscheme github_light_high_contrast'
         end,
     },
 }
