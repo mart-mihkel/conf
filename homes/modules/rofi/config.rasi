@@ -1,10 +1,12 @@
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
 configuration {
   font: "JetbrainsMono Nerd Font 10";
-  terminal: "alacritty";  
+  terminal: "alacritty";
 
   timeout {
     action: "kb-cancel";
-    delay:  0;
+    delay: 0;
   }
 
   filebrowser {
@@ -14,13 +16,11 @@ configuration {
 }
 
 * {
-  background-color: transparent;
   background: none;
 
   padding: 0;
   margin: 0;
 
-  border-radius: 8;
   border: 0;
 }
 
@@ -31,7 +31,8 @@ window {
   padding: 0.25em;
   margin: 0;
 
-  background-color: #ffffffe6;
+  border-color: @foreground;
+  border-radius: 8;
   border: 1;
 }
 
@@ -52,16 +53,6 @@ listview {
 
 element {
   padding: 2;
-  background-color: #ffffff00;
-}
-
-element alternate normal {
-  background-color: #ffffff00;
-}
-
-element selected normal {
-  text-color: #000000;
-  background-color: #d8d8d8e6;
 }
 
 // vim: ft=rasi

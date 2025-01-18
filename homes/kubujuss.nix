@@ -26,6 +26,7 @@
       web-eid-app
       qdigidoc
       firefox
+      dunst
       slack
       zoom
       ccid

@@ -4,6 +4,8 @@ vim.g.maplocalleader = ' '
 vim.g.netrw_banner = false
 
 vim.opt.clipboard = 'unnamedplus'
+vim.opt.background = 'dark'
+vim.opt.termguicolors = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true

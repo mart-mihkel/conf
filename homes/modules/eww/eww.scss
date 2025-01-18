@@ -1,12 +1,4 @@
-$background: #ffffff;
-$foreground: #000000;
-$cursor: #8e8e8e;
-
-$color0: #6b6b6b;
-$color1: #ac4242;
-$color2: #75b5aa;
-$color3: #90a959;
-$color4: #6a9fb5;
+@import "../../../../../.cache/wal/colors.scss";
 
 * {
   all: unset;
@@ -49,24 +41,24 @@ $color4: #6a9fb5;
 
 .workspace {
   .icon {
-    color: $color0;
+    color: $color4;
   }
 
   .icon.active {
-    font-weight: bold;
+    text-decoration: underline;
     color: $foreground;
   }
 }
 
 .mic {
   .icon.running {
-    color: $color1;
+    color: $color6;
   }
 }
 
 .battery {
   .icon.critical {
-    color: $color1;
+    color: $color6;
   }
 }
 
@@ -75,19 +67,19 @@ $color4: #6a9fb5;
 }
 
 .reboot.hover {
-  color: $color3;
-}
-
-.suspend.hover {
-  color: $color4;
-}
-
-.lock.hover {
   color: $color2;
 }
 
+.suspend.hover {
+  color: $color3;
+}
+
+.lock.hover {
+  color: $color4;
+}
+
 .close.hover {
-  color: $color0;
+  color: $color5
 }
 
 .tray image {
@@ -95,7 +87,7 @@ $color4: #6a9fb5;
 }
 
 scale trough {
-  background-color: $cursor;
+  background-color: $color4;
   border-radius: 4px;
   min-height: 0.3rem;
   min-width: 4rem;

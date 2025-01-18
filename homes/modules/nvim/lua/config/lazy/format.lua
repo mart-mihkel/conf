@@ -8,12 +8,16 @@ return {
             python = { 'ruff_format' },
             javascript = { 'prettierd' },
             typescript = { 'prettierd' },
-            ['_'] = { 'trim_whitespace' },
+            ['*'] = { 'trim_whitespace', 'trim_newlines' },
         },
     },
     config = function()
         local format = function()
-            require('conform').format({ async = true, lsp_format = 'fallback' })
+            require('conform').format({
+                async = true,
+                lsp_format = 'fallback',
+                formatters = { 'trim_whitespace', 'trim_newlines' },
+            })
         end
 
         vim.keymap.set({ 'n', 'v' }, '<leader>f', format, { desc = 'Format' })
