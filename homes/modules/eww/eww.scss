@@ -1,12 +1,12 @@
-$base: #ffffff;
-$text: #000000;
-$other: #8e8e8e;
-$gray: #6b6b6b;
+$background: #ffffff;
+$foreground: #000000;
+$cursor: #8e8e8e;
 
-$red: #ac4242;
-$green: #90a959;
-$blue: #6a9fb5;
-$cyan: #75b5aa;
+$color0: #6b6b6b;
+$color1: #ac4242;
+$color2: #75b5aa;
+$color3: #90a959;
+$color4: #6a9fb5;
 
 * {
   all: unset;
@@ -17,29 +17,27 @@ $cyan: #75b5aa;
 .powermenu {
   font-family: "JetbrainsMono Nerd Font";
 
-  background-color: $base;
-  border-color: $text;
-  color: $text;
+  background-color: $background;
+  color: $foreground;
+
+  border-color: $foreground;
+  border-radius: 8px;
+  border: 1px solid;
 
   opacity: 0.9;
 }
 
 .bar {
-  border-bottom: 1px solid;
+  margin: 0.5rem 1rem;
+  padding: 0.1rem;
 }
 
 .tooltip {
-  border: 1px solid;
-  border-radius: 8px;
-
   padding: 0.25rem 0.5rem;
 }
 
 .powermenu {
   font-size: 2rem;
-
-  border: 1px solid;
-  border-radius: 8px;
 
   margin: 1rem;
   padding: 1rem;
@@ -51,45 +49,45 @@ $cyan: #75b5aa;
 
 .workspace {
   .icon {
-    color: $gray;
+    color: $color0;
   }
 
   .icon.active {
-    color: $text;
     font-weight: bold;
+    color: $foreground;
   }
 }
 
 .mic {
   .icon.running {
-    color: $red;
+    color: $color1;
   }
 }
 
 .battery {
   .icon.critical {
-    color: $red;
+    color: $color1;
   }
 }
 
 .shutdown.hover {
-  color: $red;
+  color: $color1;
 }
 
 .reboot.hover {
-  color: $green;
+  color: $color3;
 }
 
 .suspend.hover {
-  color: $blue;
+  color: $color4;
 }
 
 .lock.hover {
-  color: $cyan;
+  color: $color2;
 }
 
 .close.hover {
-  color: $gray;
+  color: $color0;
 }
 
 .tray image {
@@ -97,13 +95,13 @@ $cyan: #75b5aa;
 }
 
 scale trough {
-  background-color: $other;
-  border-radius: 2px;
+  background-color: $cursor;
+  border-radius: 4px;
   min-height: 0.3rem;
   min-width: 4rem;
 }
 
 scale trough highlight {
-  background-color: $text;
-  border-radius: 2px;
+  background-color: $foreground;
+  border-radius: 4px;
 }

@@ -1,5 +1,6 @@
 return {
     { 'tpope/vim-sleuth' },
+    { 'uZer/pywal16.nvim', },
     { 'RRethy/base16-nvim', },
     {
         'projekt0n/github-nvim-theme',
