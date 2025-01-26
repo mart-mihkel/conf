@@ -1,0 +1,76 @@
+* {{
+    background-color: {background};
+    border-color: {foreground};
+    text-color: {foreground};
+}}
+
+#window {{
+    background-color: {background};
+}}
+
+#message {{
+    border-color: {foreground};
+}}
+
+#textbox {{
+    text-color: {foreground};
+}}
+
+#textbox-prompt-colon {{
+    text-color: {foreground};
+}}
+
+#listview {{
+    border-color: {foreground};
+}}
+
+#element-text, element-icon {{
+    background-color: inherit;
+    text-color:       inherit;
+}}
+
+#element.normal {{
+    background-color: {background};
+    text-color: {foreground};
+}}
+
+#element.selected {{
+    background-color: {foreground};
+    text-color: {background};
+}}
+
+#element.alternate {{
+    background-color: {background};
+    text-color: {foreground};
+}}
+
+#sidebar {{
+    border-color: {foreground};
+}}
+
+#button {{
+    text-color: {foreground};
+}}
+
+#button.selected {{
+    background-color: {foreground};
+    text-color: {background};
+}}
+
+#inputbar {{
+    text-color: {foreground};
+}}
+
+#case-indicator {{
+    text-color: {foreground};
+}}
+
+#entry {{
+    text-color: {foreground};
+}}
+
+#prompt {{
+    text-color: {foreground};
+}}
+
+// vim: ft=rasi

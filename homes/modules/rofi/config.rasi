@@ -1,4 +1,4 @@
-@theme "~/.cache/wal/colors-rofi-dark.rasi"
+@theme "~/.cache/wal/colors-rofi.rasi"
 
 configuration {
   font: "JetbrainsMono Nerd Font 10";
@@ -16,11 +16,9 @@ configuration {
 }
 
 * {
-  background: none;
-
+  spacing: 0;
   padding: 0;
   margin: 0;
-
   border: 0;
 }
 
@@ -28,12 +26,11 @@ window {
   height: 24em;
   width: 12em;
 
-  padding: 0.25em;
-  margin: 0;
+  border-radius: 0.25em;
+  border: 0.1em;
 
-  border-color: @foreground;
-  border-radius: 8;
-  border: 1;
+  padding: 0;
+  margin: 0;
 }
 
 inputbar {
@@ -42,6 +39,7 @@ inputbar {
 
 entry {
   placeholder: "󰍉";
+  padding: 0.25em;
 }
 
 listview {
@@ -52,7 +50,7 @@ listview {
 }
 
 element {
-  padding: 2;
+  padding: 0.125em 0.25em;
 }
 
 // vim: ft=rasi

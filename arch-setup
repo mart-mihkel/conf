@@ -4,17 +4,15 @@ BOLDGREEN="\e[1;32m"
 ENDCOLOR="\e[0m"
 
 USER="mart"
-HOME="/home/$USER"
-CONF="$HOME/.config"
-DOTS="$HOME/git/dotfiles/homes/modules"
+CONF="/home/$USER/.config"
+DOTS="/home/$USER/git/dotfiles/homes/modules"
 
 PKGS_CORE="base base-devel linux-lts linux-firmware intel-ucode"
-PKGS_COMMON="sudo man-db bash-completion git curl wget neovim vim tmux openssl openssh sshfs networkmanager intel-undervolt tlp wol net-tools"
+PKGS_COMMON="sudo man-db bash-completion git curl wget neovim vim tmux openssl openssh sshfs networkmanager wol socat net-tools inotify-tools expect"
 PKGS_EXTRA="fastfetch ripgrep cargo cmake make nodejs gcc uv jq zip unzip cloudflared tree docker docker-compose docker-buildx containerd"
-PKGS_HYPRLAND="hyprland hypridle hyprpaper hyprlock eww wl-clipboard alacritty gammastep greetd grim slurp rofi rofi-emoji socat dunst"
-PKGS_HARDWARE="pipewire pipewire-alsa pipewire-pulse wireplumber pamixer bluez bluez-utils ccid pcsclite brightnessctl"
-PKGS_DESKTOP="alacritty firefox zoom slack-desktop qdigidoc4 web-eid-native web-eid-firefox"
-PKGS_FONTS="noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono-nerd"
+PKGS_HARDWARE="pipewire pipewire-alsa pipewire-pulse wireplumber bluez bluez-utils ccid pcsclite brightnessctl intel-undervolt tlp"
+PKGS_HYPRLAND="hyprland hypridle hyprpaper hyprlock eww wl-clipboard gammastep greetd grim slurp rofi rofi-emoji dunst"
+PKGS_DESKTOP="alacritty firefox zoom slack-desktop qdigidoc4 web-eid-native web-eid-firefox noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono-nerd"
 
 if ! id -u aur > /dev/null 2>&1; then
     echo -e "[${BOLDGREEN}aur user${ENDCOLOR}]"
@@ -44,7 +42,7 @@ fi
 
 echo -e "[${BOLDGREEN}packages${ENDCOLOR}]"
 
-su aur -c "yay -S --needed --noconfirm $PKGS_CORE $PKGS_COMMON $PKGS_EXTRA $PKGS_HYPRLAND $PKGS_HARDWARE $PKGS_DESKTOP $PKGS_FONTS"
+su aur -c "yay -S --needed --noconfirm $PKGS_CORE $PKGS_COMMON $PKGS_EXTRA $PKGS_HYPRLAND $PKGS_HARDWARE $PKGS_DESKTOP"
 
 echo -e "[${BOLDGREEN}groups${ENDCOLOR}]"
 
@@ -77,9 +75,8 @@ user = "${USER}"
 EOF
 
 su "$USER" -c "
-    ln -sf $DOTS/bash/.bashrc $HOME/.bashrc
+    ln -sf $DOTS/bash/.bashrc /home/$USER/.bashrc
     ln -sf $DOTS/alacritty $CONF
-    ln -sf $DOTS/dunst $CONF
     ln -sf $DOTS/rofi $CONF
     ln -sf $DOTS/nvim $CONF
     ln -sf $DOTS/tmux $CONF

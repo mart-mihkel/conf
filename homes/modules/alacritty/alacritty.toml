@@ -1,13 +1,13 @@
 [general]
-import = [ "~/.cache/wal/colors-alacritty.toml" ]
+# import = [ "~/.cache/wal/colors-alacritty.toml" ]
 
 [window]
 dynamic_padding = true
-opacity = 0.75
 
 [font]
-normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
 size = 11
+normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
 
-[colors]
-cursor = { text = "#0d0e0c", cursor = "#c8b6b8" }
+[colors.primary]
+background = "#ffffff"
+foreground = "#000000"

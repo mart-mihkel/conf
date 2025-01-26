@@ -6,13 +6,13 @@
     ./modules/git.nix
 
     ./modules/alacritty
-    ./modules/dunst
     ./modules/nvim
     ./modules/hypr
     ./modules/rofi
     ./modules/bash
     ./modules/tmux
     ./modules/eww
+    ./modules/wal
   ];
 
   programs.home-manager.enable = true;

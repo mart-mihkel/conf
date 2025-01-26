@@ -1,0 +1,3 @@
+{
+  programs.pywal.enable = true;
+}

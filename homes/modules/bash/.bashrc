@@ -8,11 +8,13 @@ if [[ -r /usr/share/bash-completion/bash_completion ]]; then
 fi
 
 alias vim="nvim"
-alias activate=". .venv/bin/activate"
 alias neofetch="fastfetch --config neofetch"
 
-alias l="ls -lA --color"
-alias la="ls -la --color"
+alias activate=". .venv/bin/activate"
+alias notebook=". .venv/bin/activate && jupyter-notebook"
+
+alias l="ls -lhA --color"
+alias la="ls -lha --color"
 alias grep="grep --color"
 
 alias headset="bluetoothctl connect 14:3F:A6:DA:AA:00"
