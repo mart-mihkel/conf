@@ -4,6 +4,7 @@
   imports = [
     ./filesystems.nix
     ./networking.nix
+    ./services.nix
     ./boot.nix
 
     ../modules/sops.nix

@@ -10,3 +10,11 @@ nix-channel --update
 # sops
 mkdir -p ~/.config/sops/age
 nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
+
+
+# nix-shell -p age --run "age-keygen -y ~/.config/sops/age/keys.txt"
+# nix-shell -p sops --run "sops updatekeys .secrets.yaml"
+#
+# or
+#
+# nix-shell -p ssh-to-age --run 'ssh-keyscan <machine> | ssh-to-age'

@@ -1,6 +1,6 @@
 {
   sops = {
     defaultSopsFile = ../../.secrets.yaml;
-    age.keyFile = "~/.config/sops/age/keys.txt";
+    age.keyFile = "/home/kubujuss/.config/sops/age/keys.txt";
   };
 }
