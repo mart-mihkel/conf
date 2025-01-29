@@ -1,21 +1,31 @@
 {
-  services.jupyterhub = {
-    enable = true;
+  services = {
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+    };
 
-    extraConfig = ''
-      c.Authenticator.allowed_users = {'kubujuss'} 
-      c.Authenticator.admin_users = {'kubujuss'}
+    jupyterhub = {
+      enable = true;
 
-      c.SystemdSpawner.environment = {
-        'LD_LIBRARY_PATH': '/run/opengl-driver/lib:$LD_LIBRARY_PATH',
-        'CUDA_HOME': '/run/opengl-driver',
+      extraConfig = ''
+        c.Authenticator.allowed_users = {'kubujuss'} 
+        c.Authenticator.admin_users = {'kubujuss'}
 
-        'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
+        c.SystemdSpawner.environment = {
+          'LD_LIBRARY_PATH': '/run/opengl-driver/lib:$LD_LIBRARY_PATH',
+          'CUDA_HOME': '/run/opengl-driver',
 
-        'TF_CPP_MIN_LOG_LEVEL': '3',
-      }
-    '';
+          'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
+
+          'TF_CPP_MIN_LOG_LEVEL': '3',
+        }
+      '';
+    };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8000 ];
+  networking.firewall.allowedTCPPorts = [ 
+    11434 # ollama
+    8000  # jupyterhub
+  ];
 }

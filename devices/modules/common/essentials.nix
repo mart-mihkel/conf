@@ -21,6 +21,7 @@
     curl
     wget
     tree
+    btop
     wol
     git
     gcc
