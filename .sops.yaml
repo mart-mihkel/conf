@@ -1,0 +1,7 @@
+keys:
+  - &jaam age1gcllyspzkxqrhqvdqm3vcafpl7esd6de2nlcemfsa323cvtcp3tqfej2gr
+creation_rules:
+  - path_regex: .secrets.yaml
+    key_groups:
+    - age:
+      - *jaam

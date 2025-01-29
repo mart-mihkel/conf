@@ -1,13 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.11";
+    sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: let
+  outputs = { nixpkgs, sops-nix, home-manager, ... }: let
     x86 = "x86_64-linux";
     arm = "aarch64-linux";
 
@@ -28,17 +29,20 @@
     nixosConfigurations = {
       dell = nixpkgs.lib.nixosSystem {
         system = "${x86}";
-        modules = [ ./devices/dell ] ++ kubujuss;
+        modules = kubujuss ++ [ ./devices/dell ];
       };
 
       jaam = nixpkgs.lib.nixosSystem {
         system = "${x86}";
-        modules = [ ./devices/jaam ] ++ kubujuss-headless;
+        modules =  kubujuss-headless ++ [ ./devices/jaam ];
       };
 
       alajaam = nixpkgs.lib.nixosSystem {
         system = "${arm}";
-        modules = [ ./devices/alajaam ] ++ kubujuss-headless;
+        modules = kubujuss-headless ++ [
+          sops-nix.nixosModules.sops
+          ./devices/alajaam 
+        ];
       };
     };
   };

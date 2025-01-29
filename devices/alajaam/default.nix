@@ -6,6 +6,7 @@
     ./networking.nix
     ./boot.nix
 
+    ../modules/sops.nix
     ../modules/ssh.nix
 
     ../modules/common
