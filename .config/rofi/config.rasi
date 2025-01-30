@@ -1,0 +1,18 @@
+@theme "~/.cache/wal/colors-rofi.rasi"
+
+configuration {
+  font: "JetbrainsMono Nerd Font 11";
+  terminal: "alacritty";
+
+  timeout {
+    action: "kb-cancel";
+    delay: 0;
+  }
+
+  filebrowser {
+    directories-first: true;
+    sorting-method: "name";
+  }
+}
+
+// vim: ft=rasi

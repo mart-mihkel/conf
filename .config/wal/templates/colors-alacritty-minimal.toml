@@ -1,0 +1,23 @@
+[colors.primary]
+background = "{background}"
+foreground = "{foreground}"
+
+[colors.cursor]
+text = "{background}"
+cursor = "{foreground}"
+
+[colors.vi_mode_cursor]
+text = "{background}"
+cursor = "{foreground}"
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "CellForeground"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors.selection]
+text = "CellBackground"
+background = "CellForeground"

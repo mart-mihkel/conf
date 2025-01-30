@@ -1,0 +1,57 @@
+[global]
+    monitor = 0
+    follow = none
+
+    width = (64, 512)
+    height = (32, 128)
+    offset = (0, 0)
+    origin = top-right
+
+    font = JetbrainsMono Nerd Font 11
+    alignment = center
+    markup = full
+
+    icon_position = right
+    min_icon_size = 64
+    max_icon_size = 64
+
+    padding = 4
+    horizontal_padding = 4
+
+    frame_width = 1
+    corner_radius = 4
+
+    line_height = 0
+    separator_height = 1
+
+    highlight = "{color6},{color14}"
+    progress_bar_corner_radius = 4
+    progress_bar_frame_width = 0
+    progress_bar_max_width = 128
+    progress_bar_min_width = 64
+    progress_bar_height = 8
+
+    idle_threshold = 300
+
+    dmenu = rofi -dmenu
+    browser = firefox -new-tab
+
+[urgency_low]
+    frame_color = "{color1}00"
+    foreground = "{color0}"
+    background = "{background}00"
+    timeout = 2
+
+[urgency_normal]
+    frame_color = "{color1}00"
+    foreground = "{color0}"
+    background = "{background}00"
+    timeout = 6
+
+[urgency_critical]
+    frame_color = "{color1}"
+    foreground = "{color1}"
+    background = "{background}"
+    timeout = 8
+
+# vim: ft=cfg
