@@ -1,3 +1,12 @@
+vim.api.nvim_create_autocmd('VimEnter', {
+    desc = 'Open netrw on startup',
+    callback = function()
+        if vim.fn.argc() == 0 then
+            vim.cmd('Explore .')
+        end
+    end,
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking text',
     group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
@@ -19,7 +28,7 @@ local border = {
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = opts.border or border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
