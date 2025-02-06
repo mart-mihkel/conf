@@ -20,13 +20,13 @@ window {{
 
 horibox {{
   orientation: horizontal;
-  children: [ entry, listview ];
+  children: [ prompt, entry, listview ];
 }}
 
 entry {{
-  cursor-width: 0;
+  cursor-width: 8px;
   expand: false;
-  width: 4em;
+  width: 96px;
 }}
 
 listview {{
@@ -35,6 +35,8 @@ listview {{
 
 element {{
   padding: 0 0.25em 0 0.25em;
+  expand: false;
+  width: 128px;
 }}
 
 element.selected {{

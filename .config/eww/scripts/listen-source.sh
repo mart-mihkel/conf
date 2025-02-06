@@ -19,7 +19,6 @@ query_default_source() {
     }'
 }
 
-
 [[ "$1" == "-d" ]] && QUERY=query_default_source || QUERY=query_sources
 
 $QUERY

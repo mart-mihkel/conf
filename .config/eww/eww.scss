@@ -6,55 +6,10 @@
   color: $foreground
 }
 
-.p-2 {
-  padding: 0.5rem;
-}
-
-.px-1 {
-  padding-right: 0.25rem;
-  padding-left: 0.25rem;
-}
-
-.m-1 {
-  margin: 0.25rem;
-}
-
-.m-2 {
-  margin: 0.5rem;
-}
-
-.ml-1 {
-  margin-left: 0.25rem;
-}
-
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.mx-6 {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.font-6 {
-  font-size: 1.5rem;
-}
-
-.font-8 {
-  font-size: 2rem;
-}
-
-.font-10 {
-  font-size: 2.5rem;
+.box {
+  background-color: $background;
+  border: 1px solid $color1;
+  border-radius: 0.25rem;
 }
 
 .underline {
@@ -65,88 +20,20 @@
   font-weight: bold;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
+.font-6 {
+  font-size: 1.5rem;
+}
+
 .color-0 {
   color: $color0;
 }
 
 .color-1 {
   color: $color1;
-}
-
-.color-2 {
-  color: $color2;
-}
-
-.color-3 {
-  color: $color3;
-}
-
-.color-4 {
-  color: $color4;
-}
-
-.color-5 {
-  color: $color5;
-}
-
-.color-6 {
-  color: $color6;
-}
-
-.color-7 {
-  color: $color7;
-}
-
-.color-8 {
-  color: $color8;
-}
-
-.color-9 {
-  color: $color9;
-}
-
-.color-10 {
-  color: $color10;
-}
-
-.color-11 {
-  color: $color11;
-}
-
-.color-12 {
-  color: $color12;
-}
-
-.color-13 {
-  color: $color13;
-}
-
-.color-14 {
-  color: $color14;
-}
-
-.color-15 {
-  color: $color15;
-}
-
-.bg {
-  background-color: $background;
-}
-
-.fg {
-  background-color: $foreground;
-}
-
-.bg-0 {
-  background-color: $color0;
-}
-
-.bg-1 {
-  background-color: $color1;
-}
-
-.bg-2 {
-  background-color: $color2;
 }
 
 .bg-3 {
@@ -165,22 +52,6 @@
   background-color: $color6;
 }
 
-.bg-7 {
-  background-color: $color7;
-}
-
-.bg-8 {
-  background-color: $color8;
-}
-
-.bg-9 {
-  background-color: $color9;
-}
-
-.bg-10 {
-  background-color: $color10;
-}
-
 .bg-11 {
   background-color: $color11;
 }
@@ -196,22 +67,6 @@
 .bg-14 {
   background-color: $color14;
 }
-
-.bg-15 {
-  background-color: $color15;
-}
-
-// border 
-
-.b-1 {
-  border: 1px solid $color1;
-}
-
-.br-1 {
-  border-radius: 0.25rem;
-}
-
-// gtk widgets
 
 image {
   -gtk-icon-transform: scale(0.5);
@@ -229,17 +84,10 @@ calendar:indeterminate {
 scale trough {
   min-height: 0.5rem;
   border-radius: 0.25rem;
-
-  highlight {
-    border-radius: 0.25rem;
-  }
-}
-
-scale.scale-0 trough {
   background-color: $color8;
 
   highlight {
+    border-radius: 0.25rem;
     background-color: $color0;
   }
 }
-

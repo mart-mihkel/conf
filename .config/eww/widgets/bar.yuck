@@ -3,20 +3,21 @@
   :stacking 'fg'
   :exclusive true
   :focusable false
-  :namespace 'eww-bar'
+  :namespace 'eww'
   (bar))
 
 (defwidget bar []
   (box
-    (box :halign 'start' :space-evenly false :spacing 16
-      (bar-workspaces))
-    (box :halign 'center' :space-evenly false :spacing 16
-      (bar-date)
+    (box :style 'padding-left: 0.25rem' :halign 'start' :space-evenly false :spacing 8
+      (bar-workspaces)
+      (window-label :class 'color-0'))
+    (box :halign 'center' :spacing 16
+      (label :class 'color-0' :text date-poll)
       (bar-spotify))
-    (box :halign 'end' :space-evenly false :spacing 16
+    (box :style 'padding-right: 0.25rem' :halign 'end' :space-evenly false :spacing 8
       (systray)
-      (wifi-label :class 'color-0')
-      (bluetooth-label :class 'color-0')
+      (bar-wifi)
+      (bar-bluetooth)
       (bar-speakers)
       (bar-mic)
       (bar-battery)
@@ -24,59 +25,47 @@
       (bar-panel))))
 
 (defwidget bar-workspaces []
-  (box :space-evenly false
+  (box :space-evenly false :spacing 4
     (label :text '${awsp-listen}' :visible false) ; initialize
     (for wsp in {wsp-listen}
       (button :onclick 'hyprctl dispatch workspace ${wsp.id}'
-        (label :class 'ml-1 color-0 ${wsp.id == awsp-listen ? 'underline' : ''}'
-          :text '${wsp.id}')))))
+        (workspace-label :class 'color-0' :workspace wsp)))))
 
 (defwidget bar-spotify []
-  (tooltip
-    (box :class 'bg br-1 b-1' :space-evenly false
-      (box :width 64 :height 64
-        :style 'background-image: url("${spotify-listen.art}"); background-size: cover')
-      (box :class 'm-2' :orientation 'v'
-        (label :class 'color-1 bold' :text '${spotify-listen.title}')
-        (label :class 'color-1' :text '${spotify-listen.artist}')))
-    (box :space-evenly false :spacing 8 :visible '${spotify-listen.status != "null"}'
-      (player-label :class 'color-0')
-      (button :onclick 'playerctl -p spotify previous'
-        (label :class 'color-0' :text '󰒮'))
-      (button :onclick 'playerctl -p spotify play-pause'
-        (label :class 'color-0' :text '${spotify-listen.position}|${spotify-listen.length}'))
-      (button :onclick 'playerctl -p spotify next'
-        (label :class 'color-0' :text '󰒭')))))
+  (box :space-evenly false :spacing 4 :visible '${spotify-listen.status != "null"}'
+    (button :onclick 'dunstify -u low -h string:x-dunst-stack-tag:spotify "󰓇 Currently playing" "${spotify-listen.title} by ${spotify-listen.artist}"'
+      (label :class 'color-0' :text '󰓇'))
+    (button :width 16 :onclick 'playerctl -p spotify previous'
+      (label :class 'color-0' :text '󰒮'))
+    (button :onclick 'playerctl -p spotify play-pause'
+      (label :class 'color-0' :text '${spotify-listen.position}|${spotify-listen.length}'))
+    (button :width 16 :onclick 'playerctl -p spotify next'
+      (label :class 'color-0' :text '󰒭'))))
 
-(defwidget bar-date []
-  (tooltip
-    (calendar :class 'bg br-1 b-1' :show-heading false)
-    (label :class 'color-0' :text date-poll)))
+(defwidget bar-wifi []
+  (box :width 26
+    (wifi-label :class 'color-0')))
+
+(defwidget bar-bluetooth []
+  (box :width 16
+    (bluetooth-label :class 'color-0')))
 
 (defwidget bar-speakers []
-  (tooltip
-    (label :class 'bg br-1 b-1 color-1 px-1' :text '${dsink-listen.volume}')
-    (button :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-      (speakers-label :class 'color-0'))))
+  (button :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle' :width 16
+    (speakers-label :class 'color-0')))
 
 (defwidget bar-mic []
-  (button :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
+  (button :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle' :width 16
     (mic-label :class 'color-0')))
 
 (defwidget bar-battery []
-  (tooltip
-    (label :class 'bg br-1 b-1 color-1 px-1' :text '${EWW_BATTERY["BAT0"].capacity}%')
+  (box :width 16
     (battery-label :class 'color-0')))
 
 (defwidget bar-brightness []
-  (tooltip
-    (box :class 'bg br-1 b-1 px-1' :space-evenly false :spacing 16
-      (weather-label :class 'color-1')
-      (temperature-label :class 'color-2')
-      (label :class 'color-3' :text '󰖝 ${weather-poll?.wind_speed_10m}km/h'))
-    (button :onclick '../hypr/scripts/wallpaper.sh -s' :timeout '10s'
-      (brightness-label :class 'color-0'))))
+  (button :onclick '../hypr/scripts/wallpaper.sh -s' :timeout '10s' :width 16
+    (brightness-label :class 'color-0')))
 
 (defwidget bar-panel []
-  (eventbox :onhover 'eww open panel'
-    (label :class 'color-0' :text '󰣇 ')))
+  (eventbox :onhover 'eww open panel' :width 16
+    (label :class 'color-0' :text '󰣇')))

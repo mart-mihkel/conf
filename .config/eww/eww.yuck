@@ -1,14 +1,14 @@
 (include 'widgets/panel.yuck')
 (include 'widgets/bar.yuck')
 
-(defpoll date-poll :interval '2s' 'date +"󰃰 %b-%d %H:%M"')
+(defpoll date-poll :interval '2s' 'date +"󰃰 %a, %b-%d %H:%M"')
 (defpoll wifi-poll :initial '[]' :interval '2s' 'python scripts/poll-wifi.py')
 (defpoll awifi-poll :initial 0 :interval '2s' 'python scripts/poll-wifi.py -a')
-(defpoll weather-poll :initial 'null' :interval '15m' 'scripts/poll-weather.sh')
 (defpoll bluetooth-poll :initial '[]' :interval '2s' 'python scripts/poll-bluetooth.py')
 
 (deflisten wsp-listen :initial '[]' 'scripts/listen-wsp.sh')
 (deflisten awsp-listen :initial 1 'scripts/listen-wsp.sh -a')
+(deflisten window-listen :initial '{"class":""}' 'scripts/listen-window.sh')
 
 (deflisten sink-listen :initial '[]' 'scripts/listen-sink.sh')
 (deflisten dsink-listen :initial '{"mute":false,"volume":"0%"}' 'scripts/listen-sink.sh -d')
@@ -19,11 +19,20 @@
 (deflisten brightness-listen :initial 0 'scripts/listen-brightness.sh')
 (deflisten spotify-listen :initial '{"status":null}' 'scripts/listen-spotify.sh')
 
-(defwidget player-label [class ?xalign]
-  (label :class '${class}' :xalign '${xalign ?: 0.5}'
-    :text '${spotify-listen.player == "spotify" ? "󰓇"
-           : spotify-listen.player == "firefox" ? "󰈹"
-           : "󰝚"}'))
+(defwidget workspace-label [class workspace]
+  (label :class '${class} ${workspace.id == awsp-listen ? "underline" : ""}'
+    :text '${workspace.id}'))
+
+(defwidget window-label [class ?xalign]
+  (label :class '${class}' :xalign '${xalign ?: 0.5}' :limit-width 32
+    :text '${window-listen.class == "Alacritty" ? ""
+           : window-listen.class == "Spotify" ? "󰓇"
+           : window-listen.class == "firefox" ? "󰈹"
+           : window-listen.class == "discord" ? ""
+           : window-listen.class == "Slack" ? ""
+           : window-listen.class == "kitty" ? ""
+           : window-listen.class != "" ? "󱂬"
+           : ""} ${window-listen?.title ?: ""}'))
 
 (defwidget wifi-label [class ?xalign]
   (label :class '${class}' :xalign '${xalign ?: 0.5}'
@@ -51,8 +60,8 @@
 
 (defwidget brightness-label [class ?xalign]
   (label :class '${class}' :xalign '${xalign ?: 0.5}'
-    :text '${brightness-listen >= 66 ? "󰃠"
-           : brightness-listen >= 33 ? "󰃟" 
+    :text '${brightness-listen > 66 ? "󰃠"
+           : brightness-listen > 33 ? "󰃟"
            : "󰃞"}'))
 
 (defwidget battery-label [class ?xalign]
@@ -69,24 +78,3 @@
            : EWW_BATTERY["BAT0"].capacity > 10 ? "󰁺"
            : EWW_BATTERY["BAT0"].status == "Charging" ? "󰂄"
            : "󰂃"}'))
-
-(defwidget temperature-label [class ?xalign]
-  (label :class '${class}' :xalign '${xalign ?: 0.5}'
-    :text '${weather-poll == "null" ? ""
-           : weather-poll.temperature_2m > 20 ? ""
-           : weather-poll.temperature_2m > 15 ? ""
-           : weather-poll.temperature_2m > 10 ? ""
-           : weather-poll.temperature_2m > 5 ? ""
-           : ""} ${weather-poll?.temperature_2m}°C'))
-
-(defwidget weather-label [class ?xalign]
-  (label :class '${class}' :xalign '${xalign ?: 0.5}'
-    :text '${weather-poll == "null" ? "󰖙 Weather"
-           : weather-poll.snowfall > 0.625 ? "󰼶 Heavy snow"
-           : weather-poll.snowfall > 0.025 ? "󰖘 Snow"
-           : weather-poll.rain > 1.9 ? "󰖖 Heavy rain"
-           : weather-poll.rain > 0.025 ? "󰖗 Rain"
-           : weather-poll.cloud_cover > 95 ? "󰖑 Overcast"
-           : weather-poll.cloud_cover > 50 ? "󰖐 Cloudy"
-           : weather-poll.cloud_cover > 25 ? "󰖕 Partly cloudy"
-           : "󰖙 Sunny"}'))

@@ -5,14 +5,12 @@ notify() {
     PROGRESS="int:value:$CURRENT"
     TAG="string:x-dunst-stack-tag:brightness"
 
-    if [[ $CURRENT -gt 75 ]]; then
+    if [[ $CURRENT -gt 66 ]]; then
         ICON="󰃠"
-    elif [[ $CURRENT -gt 50 ]]; then
+    elif [[ $CURRENT -gt 33 ]]; then
         ICON="󰃟"
-    elif [[ $CURRENT -gt 25 ]]; then
-        ICON="󰃞"
     else
-        ICON="󰃝"
+        ICON="󰃞"
     fi
 
     dunstify -u low -h $PROGRESS -h $TAG "$ICON $CURRENT"

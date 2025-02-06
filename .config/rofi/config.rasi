@@ -4,14 +4,16 @@ configuration {
   font: "JetbrainsMono Nerd Font 11";
   terminal: "alacritty";
 
-  timeout {
-    action: "kb-cancel";
-    delay: 0;
+  drun {
+    display-name: "󱈆 ";
   }
 
-  filebrowser {
-    directories-first: true;
-    sorting-method: "name";
+  emoji {
+    display-name: "󰀖 ";
+  }
+
+  ssh {
+    display-name: "󰥖 ";
   }
 }
 

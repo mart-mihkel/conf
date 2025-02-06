@@ -19,7 +19,6 @@ apply() {
 
     cp -f $PICK $WAL_CACHE/wallpaper
     cp -f $WAL_CACHE/colors-dunst $CFG/dunst/dunstrc
-    cp -f $WAL_CACHE/colors-btop.theme $CFG/btop/themes/pywal.theme
 
     eww reload &
 
@@ -39,11 +38,11 @@ WAL_CACHE="${HOME}/.cache/wal"
 WALLPAPERS="${HOME}/Pictures/wallpapers"
 
 if [[ "$1" == "-l" ]]; then
-    PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu)"
+    PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu -p '󰥷 ')"
     set_light
     apply
 elif [[ "$1" == "-d" ]]; then
-    PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu)"
+    PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu -p '󰥷 ')"
     set_dark
     apply
 elif [[ "$1" == "-s" ]]; then

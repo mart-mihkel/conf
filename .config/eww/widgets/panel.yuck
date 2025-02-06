@@ -3,12 +3,12 @@
   :stacking 'fg'
   :exclusive false
   :focusable false
-  :namespace 'eww-panel'
+  :namespace 'eww'
   (panel))
 
 (defwidget panel []
   (eventbox :onhoverlost "eww close panel"
-    (box :class 'p-2' :orientation 'v' :space-evenly false :spacing 4
+    (box :style 'margin: 4px' :orientation 'v' :space-evenly false :spacing 4
       (panel-power)
       (panel-options))))
 
@@ -21,19 +21,19 @@
     (eventbox :onhover "eww update shutdown-hover=true"
       :onhoverlost "eww update shutdown-hover=false"
       (button :onclick 'shutdown now'
-        (label :class 'br-1 p-2 font-6 color-0  ${shutdown-hover ? "bg-11" : "bg-3"}' :xalign 0.475  :text '󰤆')))
+        (label :class 'p-2 font-6 color-0  ${shutdown-hover ? "bg-11" : "bg-3"}' :xalign 0.475  :text '󰤆')))
     (eventbox :onhover "eww update reboot-hover=true"
       :onhoverlost "eww update reboot-hover=false"
-      (button :onclick 'reboot' :class 'box'
-        (label :class 'br-1 p-2 font-6 color-0 ${reboot-hover ? "bg-12" : "bg-4"}' :xalign 0.475 :text '󰑓')))
+      (button :onclick 'reboot'
+        (label :class 'p-2 font-6 color-0 ${reboot-hover ? "bg-12" : "bg-4"}' :xalign 0.475 :text '󰑓')))
     (eventbox :onhover "eww update suspend-hover=true"
       :onhoverlost "eww update suspend-hover=false"
-      (button :onclick 'systemctl suspend' :class 'box'
-        (label :class 'br-1 p-2 font-6 color-0 ${suspend-hover ? "bg-11" : "bg-5"}' :text '󰤄')))
+      (button :onclick 'playerctl -a pause & systemctl suspend'
+        (label :class 'p-2 font-6 color-0 ${suspend-hover ? "bg-13" : "bg-5"}' :text '󰤄')))
     (eventbox :onhover "eww update lock-hover=true"
       :onhoverlost "eww update lock-hover=false"
-      (button :onclick 'playerctl -a pause && hyprlock && sleep 1' :class 'box'
-        (label :class 'br-1 p-2 font-6 color-0 ${lock-hover ? "bg-14" : "bg-6"}' :text '󰌾')))))
+      (button :onclick 'playerctl -a pause & hyprlock && sleep 1'
+        (label :class 'p-2 font-6 color-0 ${lock-hover ? "bg-14" : "bg-6"}' :text '󰌾')))))
 
 (defvar wifi-reveal false)
 (defvar sink-reveal false)
@@ -43,16 +43,16 @@
   (box :orientation 'v' :space-evenly false
     (box :spacing 4
       (eventbox :onhover 'eww update wifi-reveal=true sink-reveal=false source-reveal=false  bluetooth-reveal=false'
-        (wifi-label :class 'br-1 p-2 font-6 color-0 ${wifi-reveal ? "bg-11" : "bg-3"}' :xalign 0.375))
+        (wifi-label :class 'p-2 font-6 color-0 ${wifi-reveal ? "bg-11" : "bg-3"}' :xalign 0.375))
       (eventbox :onhover 'eww update wifi-reveal=false sink-reveal=false source-reveal=false bluetooth-reveal=true'
-        (button :onclick 'scripts/expect-scan.ex' :timeout '10s'
-          (bluetooth-label :class 'br-1 p-2 font-6 color-0 ${bluetooth-reveal ? "bg-12" : "bg-4"}' :xalign 0.45)))
+        (button :onclick 'scripts/expect-scan.tcl' :timeout '10s'
+          (bluetooth-label :class 'p-2 font-6 color-0 ${bluetooth-reveal ? "bg-12" : "bg-4"}' :xalign 0.45)))
       (eventbox :onhover 'eww update wifi-reveal=false sink-reveal=true source-reveal=false bluetooth-reveal=false'
         (button :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-          (speakers-label :class 'br-1 p-2 font-6 color-0 ${sink-reveal ? "bg-13" : "bg-5"}' :xalign 0.45)))
+          (speakers-label :class 'p-2 font-6 color-0 ${sink-reveal ? "bg-13" : "bg-5"}' :xalign 0.45)))
       (eventbox :onhover 'eww update wifi-reveal=false sink-reveal=false source-reveal=true bluetooth-reveal=false'
         (button :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
-          (mic-label :class 'br-1 p-2 font-6 color-0 ${source-reveal ? "bg-14" : "bg-6"}' :xalign 0.475))))
+          (mic-label :class 'p-2 font-6 color-0 ${source-reveal ? "bg-14" : "bg-6"}' :xalign 0.475))))
     (wifi-reveal)
     (sink-reveal)
     (source-reveal)
@@ -68,19 +68,19 @@
               (label :class 'color-0' :halign 'start' :text '${con.ssid}')
               (box
                 (label :class 'color-0' :text '${con.active == "yes" ? "󰀂" : ""}')
-                (scale :class 'scale-0' :value '${con.signal}')))))))))
+                (scale :value '${con.signal}')))))))))
 
 (defwidget bluetooth-reveal []
   (revealer :transition 'slidedown' :reveal bluetooth-reveal :visible bluetooth-reveal
     (eventbox :onhoverlost 'eww update bluetooth-reveal=false'
       (box :orientation 'v'
         (for dev in bluetooth-poll
-          (button :onclick 'scripts/expect-bluetooth.ex ${dev.mac}' :timeout '60s'
+          (button :onclick 'scripts/expect-bluetooth.tcl ${dev.mac}' :timeout '60s'
             (box
               (label :class 'color-0' :halign 'start' :text '${dev.name}')
               (box
                 (label :class 'color-0' :text '${dev.connected ? "󰂱" : ""}')
-                (scale :class 'scale-0' :value '${dev.battery}')))))))))
+                (scale :value '${dev.battery}')))))))))
 
 (defwidget sink-reveal []
   (revealer :transition 'slidedown' :reveal sink-reveal :visible sink-reveal
@@ -95,8 +95,7 @@
                 (box
                   (label :class 'color-0' :text '${sink.mute ? "" : ""}')
                   (label :class 'color-0' :text '${sink.default ? "󱡬" : ""}')))
-              (scale :class 'scale-0'
-                :value '${replace(sink.volume, "%", "")}'
+              (scale :value '${replace(sink.volume, "%", "")}'
                 :onchange 'pactl set-sink-volume ${sink.id} {}%'))))))))
 
 (defwidget source-reveal []
@@ -112,6 +111,5 @@
                 (box
                   (label :class 'color-0' :text '${source.mute ? "󰍭" : ""}')
                   (label :class 'color-0' :text '${source.default ? "󱡬" : ""}')))
-              (scale :class 'scale-0'
-                :value '${replace(source.volume, "%", "") ?: 0}'
+              (scale :value '${replace(source.volume, "%", "") ?: 0}'
                 :onchange 'pactl set-source-volume ${source.id} {}%'))))))))
