@@ -1,10 +1,10 @@
-# conf 🍚
+# 🍚Conf - Hyprland rice
 
-![sunflowers](./img/sunflowers.png)
-![skeleton](./img/skeleton.png)
-![clouds](./img/clouds.png)
+![sunflowers](./.github/img/sunflowers.png)
+![whitesnake](./.github/img/whitesnake.png)
+![mountain](./.github/img/mountain.png)
 
-## Install
+## Install🤢
 
 ```bash
 cp -r .config/* ~/.config
@@ -12,11 +12,56 @@ cp .tmux.conf ~/.tmux.conf
 cp .bashrc ~/.bashrc
 ```
 
-## Dependencies
+### Programs✨
 
-- hyprland: `hyprland hyprlock hypridle hyprpaper`
-- apps: `alacritty dunst eww rofi-wayland rofi-emoji`
-- shell: `neovim tmux bash ripgrep`
-- color: `pywal-16 gammastep`
-- tools: `brightnessctl playerctl grim slurp inotify-tools expect socat wl-clipboard gvfs networkmanager pipewire-pulse`
-- fonts: `ttf-jetbrains-mono-nerd noto-fonts-emoji`
+**hyprland**
+
+| program   | description      |
+| --------- | ---------------- |
+| hyprland  | window manager   |
+| hyprlock  | screen locker    |
+| hypridle  | idle daemon      |
+| hyprpaper | wallpaper daemon |
+
+**apps**
+
+| program      | description          |
+| ------------ | -------------------- |
+| eww          | widgets (status bar) |
+| dunst        | notification daemon  |
+| alacritty    | terminal emulator    |
+| rofi-emoji   | emoji picker         |
+| rofi-wayland | application launcher |
+
+**shell**
+
+| program   | description          |
+| --------- | -------------------- |
+| bash      | shell                |
+| tmux      | terminal multiplexer |
+| neovim    | text editor          |
+| fastfetch | system info fetcher  |
+
+### Dependencies📦
+
+**tools**
+
+| tool                          | description                    |
+| ----------------------------- | ------------------------------ |
+| socat                         | socket cat                     |
+| expect                        | interactive scripting tool     |
+| pywal-16                      | colorscheme generator          |
+| playerctl                     | audio player control           |
+| grim & slurp                  | screenshot tools               |
+| wl-clipboard                  | clipboard tool                 |
+| inotify-tools                 | monitor filesystem events      |
+| brightnessctl                 | backlight control              |
+| networkmanager                | networking                     |
+| wayland-pipewire-idle-inhibit | automatic audio idle inhibitor |
+
+**fonts**
+
+| tool                    | description    |
+| ----------------------- | -------------- |
+| noto-fonts-emoji        | emoji font     |
+| ttf-jetbrains-mono-nerd | font and icons |
