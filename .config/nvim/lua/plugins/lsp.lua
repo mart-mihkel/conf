@@ -1,0 +1,124 @@
+return {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+        { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
+        { "j-hui/fidget.nvim", opts = {} },
+        "williamboman/mason-lspconfig.nvim",
+        "williamboman/mason.nvim",
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "hrsh7th/nvim-cmp",
+    },
+    config = function()
+        -- snippets
+        local luasnip = require("luasnip")
+        luasnip.config.setup({})
+        require("luasnip.loaders.from_vscode").lazy_load()
+
+        -- autocomplete
+        local cmp = require("cmp")
+        cmp.setup({
+            completion = { completeopt = "menu,menuone,noinsert" },
+            mapping = cmp.mapping.preset.insert({
+                ["<C-Space>"] = cmp.mapping.complete({}),
+                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                ["<C-n>"] = cmp.mapping.select_next_item(),
+                ["<C-p>"] = cmp.mapping.select_prev_item(),
+
+                ["<C-l>"] = cmp.mapping(function()
+                    if luasnip.expand_or_locally_jumpable() then
+                        luasnip.expand_or_jump()
+                    end
+                end, { "i", "s" }),
+
+                ["<C-h>"] = cmp.mapping(function()
+                    if luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    end
+                end, { "i", "s" }),
+            }),
+            snippet = {
+                expand = function(args)
+                    luasnip.lsp_expand(args.body)
+                end,
+            },
+            sources = {
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+                { name = "buffer" },
+                { name = "path" },
+            },
+        })
+
+        -- lsp
+        local lspconfig = require("lspconfig")
+        local capabilities = vim.tbl_deep_extend(
+            "force",
+            lspconfig.util.default_config.capabilities,
+            require("cmp_nvim_lsp").default_capabilities()
+        )
+
+        local rust_analyzer_cfg = function()
+            lspconfig.rust_analyzer.setup({
+                capabilities = capabilities,
+                settings = {
+                    ["rust-analyzer"] = {
+                        cargo = { features = "all" },
+                    },
+                },
+            })
+        end
+
+        local lua_ls_cfg = function()
+            lspconfig.lua_ls.setup({
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        runtime = { version = "LuaJIT" },
+                        diagnostics = { globals = { "vim" } },
+                    },
+                },
+            })
+        end
+
+        require("mason").setup()
+        require("mason-lspconfig").setup({
+            handlers = {
+                function(server)
+                    lspconfig[server].setup({ capabilities = capabilities })
+                end,
+                ["rust_analyzer"] = rust_analyzer_cfg,
+                ["lua_ls"] = lua_ls_cfg,
+            },
+        })
+
+        vim.api.nvim_create_autocmd("LspAttach", {
+            desc = "LSP keymaps",
+            group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+            callback = function(event)
+                local builtin = require("telescope.builtin")
+                local map = function(keys, func, desc)
+                    vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+                end
+
+                map("K", vim.lsp.buf.hover, "Hover documentation")
+                map("gr", builtin.lsp_references, "Goto references")
+                map("gd", builtin.lsp_definitions, "Goto definition")
+                map("gi", builtin.lsp_implementations, "Goto implementation")
+
+                map("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
+                map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
+                map("<leader>q", vim.diagnostic.setloclist, "Open diagnostic quickfix list")
+                map("<leader>e", vim.diagnostic.open_float, "Show diagnostic error messages")
+
+                map("<leader>rn", vim.lsp.buf.rename, "Rename")
+                map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+                map("<leader>D", builtin.lsp_type_definitions, "Type definition")
+                map("<leader>ds", builtin.lsp_document_symbols, "Document symbols")
+                map("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "Workspace symbols")
+            end,
+        })
+    end,
+}
