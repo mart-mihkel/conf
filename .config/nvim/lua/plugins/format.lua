@@ -18,15 +18,11 @@ return {
 
                 javascriptreact = { "prettierd" },
                 typescriptreact = { "prettierd" },
-
-                ["_"] = { "trim_whitespace" },
             },
         })
 
-        local format = function()
+        vim.keymap.set("n", "<leader>f", function()
             conform.format({ async = true, lsp_format = "fallback" })
-        end
-
-        vim.keymap.set("n", "<leader>f", format, { desc = "Format buffer" })
+        end)
     end,
 }

@@ -1,10 +1,5 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
-vim.g.netrw_banner = false
-
-require("config.keymap")
 require("config.option")
+require("config.mapping")
 require("config.autocmd")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

@@ -1,3 +1,7 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+vim.g.netrw_banner = false
+
 vim.opt.titlestring = "vim"
 vim.opt.title = true
 
@@ -27,6 +31,7 @@ vim.opt.termguicolors = true
 vim.opt.breakindent = true
 vim.opt.expandtab = true
 vim.opt.undofile = true
+vim.opt.wrap = false
 
-vim.opt.scrolloff = 10
 vim.opt.laststatus = 3
+vim.opt.scrolloff = 8

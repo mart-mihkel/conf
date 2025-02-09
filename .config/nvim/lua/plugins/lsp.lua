@@ -93,32 +93,5 @@ return {
                 ["lua_ls"] = lua_ls_cfg,
             },
         })
-
-        vim.api.nvim_create_autocmd("LspAttach", {
-            desc = "LSP keymaps",
-            group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-            callback = function(event)
-                local builtin = require("telescope.builtin")
-                local map = function(keys, func, desc)
-                    vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-                end
-
-                map("K", vim.lsp.buf.hover, "Hover documentation")
-                map("gr", builtin.lsp_references, "Goto references")
-                map("gd", builtin.lsp_definitions, "Goto definition")
-                map("gi", builtin.lsp_implementations, "Goto implementation")
-
-                map("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
-                map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
-                map("<leader>q", vim.diagnostic.setloclist, "Open diagnostic quickfix list")
-                map("<leader>e", vim.diagnostic.open_float, "Show diagnostic error messages")
-
-                map("<leader>rn", vim.lsp.buf.rename, "Rename")
-                map("<leader>ca", vim.lsp.buf.code_action, "Code action")
-                map("<leader>D", builtin.lsp_type_definitions, "Type definition")
-                map("<leader>ds", builtin.lsp_document_symbols, "Document symbols")
-                map("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "Workspace symbols")
-            end,
-        })
     end,
 }
