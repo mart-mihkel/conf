@@ -12,6 +12,7 @@ alias l="ls -lhA --color"
 alias la="ls -lha --color"
 alias grep="grep --color"
 
+alias vi="nvim"
 alias vim="nvim"
 alias neofetch="fastfetch"
 

@@ -1,26 +1,19 @@
-local theme_current = 1
-local themes = {
-    { name = "github_light", lualine = "github_light" },
-    { name = "pywal16", lualine = "pywal16-nvim" },
-}
+local colori = 1
+local colors = { "github_light", "pywal16" }
 
-local cycle_theme = function()
-    theme_current = theme_current % #themes + 1
-    local theme = themes[theme_current]
-
-    vim.cmd.colorscheme(theme.name)
-    -- require("lualine").setup({ options = { theme = theme.lualine } })
+local cycle_colors = function()
+    colori = colori % #colors + 1
+    vim.cmd.colorscheme(colors[colori])
 end
 
-vim.keymap.set("n", "<C-W>n", function()
-    vim.cmd.Explore(vim.fn.expand("%:h"))
-end)
+vim.keymap.set("n", "<leader>cc", cycle_colors)
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<C-w>n", function() vim.cmd.Explore(vim.fn.expand("%:h")) end)
 
-vim.keymap.set("n", "<leader>cc", cycle_theme)
+vim.keymap.set("n", "<C-d>", "<C-D>zz")
+vim.keymap.set("n", "<C-u>", "<C-U>zz")
 
-vim.keymap.set("n", "<C-J>", "<cmd>cnext<CR>")
-vim.keymap.set("n", "<C-K>", "<cmd>cprevious<CR>")
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<C-k>", "<cmd>cprevious<CR>")
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")

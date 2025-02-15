@@ -17,13 +17,43 @@ def match_connected(out: str) -> bool:
     return False
 
 
-def match_battery(out: str) -> int:
+def match_battery(out: str) -> str:
     match = re.search(r"Battery Percentage:.*", out)
     if match:
         s, e = match.span()
-        return int(out[s:e].split()[-1][1:-1])
+        bat = int(out[s:e].split()[-1][1:-1])
 
-    return 0
+        if bat > 95:
+            return "󰥈"
+
+        if bat > 90:
+            return "󰥆"
+
+        if bat > 80:
+            return "󰥅"
+
+        if bat > 70:
+            return "󰥄"
+
+        if bat > 60:
+            return "󰥃"
+
+        if bat > 50:
+            return "󰥂"
+
+        if bat > 40:
+            return "󰥁"
+
+        if bat > 30:
+            return "󰥀"
+
+        if bat > 20:
+            return "󰤿"
+
+        if bat > 10:
+            return "󰤾"
+
+    return ""
 
 
 out = subprocess.check_output(["bluetoothctl", "devices"], text=True)

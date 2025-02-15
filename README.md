@@ -1,4 +1,4 @@
-# 🍚Conf - Hyprland rice
+# Conf🍚 - Hyprland rice
 
 ![sunflowers](./.github/img/sunflowers.png)
 ![whitesnake](./.github/img/whitesnake.png)
@@ -40,7 +40,6 @@ cp .bashrc ~/.bashrc
 | bash      | shell                |
 | tmux      | terminal multiplexer |
 | neovim    | text editor          |
-| fastfetch | system info fetcher  |
 
 ### Dependencies📦
 
@@ -49,7 +48,6 @@ cp .bashrc ~/.bashrc
 | tool                          | description                    |
 | ----------------------------- | ------------------------------ |
 | socat                         | socket cat                     |
-| expect                        | interactive scripting tool     |
 | pywal-16                      | colorscheme generator          |
 | playerctl                     | audio player control           |
 | grim & slurp                  | screenshot tools               |

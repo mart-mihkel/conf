@@ -7,7 +7,7 @@ query_sources() {
         mute: .mute,
         name: .description,
         default: (.name == $default),
-        volume: .volume["front-left"].value_percent
+        volume: .volume["front-left"].value_percent | sub("%"; "")
     }]'
 }
 

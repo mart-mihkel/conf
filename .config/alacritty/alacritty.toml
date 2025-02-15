@@ -1,9 +1,10 @@
-[general]
-import = [ "~/.cache/wal/colors-alacritty.toml" ]
-
 [window]
 dynamic_padding = true
 
 [font]
 size = 11
 normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
+
+[colors.primary]
+background = "#ffffff"
+foreground = "#000000"
