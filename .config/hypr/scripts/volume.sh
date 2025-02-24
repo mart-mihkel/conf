@@ -9,15 +9,15 @@ notify_sink() {
     if [[ $MUTE == "yes" ]]; then
         ICON="󰖁"
         CURRENT="muted"
-    elif [[ $CURRENT -gt 70 ]]; then
+    elif [[ $CURRENT -gt 40 ]]; then
         ICON="󰕾"
-    elif [[ $CURRENT -gt 35 ]]; then
+    elif [[ $CURRENT -gt 20 ]]; then
         ICON="󰖀"
     else
         ICON="󰕿"
     fi
 
-    dunstify -u low -h $PROGRESS -h $TAG "$ICON $CURRENT"
+    dunstify -u low -h $TAG "$ICON $CURRENT"
 }
 
 notify_source() {

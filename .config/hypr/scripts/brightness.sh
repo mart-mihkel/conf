@@ -13,7 +13,7 @@ notify() {
         ICON="󰃞"
     fi
 
-    dunstify -u low -h $PROGRESS -h $TAG "$ICON $CURRENT"
+    dunstify -u low -h $TAG "$ICON $CURRENT"
 }
 
 if [[ "$1" == "-i" ]]; then

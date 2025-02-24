@@ -1,13 +1,3 @@
-local colori = 1
-local colors = { "github_light", "pywal16" }
-
-local cycle_colors = function()
-    colori = colori % #colors + 1
-    vim.cmd.colorscheme(colors[colori])
-end
-
-vim.keymap.set("n", "<leader>cc", cycle_colors)
-
 vim.keymap.set("n", "<C-w>n", function() vim.cmd.Explore(vim.fn.expand("%:h")) end)
 
 vim.keymap.set("n", "<C-d>", "<C-D>zz")

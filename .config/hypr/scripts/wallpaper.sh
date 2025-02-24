@@ -3,31 +3,29 @@
 set_dark() {
     WAL_FLAG="--cols16 darken"
     GNOME_COLOR="prefer-dark"
-    GTK="Adawaita-dark"
+    GTK="Adwaita-dark"
 }
 
 set_light() {
     WAL_FLAG="-l --cols16 lighten"
     GNOME_COLOR="prefer-light"
-    GTK="Adawaita"
+    GTK="Adwaita"
 }
 
 apply() {
     [[ "$PICK" == "$WALLPAPERS/" ]] && exit 1
 
-    wal $WAL_FLAG -n -q -e -i $PICK
+    wal $WAL_FLAG -s -n -q -e -i $PICK
 
     cp -f $PICK $WAL_CACHE/wallpaper
     cp -f $WAL_CACHE/colors-dunst $CFG/dunst/dunstrc
-
-    eww reload &
 
     pkill dunst
     hyprctl dispatch exec dunst &
 
     hyprctl hyprpaper unload all
     hyprctl hyprpaper preload $PICK
-    hyprctl hyprpaper wallpaper ", ${PICK}"
+    hyprctl hyprpaper wallpaper ", ${PICK}" &
 
     gsettings set org.gnome.desktop.interface gtk-theme $GTK
     gsettings set org.gnome.desktop.interface color-scheme $GNOME_COLOR

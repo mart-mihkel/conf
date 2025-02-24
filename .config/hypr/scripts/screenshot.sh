@@ -9,4 +9,4 @@ fi
 grim -g "$GEOM"
 grim -g "$GEOM" - | wl-copy -t image/png
 
-dunstify -u low "Screenshot" "Saved to ~/Pictures and copied to clipboard"
+dunstify -u low "Screenshot" "Saved to ~/Pictures\nCopied to clipboard"

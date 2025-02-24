@@ -1,0 +1,16 @@
+font-family =
+font-size = 11
+font-feature = -calt, -liga, -dlig
+
+app-notifications = no-clipboard-copy
+confirm-close-surface = false
+resize-overlay = never
+
+window-padding-balance = true
+window-decoration = none
+
+background-opacity = 0.9
+
+theme = nord
+
+# vim: ft=cfg

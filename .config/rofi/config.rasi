@@ -2,18 +2,20 @@
 
 configuration {
   font: "JetbrainsMono Nerd Font 11";
-  terminal: "alacritty";
+  terminal: "ghostty";
+
+  modes: [drun, ssh, emoji];
 
   drun {
     display-name: "󱈆 ";
   }
 
-  emoji {
-    display-name: "󰀖 ";
-  }
-
   ssh {
     display-name: "󰥖 ";
+  }
+
+  emoji {
+    display-name: "󰀖 ";
   }
 }
 

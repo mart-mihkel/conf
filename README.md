@@ -1,8 +1,6 @@
 # Conf🍚 - Hyprland rice
 
-![sunflowers](./.github/img/sunflowers.png)
-![whitesnake](./.github/img/whitesnake.png)
-![mountain](./.github/img/mountain.png)
+![tux](./.github/img/tux.png)
 
 ## Install🤢
 
@@ -10,6 +8,7 @@
 cp -r .config/* ~/.config
 cp .tmux.conf ~/.tmux.conf
 cp .bashrc ~/.bashrc
+yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype pywal-16 playerctl grim wl-clipboard brightnessctl networkmanager wayland noto-fonts-emoji tf-jetbrains-mono-nerd
 ```
 
 ### Programs✨
@@ -29,17 +28,20 @@ cp .bashrc ~/.bashrc
 | ------------ | -------------------- |
 | eww          | widgets (status bar) |
 | dunst        | notification daemon  |
-| alacritty    | terminal emulator    |
+| ghostty      | terminal emulator    |
 | rofi-emoji   | emoji picker         |
 | rofi-wayland | application launcher |
 
 **shell**
 
-| program   | description          |
-| --------- | -------------------- |
-| bash      | shell                |
-| tmux      | terminal multiplexer |
-| neovim    | text editor          |
+| program    | description             |
+| ---------- | ----------------------- |
+| bash       | shell                   |
+| tmux       | terminal multiplexer    |
+| nmtui      | networkmanager frontend |
+| neovim     | text editor             |
+| bluetui    | bluetooth frontend      |
+| pulsemixer | audio control frontend  |
 
 ### Dependencies📦
 
@@ -48,18 +50,18 @@ cp .bashrc ~/.bashrc
 | tool                          | description                    |
 | ----------------------------- | ------------------------------ |
 | socat                         | socket cat                     |
+| wtype                         | wayland paste tool             |
 | pywal-16                      | colorscheme generator          |
 | playerctl                     | audio player control           |
 | grim & slurp                  | screenshot tools               |
 | wl-clipboard                  | clipboard tool                 |
-| inotify-tools                 | monitor filesystem events      |
 | brightnessctl                 | backlight control              |
 | networkmanager                | networking                     |
 | wayland-pipewire-idle-inhibit | automatic audio idle inhibitor |
 
 **fonts**
 
-| tool                    | description    |
+| font                    | description    |
 | ----------------------- | -------------- |
 | noto-fonts-emoji        | emoji font     |
 | ttf-jetbrains-mono-nerd | font and icons |

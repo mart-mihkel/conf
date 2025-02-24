@@ -27,7 +27,6 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = false
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.background = "light"
 vim.opt.signcolumn = "yes"
 
 vim.opt.termguicolors = true
