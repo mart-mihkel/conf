@@ -1,8 +1,8 @@
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
+        { "j-hui/fidget.nvim", opts = { notification = { window = { winblend = 0 } } } },
         { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
-        { "j-hui/fidget.nvim", opts = {} },
         "williamboman/mason-lspconfig.nvim",
         "williamboman/mason.nvim",
         "saadparwaiz1/cmp_luasnip",
