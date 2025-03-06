@@ -1,4 +1,6 @@
-# Conf🍚 - Hyprland rice
+# Conf🍚
+
+**Hyprland rice**
 
 ![tux](./.github/img/tux.png)
 
@@ -8,7 +10,7 @@
 cp -r .config/* ~/.config
 cp .tmux.conf ~/.tmux.conf
 cp .bashrc ~/.bashrc
-yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype pywal-16 playerctl grim wl-clipboard brightnessctl networkmanager wayland noto-fonts-emoji tf-jetbrains-mono-nerd
+yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
 ```
 
 ### Programs✨
@@ -49,12 +51,12 @@ yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wa
 
 | tool                          | description                    |
 | ----------------------------- | ------------------------------ |
+| grim                          | screenshot tool                |
+| slurp                         | screenshot tool                |
 | socat                         | socket cat                     |
 | wtype                         | wayland paste tool             |
-| pywal-16                      | colorscheme generator          |
 | playerctl                     | audio player control           |
-| grim & slurp                  | screenshot tools               |
-| wl-clipboard                  | clipboard tool                 |
+| wl-clipboard                  | wayland clipboard tool         |
 | brightnessctl                 | backlight control              |
 | networkmanager                | networking                     |
 | wayland-pipewire-idle-inhibit | automatic audio idle inhibitor |

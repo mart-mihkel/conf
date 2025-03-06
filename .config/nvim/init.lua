@@ -5,7 +5,7 @@ require("config.autocmd")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({ "git", "clone", "-b stable", "--filter=blob:none", lazyrepo, lazypath })
+    vim.fn.system({ "git", "clone", "--branch=stable", "--filter=blob:none", lazyrepo, lazypath })
 end
 
 vim.opt.rtp:prepend(lazypath)

@@ -1,5 +1,3 @@
-@theme "~/.cache/wal/colors-rofi.rasi"
-
 configuration {
   font: "JetbrainsMono Nerd Font 11";
   terminal: "ghostty";
@@ -17,6 +15,53 @@ configuration {
   emoji {
     display-name: "󰀖 ";
   }
+}
+
+@theme "nord"
+
+* {
+  spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+
+  background-color: transparent;
+  border-color: transparent;
+  text-color: #ECEFF4;
+}
+
+window {
+  width: 100%;
+
+  anchor: north;
+  location: north;
+
+  children: [ horibox ];
+}
+
+horibox {
+  orientation: horizontal;
+  children: [ prompt, entry, listview ];
+}
+
+entry {
+  cursor-width: 8px;
+  expand: false;
+  width: 96px;
+}
+
+listview {
+  layout: horizontal;
+}
+
+element {
+  padding: 0 0.25em 0 0.25em;
+  expand: false;
+  width: 128px;
+}
+
+element.selected {
+  background-color: #4C566A;
 }
 
 // vim: ft=rasi
