@@ -51,6 +51,7 @@ yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wa
 
 | tool                          | description                    |
 | ----------------------------- | ------------------------------ |
+| fzf                           | fuzzy finder                   |
 | grim                          | screenshot tool                |
 | slurp                         | screenshot tool                |
 | socat                         | socket cat                     |
