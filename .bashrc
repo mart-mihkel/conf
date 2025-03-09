@@ -14,18 +14,18 @@ alias l="ls -lhA --color"
 alias ls="ls --color"
 alias grep="grep --color"
 
-fzf-tmux-attach() {
+_fzf-tmux-attach() {
     _session=$(tmux ls | fzf | awk -F ':' '{ print $1 }')
     [[ -n "$_session" ]] && tmux attach -d -t $_session
 }
 
-fzf-tmux-new() {
+_fzf-tmux-new() {
     _dir=$(find . -maxdepth 2 -type d -print | fzf)
     [[ -n "$_dir" ]] && tmux new-session -c $_dir -s $(basename $_dir)
 }
 
-alias ta=fzf-tmux-attach
-alias tn=fzf-tmux-new
+alias ta=_fzf-tmux-attach
+alias tn=_fzf-tmux-new
 
 if [[ -r /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
