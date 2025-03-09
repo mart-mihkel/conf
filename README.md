@@ -1,50 +1,41 @@
 # Conf🍚
 
-**Hyprland rice**
-
 ![tux](./.github/img/tux.png)
 
 ## Install🤢
 
-```bash
-# back up your configs beforehand
-cp -r .config/* ~/.config
-cp .tmux.conf ~/.tmux.conf
-cp .bashrc ~/.bashrc
+Nix home-manager solution
 
-# see below for dependencies
-yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
+```nix
+let
+  conf = builtins.fetchGit {
+    url = "https://github.com/mart-mihkel/conf.git";
+    rev = "<commit-hash-sri>";
+    ref = "tty";
+  };
+in {
+  home = {
+    file.".config/nvim".source = conf.outPath + "/.config/nvim";
+    file.".tmux.conf".source = conf.outPath + "/.tmux.conf";
+
+    file.".bash_profile".text = "[[ -f ~/.bashrc ]] && . ~/.bashrc";
+    file.".bashrc".source = conf.outPath + "/.bashrc";
+  };
+}
 ```
 
-For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
+You can get the sri hash from git log with
+
+```bash
+nix hash convert --hash-algo sha1 <commit-hash> --to sri
+```
 
 ## Dependencies📦
 
 | package                 | description             | required |
 | ----------------------- | ----------------------- | -------- |
-| hyprland                | window manager          | ✔        |
-| hyprlock                | screen locker           |          |
-| hypridle                | idle daemon             |          |
-| hyprpaper               | wallpaper daemon        | ✔        |
-| eww                     | widgets (status bar)    | ✔        |
-| dunst                   | notification daemon     | ✔        |
-| ghostty                 | terminal emulator       | ✔        |
-| rofi-emoji              | emoji picker            |          |
-| rofi-wayland            | application launcher    | ✔        |
-| fzf                     | fuzzy finder            |          |
-| bash                    | shell                   |          |
-| tmux                    | terminal multiplexer    |          |
-| neovim                  | text editor             |          |
-| nmtui                   | networkmanager frontend |          |
-| bluetui                 | bluetooth frontend      |          |
-| pulsemixer              | audio control frontend  |          |
-| grim                    | screenshot tool         |          |
-| slurp                   | screenshot tool         |          |
-| socat                   | socket cat              | ✔        |
-| wtype                   | wayland paste tool      |          |
-| wl-clipboard            | wayland clipboard tool  |          |
-| playerctl               | audio player control    | ✔        |
-| brightnessctl           | backlight control       | ✔        |
-| networkmanager          | networking              | ✔        |
-| noto-fonts-emoji        | emoji font              |          |
+| fzf                     | fuzzy finder            | ✔        |
+| bash                    | shell                   | ✔        |
+| tmux                    | terminal multiplexer    | ✔        |
+| neovim                  | text editor             | ✔        |
 | ttf-jetbrains-mono-nerd | font and icons          | ✔        |

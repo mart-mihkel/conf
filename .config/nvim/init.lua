@@ -15,7 +15,6 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
         { "tpope/vim-sleuth" },
-        { "3rd/image.nvim", opts = {} },
         { "norcalli/nvim-colorizer.lua" },
         { "nvim-tree/nvim-web-devicons", opts = {} },
         { "folke/noice.nvim", opts = { cmdline = { view = "cmdline" } } },
