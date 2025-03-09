@@ -18,6 +18,7 @@ return {
 
         vim.keymap.set("n", "<leader>sr", builtin.resume)
         vim.keymap.set("n", "<leader>sb", builtin.buffers)
+        vim.keymap.set("n", "<leader>so", builtin.oldfiles)
         vim.keymap.set("n", "<leader>sg", builtin.git_files)
         vim.keymap.set("n", "<leader>sw", builtin.live_grep)
         vim.keymap.set("n", "<leader>sh", builtin.help_tags)
