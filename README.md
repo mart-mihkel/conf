@@ -1,6 +1,6 @@
 # Conf🍚
 
-**Hyprland rice**
+**i3 rice**
 
 ![tux](./.github/img/tux.png)
 
@@ -10,27 +10,25 @@
 # back up your configs beforehand
 cp -r .config/* ~/.config
 cp .tmux.conf ~/.tmux.conf
+cp .xinitrc ~/.xinitrc
 cp .bashrc ~/.bashrc
 
 # see below for dependencies
-yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
+yay -S i3 i3blocks dunst ghostty rofi rofi-emoji fzf bash tmux neovim nmtui bluetui pulsemixer maim xclip xdotool playerctl brightnessctl networkmanager noto-fonts-emoji ttf-jetbrains-mono-nerd
 ```
 
-For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
+For wallpaper to work you should change `~/Pictures/wallpapers/tux.png` to your wallpaper in [i3 config](./.config/i3/config)
 
 ## Dependencies📦
 
 | package                 | description             | required |
 | ----------------------- | ----------------------- | -------- |
-| hyprland                | window manager          | ✔        |
-| hyprlock                | screen locker           |          |
-| hypridle                | idle daemon             |          |
-| hyprpaper               | wallpaper daemon        | ✔        |
-| eww                     | widgets (status bar)    | ✔        |
+| i3                      | window manager          | ✔        |
+| i3blocks                | status bar              | ✔        |
 | dunst                   | notification daemon     | ✔        |
 | ghostty                 | terminal emulator       | ✔        |
+| rofi                    | application launcher    | ✔        |
 | rofi-emoji              | emoji picker            |          |
-| rofi-wayland            | application launcher    | ✔        |
 | fzf                     | fuzzy finder            |          |
 | bash                    | shell                   |          |
 | tmux                    | terminal multiplexer    |          |
@@ -38,11 +36,9 @@ For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
 | nmtui                   | networkmanager frontend |          |
 | bluetui                 | bluetooth frontend      |          |
 | pulsemixer              | audio control frontend  |          |
-| grim                    | screenshot tool         |          |
-| slurp                   | screenshot tool         |          |
-| socat                   | socket cat              | ✔        |
-| wtype                   | wayland paste tool      |          |
-| wl-clipboard            | wayland clipboard tool  |          |
+| maim                    | screenshot tool         |          |
+| xclip                   | x11 clipboard tool      |          |
+| xdotool                 | x11 paste tool          |          |
 | playerctl               | audio player control    | ✔        |
 | brightnessctl           | backlight control       | ✔        |
 | networkmanager          | networking              | ✔        |

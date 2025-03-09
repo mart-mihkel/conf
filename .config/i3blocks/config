@@ -1,0 +1,22 @@
+separator=true
+separator_block_width=10
+
+[audio]
+command=echo "$(pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes && echo '󰖁' || echo '󰕾')"
+interval=once
+signal=1
+
+[mic]
+command=echo "$(pactl get-source-mute @DEFAULT_SOURCE@ | grep -q yes && echo '󰍭' || echo '󰍬')"
+interval=once
+signal=1
+
+[battery]
+command=echo "󰁹 $(cat /sys/class/power_supply/BAT0/capacity)%"
+interval=60
+
+[time]
+command=date +"󰃰 %a, %b-%d %H:%M "
+interval=2
+
+# vim: ft=cfg
