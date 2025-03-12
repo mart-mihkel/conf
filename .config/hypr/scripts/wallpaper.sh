@@ -2,7 +2,7 @@
 
 CFG="${HOME}/.config"
 CACHE="${HOME}/.cache"
-WALLPAPERS="${HOME}/Pictures/wallpapers"
+WALLPAPERS="${HOME}/git/wallpapers"
 PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu -p '󰥷 ')"
 
 if [[ "$PICK" == "$WALLPAPERS/" ]]; then

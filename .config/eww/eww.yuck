@@ -31,23 +31,17 @@
     (box :style 'padding-right: 0.25rem' :halign 'end' :space-evenly false :spacing 8
       (systray :icon-size 14 :spacing 8)
       (bar-spotify)
-      (button :width 16
-        :onrightclick 'ghostty -e nmtui'
-        :timeout '1m'
+      (button :width 16 :onrightclick 'kitty nmtui &'
         (wifi-label))
-      (button :width 16
-        :onrightclick 'ghostty -e bluetui'
-        :timeout '1m'
+      (button :width 16 :onrightclick 'kitty bluetui &'
         (bluetooth-label))
       (button :width 16
         :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-        :onrightclick 'ghostty -e pulsemixer'
-        :timeout '1m'
+        :onrightclick 'kitty pulsemixer &'
         (speakers-label))
       (button :width 16
         :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
-        :onrightclick 'ghostty -e pulsemixer'
-        :timeout '1m'
+        :onrightclick 'kitty pulsemixer &'
         (mic-label))
       (bar-battery))))
 
@@ -138,11 +132,10 @@
            : "󰂄")}'))
 
 (defwidget window-label []
-  (label :text '${window-listen =~ "ghostty$" ? ""
-                : window-listen == "chromium" ? ""
+  (label :text '${window-listen == "chromium" ? "󰖟"
                 : window-listen == "Spotify" ? "󰓇"
-                : window-listen == "firefox" ? "󰈹"
                 : window-listen == "discord" ? ""
+                : window-listen == "kitty" ? ""
                 : window-listen == "Slack" ? ""
                 : window-listen == "steam" ? "󰓓"
                 : window-listen == "vlc" ? "󰕼"

@@ -13,7 +13,7 @@ cp .tmux.conf ~/.tmux.conf
 cp .bashrc ~/.bashrc
 
 # see below for dependencies
-yay -S hyprland hyprlock hypridle hyprpaper eww dunst ghostty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
+yay -S hyprland hyprlock hypridle hyprpaper eww dunst kitty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
 ```
 
 For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
@@ -28,7 +28,7 @@ For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
 | hyprpaper               | wallpaper daemon        | ✔        |
 | eww                     | widgets (status bar)    | ✔        |
 | dunst                   | notification daemon     | ✔        |
-| ghostty                 | terminal emulator       | ✔        |
+| kitty                   | terminal emulator       | ✔        |
 | rofi-emoji              | emoji picker            |          |
 | rofi-wayland            | application launcher    | ✔        |
 | fzf                     | fuzzy finder            |          |
