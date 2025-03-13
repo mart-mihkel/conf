@@ -1,19 +1,19 @@
 #!/bin/bash
 
 notify() {
-    CURRENT=$(brightnessctl -m | awk -F , '{print $4}' | tr -d %)
-    PROGRESS="int:value:$CURRENT"
-    TAG="string:x-dunst-stack-tag:brightness"
+    brightness=$(brightnessctl -m | awk -F , '{print $4}' | tr -d %)
+    tag="string:x-dunst-stack-tag:brightness"
+    progress="int:value:$brightness"
 
-    if [[ $CURRENT -gt 66 ]]; then
-        ICON="󰃠"
-    elif [[ $CURRENT -gt 33 ]]; then
-        ICON="󰃟"
+    if [[ $brightness -gt 66 ]]; then
+        icon="󰃠"
+    elif [[ $brightness -gt 33 ]]; then
+        icon="󰃟"
     else
-        ICON="󰃞"
+        icon="󰃞"
     fi
 
-    dunstify -u low -h $TAG "$ICON $CURRENT"
+    dunstify -u low -h $progress -h $tag "$icon $brightness"
 }
 
 if [[ "$1" == "-i" ]]; then

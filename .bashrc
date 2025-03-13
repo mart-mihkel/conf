@@ -9,19 +9,19 @@ bind "TAB:menu-complete"
 
 alias vi="nvim"
 alias vim="nvim"
+alias ssh="kitten ssh"
 
-alias l="ls -lhA --color"
+alias l="ls -hA --color"
 alias ls="ls --color"
-alias grep="grep --color"
 
 _fzf-tmux-attach() {
-    _session=$(tmux ls | fzf | awk -F ':' '{ print $1 }')
-    [[ -n "$_session" ]] && tmux attach -d -t $_session
+    session=$(tmux ls | fzf | awk -F ':' '{ print $1 }')
+    [[ -n "$session" ]] && tmux attach -d -t $session
 }
 
 _fzf-tmux-new() {
-    _dir=$(find . -maxdepth 2 -type d -print | fzf)
-    [[ -n "$_dir" ]] && tmux new-session -c $_dir -s $(basename $_dir)
+    dir=$(find . -maxdepth 2 -type d -print | fzf)
+    [[ -n "$dir" ]] && tmux new-session -c $dir -s $(basename $dir)
 }
 
 alias ta=_fzf-tmux-attach

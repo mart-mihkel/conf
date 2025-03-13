@@ -1,38 +1,38 @@
 #!/bin/bash
 
 notify_sink() {
-    CURRENT=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | tr -d %)
-    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
-    TAG="string:x-dunst-stack-tag:volume"
-    PROGRESS="int:value:$CURRENT"
+    volume=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | tr -d %)
+    mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+    tag="string:x-dunst-stack-tag:volume"
+    progress="int:value:$volume"
 
-    if [[ $MUTE == "yes" ]]; then
-        ICON="󰖁"
-        CURRENT="muted"
-    elif [[ $CURRENT -gt 40 ]]; then
-        ICON="󰕾"
-    elif [[ $CURRENT -gt 20 ]]; then
-        ICON="󰖀"
+    if [[ $mute == "yes" ]]; then
+        icon="󰖁"
+        volume="muted"
+    elif [[ $volume -gt 40 ]]; then
+        icon="󰕾"
+    elif [[ $volume -gt 20 ]]; then
+        icon="󰖀"
     else
-        ICON="󰕿"
+        icon="󰕿"
     fi
 
-    dunstify -u low -h $TAG "$ICON $CURRENT"
+    dunstify -u low -h $progress -h $tag "$icon $volume"
 }
 
 notify_source() {
-    MUTE=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
-    TAG="string:x-dunst-stack-tag:mic"
+    mute=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+    tag="string:x-dunst-stack-tag:mic"
 
-    if [[ $MUTE == "yes" ]]; then
-        ICON="󰍭"
-        CURRENT="muted"
+    if [[ $mute == "yes" ]]; then
+        icon="󰍭"
+        volume="muted"
     else
-        ICON="󰍬"
-        CURRENT="on"
+        icon="󰍬"
+        volume="unmuted"
     fi
 
-    dunstify -u low -h $TAG "$ICON $CURRENT"
+    dunstify -u low -h $tag "$icon $volume"
 }
 
 

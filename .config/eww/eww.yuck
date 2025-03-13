@@ -2,15 +2,16 @@
 (defvar battery-hover false)
 
 (defpoll date-poll :interval '2s' 'date +"󰃰 %a, %b-%d %H:%M"')
-(defpoll wifi-poll :initial 0 :interval '10s' 'python scripts/poll-wifi.py -a')
-(defpoll bluetooth-poll :initial '[]' :interval '10s' 'python scripts/poll-bluetooth.py')
+(defpoll wifi-poll :initial '󰤮' :interval '10s' 'scripts/poll-wifi.sh')
+(defpoll battery-poll :initial '󰁹' :interval '2s' 'scripts/poll-battery.sh')
+(defpoll bluetooth-poll :initial '󰂯' :interval '10s' 'scripts/poll-bluetooth.sh')
 
 (deflisten wsp-listen :initial '[]' 'scripts/listen-wsp.sh')
 (deflisten active-listen :initial 1 'scripts/listen-wsp.sh -a')
 (deflisten window-listen :initial '' 'scripts/listen-window.sh')
 
-(deflisten sink-listen :initial '{"mute":false,"volume":0}' 'scripts/listen-sink.sh -d')
-(deflisten source-listen :initial '{"mute":false}' 'scripts/listen-source.sh -d')
+(deflisten sink-listen :initial '󰕾' 'scripts/listen-sink.sh')
+(deflisten source-listen :initial '󰍬' 'scripts/listen-source.sh')
 (deflisten spotify-listen :initial '{"status":null}' 'scripts/listen-spotify.sh')
 
 (defwindow bar :geometry (geometry :width '100%' :anchor 'center top')
@@ -25,24 +26,24 @@
   (box
     (box :style 'padding-left: 0.25rem' :halign 'start' :space-evenly false :spacing 4
       (bar-workspaces)
-      (box :width  16 (window-label)))
+      (box :width  16 window-listen))
     (box :halign 'center'
       (label :text date-poll))
     (box :style 'padding-right: 0.25rem' :halign 'end' :space-evenly false :spacing 8
       (systray :icon-size 14 :spacing 8)
       (bar-spotify)
       (button :width 16 :onrightclick 'kitty nmtui &'
-        (wifi-label))
+        (label :xalign 0.2 :text wifi-poll))
       (button :width 16 :onrightclick 'kitty bluetui &'
-        (bluetooth-label))
+        (label :xalign 0.6 :text bluetooth-poll))
       (button :width 16
         :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
         :onrightclick 'kitty pulsemixer &'
-        (speakers-label))
+        (label :xalign 0.6 :text sink-listen))
       (button :width 16
         :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
         :onrightclick 'kitty pulsemixer &'
-        (mic-label))
+        source-listen)
       (bar-battery))))
 
 (defwidget bar-workspaces []
@@ -68,7 +69,7 @@
   (eventbox :onhover 'eww update battery-hover=true'
     :onhoverlost 'eww update battery-hover=false'
     (box :space-evenly false :spacing 4
-      (box :width 16 (battery-label))
+      (box :width 16 battery-poll)
       (revealer :transition 'slideleft' :reveal battery-hover
         (box :space-evenly false :spacing 4
           (button :width 16 :onclick 'shutdown now' '󰤆')
@@ -79,64 +80,3 @@
 (defwidget workspace-label [workspace]
   (label :style '${workspace.id == active-listen ? "text-decoration: underline" : ""}'
     :text '${workspace.id}'))
-
-(defwidget wifi-label []
-  (label :xalign 0.2
-    :text '${wifi-poll > 90 ? "󰤨"
-           : wifi-poll > 70 ? "󰤥"
-           : wifi-poll > 50 ? "󰤢"
-           : wifi-poll > 30 ? "󰤟"
-           : wifi-poll > 10 ? "󰤯"
-           : "󰤮"}'))
-
-(defwidget bluetooth-label []
-  (label :xalign 0.6
-    :text '${jq(bluetooth-poll, "any(.connected == true)")
-           ? jq(bluetooth-poll, "[.[] | select(.connected)][0]").battery ?: "󰂱"
-           : "󰂯"}'))
-
-(defwidget speakers-label []
-  (label :xalign 0.6
-    :text '${sink-listen.mute ? "󰖁"
-           : sink-listen.volume > 40 ? "󰕾"
-           : sink-listen.volume > 20 ? "󰖀"
-           : "󰕿"}'))
-
-(defwidget mic-label []
-  (label :text '${source-listen.mute ? "󰍭" : "󰍬"}'))
-
-(defwidget battery-label []
-  (label :xalign 0.5
-    :text '${EWW_BATTERY.BAT0.status == "Discharging" ?
-           ( EWW_BATTERY.BAT0.capacity > 95 ? "󰁹"
-           : EWW_BATTERY.BAT0.capacity > 90 ? "󰂂"
-           : EWW_BATTERY.BAT0.capacity > 80 ? "󰂁"
-           : EWW_BATTERY.BAT0.capacity > 70 ? "󰂀"
-           : EWW_BATTERY.BAT0.capacity > 60 ? "󰁿"
-           : EWW_BATTERY.BAT0.capacity > 50 ? "󰁾"
-           : EWW_BATTERY.BAT0.capacity > 40 ? "󰁽"
-           : EWW_BATTERY.BAT0.capacity > 30 ? "󰁼"
-           : EWW_BATTERY.BAT0.capacity > 20 ? "󰁻"
-           : EWW_BATTERY.BAT0.capacity > 10 ? "󰁺"
-           : "󰂃") :
-           ( EWW_BATTERY.BAT0.capacity > 95 ? "󰂅"
-           : EWW_BATTERY.BAT0.capacity > 90 ? "󰂋"
-           : EWW_BATTERY.BAT0.capacity > 80 ? "󰂊"
-           : EWW_BATTERY.BAT0.capacity > 70 ? "󰢞"
-           : EWW_BATTERY.BAT0.capacity > 60 ? "󰂉"
-           : EWW_BATTERY.BAT0.capacity > 50 ? "󰢝"
-           : EWW_BATTERY.BAT0.capacity > 40 ? "󰂈"
-           : EWW_BATTERY.BAT0.capacity > 30 ? "󰂇"
-           : EWW_BATTERY.BAT0.capacity > 20 ? "󰂆"
-           : EWW_BATTERY.BAT0.capacity > 10 ? "󰢜"
-           : "󰂄")}'))
-
-(defwidget window-label []
-  (label :text '${window-listen == "chromium" ? "󰖟"
-                : window-listen == "Spotify" ? "󰓇"
-                : window-listen == "discord" ? ""
-                : window-listen == "kitty" ? ""
-                : window-listen == "Slack" ? ""
-                : window-listen == "steam" ? "󰓓"
-                : window-listen == "vlc" ? "󰕼"
-                : ""}'))

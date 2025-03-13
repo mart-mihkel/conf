@@ -16,7 +16,8 @@ cp .bashrc ~/.bashrc
 yay -S hyprland hyprlock hypridle hyprpaper eww dunst kitty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
 ```
 
-For hyprpaper to work your wallpaper should be in `~/.cache/wallpaper`
+For hyprpaper to work your wallpaper should be a file called `~/.cache/wallpaper`
+The wallpaper script (`mod + w`) looks at `~/git/wallpapers`
 
 ## Dependencies📦
 
