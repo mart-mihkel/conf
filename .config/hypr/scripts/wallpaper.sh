@@ -1,17 +1,17 @@
 #!/bin/bash
 
-CFG="${HOME}/.config"
-CACHE="${HOME}/.cache"
-WALLPAPERS="${HOME}/git/wallpapers"
-PICK="${WALLPAPERS}/$(ls "$WALLPAPERS" | rofi -dmenu -p '󰥷 ')"
+cfg="${HOME}/.config"
+cache="${HOME}/.cache"
+wals="${HOME}/git/wallpapers"
+pick="${wals}/$(ls "$wals" | rofi -dmenu -p '󰥷 ')"
 
-if [[ "$PICK" == "$WALLPAPERS/" ]]; then
+if [[ "$pick" == "$wals/" ]]; then
     echo "No wallpaper selected"
     exit 1
 fi
 
-cp -f $PICK $CACHE/wallpaper
+cp -f $pick $cache/wallpaper
 
 hyprctl hyprpaper unload all
-hyprctl hyprpaper preload $PICK
-hyprctl hyprpaper wallpaper ", ${PICK}"
+hyprctl hyprpaper preload $pick
+hyprctl hyprpaper wallpaper ", ${pick}"
