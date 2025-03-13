@@ -17,7 +17,7 @@ notify_sink() {
         icon="󰕿"
     fi
 
-    dunstify -u low -h $progress -h $tag "$icon $volume"
+    dunstify -u low -h $tag "$icon $volume"
 }
 
 notify_source() {
@@ -29,7 +29,7 @@ notify_source() {
         volume="muted"
     else
         icon="󰍬"
-        volume="unmuted"
+        volume="on"
     fi
 
     dunstify -u low -h $tag "$icon $volume"

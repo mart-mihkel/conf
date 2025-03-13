@@ -18,7 +18,3 @@ poll-sink() {
 }
 
 poll-sink
-pactl subscribe | while read -r line; do
-    echo "$line" | grep -q "'change' on sink " && poll-sink
-done
-

@@ -2,8 +2,8 @@
 
 notify() {
     brightness=$(brightnessctl -m | awk -F , '{print $4}' | tr -d %)
-    tag="string:x-dunst-stack-tag:brightness"
     progress="int:value:$brightness"
+    tag="string:x-dunst-stack-tag:brightness"
 
     if [[ $brightness -gt 66 ]]; then
         icon="󰃠"
@@ -13,7 +13,7 @@ notify() {
         icon="󰃞"
     fi
 
-    dunstify -u low -h $progress -h $tag "$icon $brightness"
+    dunstify -u low -h $tag "$icon $brightness"
 }
 
 if [[ "$1" == "-i" ]]; then

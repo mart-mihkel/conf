@@ -1,0 +1,30 @@
+separator=false
+separator_block_width=16
+
+[wifi]
+command=~/.config/i3blocks/scripts/poll-wifi.sh
+interval=10
+
+[bluetooth]
+command=~/.config/i3blocks/scripts/poll-bluetooth.sh
+interval=10
+
+[sink]
+command=~/.config/i3blocks/scripts/poll-sink.sh
+interval=once
+signal=1
+
+[source]
+command=~/.config/i3blocks/scripts/poll-source.sh
+interval=once
+signal=1
+
+[battery]
+command=~/.config/i3blocks/scripts/poll-battery.sh
+interval=2
+
+[time]
+command=date +"󰃰 %a, %b-%d %H:%M "
+interval=2
+
+# vim: ft=cfg

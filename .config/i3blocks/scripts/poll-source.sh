@@ -12,6 +12,3 @@ poll-source() {
 }
 
 poll-source
-pactl subscribe | while read -r line; do
-    echo "$line" | grep -q -e "'change' on source " -e "'change' on server" && poll-source
-done
