@@ -15,7 +15,9 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
         { "tpope/vim-sleuth" },
+        { "folke/zen-mode.nvim" },
         { "3rd/image.nvim", opts = {} },
         { "norcalli/nvim-colorizer.lua" },
+        { "nvim-tree/nvim-web-devicons" },
     },
 })

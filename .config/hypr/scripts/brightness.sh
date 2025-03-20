@@ -5,15 +5,10 @@ notify() {
     tag="string:x-dunst-stack-tag:brightness"
     progress="int:value:$brightness"
 
-    if [[ $brightness -gt 66 ]]; then
-        icon="󰃠"
-    elif [[ $brightness -gt 33 ]]; then
-        icon="󰃟"
-    else
-        icon="󰃞"
-    fi
+    icons=("󰃞" "󰃟" "󰃠")
+    idx=$(( brightness * 3 / 100 ))
 
-    dunstify -u low -h $progress -h $tag "$icon $brightness"
+    dunstify -u low -h $tag "${icons[$idx]} $brightness"
 }
 
 if [[ "$1" == "-i" ]]; then

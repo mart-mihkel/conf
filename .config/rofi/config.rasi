@@ -1,5 +1,5 @@
 configuration {
-  font: "JetbrainsMono Nerd Font 11";
+  font: "JetbrainsMono Nerd Font 9";
   terminal: "kitty";
 
   modes: [drun, ssh, emoji];
@@ -61,7 +61,7 @@ element {
 }
 
 element.selected {
-  background-color: #4C566ACC;
+  background-color: #4C566A80;
 }
 
 // vim: ft=rasi

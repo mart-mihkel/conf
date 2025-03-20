@@ -7,8 +7,8 @@ if [[ "$1" == "-a" ]]; then
     socat -u UNIX-CONNECT:$socket - |
       stdbuf -o0 awk -F '>>|,' -e '/^workspace>>/ {print $2}' -e '/^focusedmon>>/ {print $3}'
 else
-    hyprctl workspaces -j | jq -c 'map({id: .id}) | sort_by(.id)'
+    hyprctl workspaces -j | jq -c '[.[] | .id] | sort'
     socat -u UNIX-CONNECT:$socket - | while read -r; do
-        hyprctl workspaces -j | jq -c 'map({id: .id}) | sort_by(.id)'
+        hyprctl workspaces -j | jq -c '[.[] | .id] | sort'
     done
 fi

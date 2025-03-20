@@ -10,6 +10,6 @@ socat -u UNIX-CONNECT:$socket - | stdbuf -o0 awk -F '>>|,' '/^activewindow>>/{pr
         Slack) echo "" ;;
         steam) echo "󰓓" ;;
         vlc) echo "󰕼" ;;
-        *) echo "" ;;
+        *) echo "" ;; # 󰣇  󱄅 󰣨 󰕈 󰣛 󰣭
     esac
 done

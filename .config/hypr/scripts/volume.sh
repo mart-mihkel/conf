@@ -9,15 +9,13 @@ notify_sink() {
     if [[ $mute == "yes" ]]; then
         icon="󰖁"
         volume="muted"
-    elif [[ $volume -gt 40 ]]; then
-        icon="󰕾"
-    elif [[ $volume -gt 20 ]]; then
-        icon="󰖀"
     else
-        icon="󰕿"
+        icons=("󰕿" "󰖀" "󰕾")
+        idx=$(( volume * 3 / 100  ))
+        icon=${icons[$idx]}
     fi
 
-    dunstify -u low -h $progress -h $tag "$icon $volume"
+    dunstify -u low -h $tag "$icon $volume"
 }
 
 notify_source() {
@@ -26,10 +24,10 @@ notify_source() {
 
     if [[ $mute == "yes" ]]; then
         icon="󰍭"
-        volume="muted"
+        volume="off"
     else
         icon="󰍬"
-        volume="unmuted"
+        volume="on"
     fi
 
     dunstify -u low -h $tag "$icon $volume"

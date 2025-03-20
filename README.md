@@ -2,50 +2,68 @@
 
 **Hyprland rice**
 
-![tux](./.github/img/tux.png)
+![flowers](./.github/nord-flowers.png)
+
+![flower](./.github/nord-flower.png)
+
+![stars](./.github/nord-stars.png)
+
+![tray](./.github/tray.png)
 
 ## Install🤢
 
 ```bash
 # back up your configs beforehand
+cp -r ~/.config ~/.config.bak
+cp ~/.bashrc ~/.bashrc.bak
+
+# copy the rice
 cp -r .config/* ~/.config
-cp .tmux.conf ~/.tmux.conf
 cp .bashrc ~/.bashrc
 
 # see below for dependencies
-yay -S hyprland hyprlock hypridle hyprpaper eww dunst kitty rofi-emoji rofi-wayland bash tmux nmtui neovim bluetui pulsemixer socat wtype playerctl grim wl-clipboard brightnessctl networkmanager wayland-pipewire-idle-inhibit noto-fonts-emoji tf-jetbrains-mono-nerd
+yay -S --needed hyprland hyprlock hypridle hyprpaper eww dunst kitty rofi-emoji rofi-wayland tmux neovim ripgrep grim slurp socat wtype wl-clipboard playerctl brightnessctl pipewire networkmanager noto-fonts-emoji ttf-jetbrains-mono-nerd
 ```
 
-For hyprpaper to work your wallpaper should be a file called `~/.cache/wallpaper`
-The wallpaper script (`mod + w`) looks at `~/git/wallpapers`
+### Keybinds🔑
 
-## Dependencies📦
+See [hyprland.conf](./.config/hypr/hyprland.conf)
 
-| package                 | description             | required |
-| ----------------------- | ----------------------- | -------- |
-| hyprland                | window manager          | ✔        |
-| hyprlock                | screen locker           |          |
-| hypridle                | idle daemon             |          |
-| hyprpaper               | wallpaper daemon        | ✔        |
-| eww                     | widgets (status bar)    | ✔        |
-| dunst                   | notification daemon     | ✔        |
-| kitty                   | terminal emulator       | ✔        |
-| rofi-emoji              | emoji picker            |          |
-| rofi-wayland            | application launcher    | ✔        |
-| fzf                     | fuzzy finder            |          |
-| bash                    | shell                   |          |
-| tmux                    | terminal multiplexer    |          |
-| neovim                  | text editor             |          |
-| nmtui                   | networkmanager frontend |          |
-| bluetui                 | bluetooth frontend      |          |
-| pulsemixer              | audio control frontend  |          |
-| grim                    | screenshot tool         |          |
-| slurp                   | screenshot tool         |          |
-| socat                   | socket cat              | ✔        |
-| wtype                   | wayland paste tool      |          |
-| wl-clipboard            | wayland clipboard tool  |          |
-| playerctl               | audio player control    | ✔        |
-| brightnessctl           | backlight control       | ✔        |
-| networkmanager          | networking              | ✔        |
-| noto-fonts-emoji        | emoji font              |          |
-| ttf-jetbrains-mono-nerd | font and icons          | ✔        |
+### Wallpapers🖼️
+
+Hyprpaper tries to load `~/.cache/wallpaper` on startup. The
+[wallpaper script](./.config/hypr/scripts/wallpaper.sh) looks for files in
+`~/git/wallpapers`, activates the selected and saves it to cache.
+
+### Extra✨
+
+The [extra](https://github.com/mart-mihkel/conf/tree/extra) branch has configs
+for *fastfetch*, *cava* and other such fancies.
+
+### Dependencies📦
+
+| package                 | description            |
+| ----------------------- | ---------------------- |
+| hyprland                | window manager         |
+| hyprlock                | screen locker          |
+| hypridle                | idle daemon            |
+| hyprpaper               | wallpaper daemon       |
+| eww                     | widgets (status bar)   |
+| dunst                   | notification daemon    |
+| kitty                   | terminal emulator      |
+| rofi-emoji              | emoji picker           |
+| rofi-wayland            | application launcher   |
+| tmux                    | terminal multiplexer   |
+| neovim                  | text editor            |
+| ripgrep                 | grep (nvim telescope)  |
+| grim                    | screenshot tool        |
+| slurp                   | screen grab tool       |
+| socat                   | socket cat             |
+| wtype                   | wayland paste tool     |
+| wl-clipboard            | wayland clipboard tool |
+| playerctl               | audio player control   |
+| brightnessctl           | backlight control      |
+| pipewire                | audio control          |
+| networkmanager          | networking             |
+| noto-fonts-emoji        | emoji font             |
+| ttf-jetbrains-mono-nerd | font and icons         |

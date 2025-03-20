@@ -7,13 +7,13 @@ poll-sink() {
         volume: .volume["front-left"].value_percent | sub("%"; "")
     }')
 
+    volume=$(echo "$info" | jq '.volume' | tr -d '"')
     if [[ $(echo "$info" | jq '.mute') == "true" ]]; then
-        echo "󰖁"
+        echo "[\"󰖁\",\"$volume\"]"
     else
-        volume=$(echo "$info" | jq '.volume' | tr -d '"')
         icons=("󰕿" "󰖀" "󰕾")
         idx=$(( volume * 3 / 100 ))
-        echo "${icons[$idx]}"
+        echo "[\"${icons[$idx]}\",\"$volume\"]"
     fi
 }
 

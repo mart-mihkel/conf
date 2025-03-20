@@ -2,5 +2,24 @@
   all: unset;
 
   font-family: "JetbrainsMono Nerd Font";
+  font-size: 12;
+
   color: #ECEFF4;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+scale trough {
+  background-color: #4C566A;
+  border-radius: 0.25rem;
+
+  min-width: 2rem;
+  min-height: 0.25rem;
+
+  highlight {
+    background-color: #D8DEE9;
+    border-radius: 0.25rem;
+  }
 }

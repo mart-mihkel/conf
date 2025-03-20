@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cfg="${HOME}/.config"
-cache="${HOME}/.cache"
-wals="${HOME}/git/wallpapers"
-pick="${wals}/$(ls "$wals" | rofi -dmenu -p '󰥷 ')"
+cfg="$HOME/.config"
+cache="$HOME/.cache"
+wals="$HOME/git/wallpapers"
+pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu -p '󰥷 ')"
 
 if [[ "$pick" == "$wals/" ]]; then
     echo "No wallpaper selected"
@@ -14,4 +14,4 @@ cp -f $pick $cache/wallpaper
 
 hyprctl hyprpaper unload all
 hyprctl hyprpaper preload $pick
-hyprctl hyprpaper wallpaper ", ${pick}"
+hyprctl hyprpaper wallpaper ", $pick"

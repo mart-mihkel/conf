@@ -1,82 +1,116 @@
+(defvar icon-width 12)
+(defvar terminal 'kitty -1')
+
+(defvar sink-hover false)
+(defvar wifi-hover false)
 (defvar spotify-hover false)
 (defvar battery-hover false)
+(defvar bluetooth-hover false)
 
-(defpoll date-poll :interval '2s' 'date +"󰃰 %a, %b-%d %H:%M"')
-(defpoll wifi-poll :initial '󰤮' :interval '10s' 'scripts/poll-wifi.sh')
+(defpoll date-poll :interval '2s' 'date +"󰃰 %A, %B-%d %H:%M"')
+(defpoll wifi-poll :initial '["󰤮", ""]' :interval '10s' 'scripts/poll-wifi.sh')
 (defpoll battery-poll :initial '󰁹' :interval '2s' 'scripts/poll-battery.sh')
-(defpoll bluetooth-poll :initial '󰂯' :interval '10s' 'scripts/poll-bluetooth.sh')
+(defpoll bluetooth-poll :initial '["󰂯", ""]'
+  :interval '10s' 'scripts/poll-bluetooth.sh')
 
-(deflisten wsp-listen :initial '[]' 'scripts/listen-wsp.sh')
+(deflisten wsp-listen :initial '[1]' 'scripts/listen-wsp.sh')
 (deflisten active-listen :initial 1 'scripts/listen-wsp.sh -a')
-(deflisten window-listen :initial '' 'scripts/listen-window.sh')
-
-(deflisten sink-listen :initial '󰕾' 'scripts/listen-sink.sh')
+(deflisten window-listen :initial '' 'scripts/listen-window.sh')
 (deflisten source-listen :initial '󰍬' 'scripts/listen-source.sh')
-(deflisten spotify-listen :initial '{"status":null}' 'scripts/listen-spotify.sh')
+(deflisten spotify-listen :initial '' 'scripts/listen-player.sh')
+(deflisten sink-listen :initial '["󰕾", ""]' 'scripts/listen-sink.sh')
 
-(defwindow bar :geometry (geometry :width '100%' :anchor 'center top')
-  :monitor 0
-  :stacking 'fg'
-  :exclusive true
-  :focusable false
-  :namespace 'eww'
+(defwindow bar :monitor 0
+  :geometry (geometry :width '100%' :anchor 'bottom center')
+  :exclusive false :focusable false
+  :namespace 'eww' :stacking 'fg'
   (bar))
 
 (defwidget bar []
   (box
-    (box :style 'padding-left: 0.25rem' :halign 'start' :space-evenly false :spacing 4
-      (bar-workspaces)
-      (box :width  16 window-listen))
-    (box :halign 'center'
-      (label :text date-poll))
-    (box :style 'padding-right: 0.25rem' :halign 'end' :space-evenly false :spacing 8
-      (systray :icon-size 14 :spacing 8)
+    (box :style 'padding-left: 0.125rem' :halign 'start'
+      :space-evenly false :spacing 4
+      (box :width icon-width window-listen)
+      (bar-workspaces))
+    (box :halign 'center' date-poll)
+    (box :style 'padding-right: 0.125rem' :halign 'end'
+      :space-evenly false :spacing 4
+      (systray :icon-size 11 :spacing 6)
       (bar-spotify)
-      (button :width 16 :onrightclick 'kitty nmtui &'
-        (label :xalign 0.2 :text wifi-poll))
-      (button :width 16 :onrightclick 'kitty bluetui &'
-        (label :xalign 0.6 :text bluetooth-poll))
-      (button :width 16
-        :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-        :onrightclick 'kitty pulsemixer &'
-        (label :xalign 0.6 :text sink-listen))
-      (button :width 16
-        :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
-        :onrightclick 'kitty pulsemixer &'
-        source-listen)
+      (bar-wifi)
+      (bar-bluetooth)
+      (bar-sink)
       (bar-battery))))
 
 (defwidget bar-workspaces []
   (box :space-evenly false :spacing 4
-    (label :text '${active-listen}' :visible false) ; initialize
+    (label :text '${active-listen}' :visible false)
     (for wsp in {wsp-listen}
-      (button :onclick 'hyprctl dispatch workspace ${wsp.id}'
-        (workspace-label :workspace wsp)))))
+      (button :onclick 'hyprctl dispatch workspace ${wsp}'
+      (label :class '${wsp == active-listen ? "underline" : ""}'
+          :text '${wsp}')))))
 
 (defwidget bar-spotify []
-  (eventbox :visible '${spotify-listen.status != "null"}'
+  (eventbox :visible '${spotify-listen != ""}'
     :onhover 'eww update spotify-hover=true'
     :onhoverlost 'eww update spotify-hover=false'
-    (box :space-evenly false :spacing 4
-      (label :width 16 :text '󰓇')
+    (box :space-evenly false :spacing 2
+      (label :width icon-width :text '󰓇')
       (revealer :transition 'slideleft' :reveal spotify-hover
         (box :space-evenly false :spacing 0
-          (button :width 16 :onclick 'playerctl -p spotify previous' '󰒮')
-          (button :onclick 'playerctl -p spotify play-pause' '${spotify-listen.position}|${spotify-listen.length}')
-          (button :width 16 :onclick 'playerctl -p spotify next' '󰒭'))))))
+          (button :width icon-width
+            :onclick 'playerctl -p spotify previous' '󰒮')
+          (button :onclick 'playerctl -p spotify play-pause'
+            '${spotify-listen}')
+          (button :width icon-width
+            :onclick 'playerctl -p spotify next' '󰒭'))))))
+
+(defwidget bar-wifi []
+  (eventbox :onhover 'eww update wifi-hover=true'
+    :onhoverlost 'eww update wifi-hover=false'
+    (box :space-evenly false :spacing 2
+      (button :width icon-width :onrightclick '${terminal} nmtui &'
+        (label :xalign 0.2 :text '${wifi-poll[0]}'))
+      (revealer :transition 'slideleft'
+        :reveal wifi-hover '${wifi-poll[1]}'))))
+
+(defwidget bar-bluetooth []
+  (eventbox :onhover 'eww update bluetooth-hover=true'
+    :onhoverlost 'eww update bluetooth-hover=false'
+    (box :space-evenly false :spacing 2
+      (button :width icon-width :onrightclick '${terminal} bluetui &'
+        (label :xalign 0.75 :text '${bluetooth-poll[0]}'))
+      (revealer :transition 'slideleft'
+        :reveal bluetooth-hover '${bluetooth-poll[1]}'))))
+
+(defwidget bar-sink []
+  (eventbox :onhover 'eww update sink-hover=true'
+    :onhoverlost 'eww update sink-hover=false'
+    (box :space-evenly false :spacing 2
+      (button :width icon-width
+        :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+        :onrightclick '${terminal} pulsemixer &'
+        (label :xalign 0.6 :text '${sink-listen[0]}'))
+      (revealer :transition 'slideleft' :reveal sink-hover
+        (box :space-evenly false :spacing 2
+          (button :width icon-width
+            :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
+            :onrightclick '${terminal} pulsemixer &'
+            source-listen)
+          (scale :value '${sink-listen[1]}'
+            :onchange 'pactl set-sink-volume @DEFAULT_SINK@ {}%'))))))
 
 (defwidget bar-battery []
   (eventbox :onhover 'eww update battery-hover=true'
     :onhoverlost 'eww update battery-hover=false'
     (box :space-evenly false :spacing 4
-      (box :width 16 battery-poll)
+      (button :width icon-width
+        :onrightclick '${terminal} btop &' battery-poll)
       (revealer :transition 'slideleft' :reveal battery-hover
         (box :space-evenly false :spacing 4
-          (button :width 16 :onclick 'shutdown now' '󰤆')
-          (button :width 16 :onclick 'reboot' '󰑓')
-          (button :width 16 :onclick 'playerctl -a pause & systemctl suspend' '󰤄')
-          (button :width 16 :onclick 'playerctl -a pause & hyprlock && sleep 1' '󰌾'))))))
-
-(defwidget workspace-label [workspace]
-  (label :style '${workspace.id == active-listen ? "text-decoration: underline" : ""}'
-    :text '${workspace.id}'))
+          (button :width icon-width :onclick 'shutdown now' '󰤆')
+          (button :width icon-width :onclick 'reboot' '󰑓')
+          (button :width icon-width
+            :onclick 'playerctl -a pause & systemctl suspend &' '󰤄')
+          (button :width icon-width
+            :onclick 'playerctl -a pause & hyprlock &' '󰌾'))))))

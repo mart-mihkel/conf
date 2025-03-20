@@ -6,7 +6,13 @@ if [[ -z "$geometry" ]]; then
     exit 1
 fi
 
-grim -g "$geometry"
-grim -g "$geometry" - | wl-copy -t image/png
+stamp=$(date +%H%M%S-%b%d)
+name="grim-$stamp.png"
+dir="$HOME/Pictures/screenshots"
 
-dunstify -u low "Screenshot" "Saved to ~/Pictures\nCopied to clipboard"
+mkdir --parents "$dir"
+
+grim -g "$geometry" - | wl-copy -t image/png
+wl-paste > "$dir/$name"
+
+dunstify -u low "Screenshot" "Saved as $name"

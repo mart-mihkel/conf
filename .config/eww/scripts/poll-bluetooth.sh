@@ -11,19 +11,20 @@ echo "$macs" | while read -r mac; do
         continue
     fi
 
+    name=$(echo "$info" | grep Name | awk '{print $2}')
     battery=$(echo "$info" | grep Battery | awk '{print $4}' | tr -d '()')
 
     if [[ -z "$battery" ]]; then
-        echo "󰂱"
+        echo "[\"󰂱\",\"$name\""]
     else
         icons=("󰤾" "󰤿" "󰥀" "󰥁" "󰥂" "󰥃" "󰥄" "󰥅" "󰥆" "󰥈")
         idx=$(( battery * 9 / 100 ))
-        echo "${icons[$idx]}"
+        echo "[\"󰂱\",\"${icons[$idx]} $name\""]
     fi
 
     exit 3
 done
 
 if [[ $? != 3 ]]; then
-    echo "󰂯"
+    echo "[\"󰂯\",\"\""]
 fi
