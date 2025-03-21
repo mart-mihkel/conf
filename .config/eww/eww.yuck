@@ -18,7 +18,7 @@
 (deflisten window-listen :initial '' 'scripts/listen-window.sh')
 (deflisten source-listen :initial '󰍬' 'scripts/listen-source.sh')
 (deflisten spotify-listen :initial '' 'scripts/listen-player.sh')
-(deflisten sink-listen :initial '["󰕾", ""]' 'scripts/listen-sink.sh')
+(deflisten sink-listen :initial '["󰕾", "0"]' 'scripts/listen-sink.sh')
 
 (defwindow bar :monitor 0
   :geometry (geometry :width '100%' :anchor 'bottom center')

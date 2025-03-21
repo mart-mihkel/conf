@@ -1,0 +1,12 @@
+separator=true
+separator_block_width=16
+
+[battery]
+command=echo "Battery $(cat /sys/class/power_supply/BAT0/capacity)%"
+interval=2
+
+[time]
+command=date "+%A, %B-%d %H:%M"
+interval=2
+
+# vim: ft=cfg
