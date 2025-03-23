@@ -11,7 +11,4 @@ if [[ "$pick" == "$wals/" ]]; then
 fi
 
 cp -f $pick $cache/wallpaper
-
-hyprctl hyprpaper unload all
-hyprctl hyprpaper preload $pick
-hyprctl hyprpaper wallpaper ", $pick"
+hyprctl hyprpaper reload ,$pick
