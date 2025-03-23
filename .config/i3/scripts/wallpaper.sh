@@ -11,4 +11,4 @@ if [[ "$pick" == "$wals/" ]]; then
 fi
 
 cp -f $pick $cache/wallpaper
-hyprctl hyprpaper reload ,$pick
+feh --no-fehbg --bg-fill ~/.cache/wallpaper

@@ -1,5 +1,5 @@
 (defvar icon-width 12)
-(defvar terminal 'kitty -1')
+(defvar terminal 'ghostty -e')
 
 (defvar sink-hover false)
 (defvar wifi-hover false)
@@ -8,47 +8,36 @@
 (defvar bluetooth-hover false)
 
 (defpoll date-poll :interval '2s' 'date +"󰃰 %A, %B-%d %H:%M"')
-(defpoll wifi-poll :initial '["󰤮", ""]' :interval '10s' 'scripts/poll-wifi.sh')
-(defpoll battery-poll :initial '󰁹' :interval '2s' 'scripts/poll-battery.sh')
-(defpoll bluetooth-poll :initial '["󰂯", ""]'
-  :interval '10s' 'scripts/poll-bluetooth.sh')
+(defpoll battery-poll :initial '󰁹' :interval '2s' 'scripts/battery.sh')
+(defpoll wifi-poll :initial '["󰤮", ""]' :interval '10s' 'scripts/wifi.sh')
+(defpoll bt-poll :initial '["󰂯", ""]' :interval '10s' 'scripts/bluetooth.sh')
 
-(deflisten wsp-listen :initial '[1]' 'scripts/listen-wsp.sh')
-(deflisten active-listen :initial 1 'scripts/listen-wsp.sh -a')
-(deflisten window-listen :initial '' 'scripts/listen-window.sh')
-(deflisten source-listen :initial '󰍬' 'scripts/listen-source.sh')
-(deflisten spotify-listen :initial '' 'scripts/listen-player.sh')
-(deflisten sink-listen :initial '["󰕾", ""]' 'scripts/listen-sink.sh')
+(deflisten wsp-listen :initial '[]' 'scripts/wsp.sh')
+(deflisten active-listen :initial 1 'scripts/wsp.sh -a')
+(deflisten source-listen :initial '󰍬' 'scripts/source.sh')
+(deflisten spotify-listen :initial '' 'scripts/player.sh')
+(deflisten sink-listen :initial '["󰕾", "0.0"]' 'scripts/sink.sh')
 
 (defwindow bar :monitor 0
   :geometry (geometry :width '100%' :anchor 'bottom center')
-  :exclusive false :focusable false
-  :namespace 'eww' :stacking 'fg'
-  (bar))
+  :exclusive false :focusable false :namespace 'eww'
+  :stacking 'fg' :windowtype 'dock' (bar))
 
 (defwidget bar []
-  (box
-    (box :style 'padding-left: 0.125rem' :halign 'start'
-      :space-evenly false :spacing 4
-      (box :width icon-width window-listen)
-      (bar-workspaces))
+  (box :style 'padding: 0 0.125rem 0 0.125rem'
+    (box :halign 'start' (bar-workspaces))
     (box :halign 'center' date-poll)
-    (box :style 'padding-right: 0.125rem' :halign 'end'
-      :space-evenly false :spacing 4
-      (systray :icon-size 11 :spacing 6)
-      (bar-spotify)
-      (bar-wifi)
-      (bar-bluetooth)
-      (bar-sink)
-      (bar-battery))))
+    (box :halign 'end' :space-evenly false :spacing 4
+      (systray :width icon-width :icon-size '${icon-width - 1}' :spacing 6)
+      (bar-spotify) (bar-wifi) (bar-bluetooth) (bar-sink) (bar-battery))))
 
 (defwidget bar-workspaces []
-  (box :space-evenly false :spacing 4
+  (box :space-evenly false :spacing 2
     (label :text '${active-listen}' :visible false)
     (for wsp in {wsp-listen}
-      (button :onclick 'hyprctl dispatch workspace ${wsp}'
-      (label :class '${wsp == active-listen ? "underline" : ""}'
-          :text '${wsp}')))))
+      (button :onclick 'scripts/wsp.sh -w ${wsp.id}'
+        (label :style 'opacity: ${wsp.id == active-listen ? "1.0" : "0.5"}'
+          :width icon-width :text '${wsp.icon}')))))
 
 (defwidget bar-spotify []
   (eventbox :visible '${spotify-listen != ""}'
@@ -68,35 +57,33 @@
 (defwidget bar-wifi []
   (eventbox :onhover 'eww update wifi-hover=true'
     :onhoverlost 'eww update wifi-hover=false'
-    (box :space-evenly false :spacing 2
-      (button :width icon-width :onrightclick '${terminal} nmtui &'
-        (label :xalign 0.2 :text '${wifi-poll[0]}'))
-      (revealer :transition 'slideleft'
-        :reveal wifi-hover '${wifi-poll[1]}'))))
+    (button :onclick '${terminal} nmtui &'
+      (box :space-evenly false :spacing 4
+        (label :width icon-width :text '${wifi-poll[0]}')
+        (revealer :transition 'slideleft'
+          :reveal wifi-hover '${wifi-poll[1]}')))))
 
 (defwidget bar-bluetooth []
   (eventbox :onhover 'eww update bluetooth-hover=true'
     :onhoverlost 'eww update bluetooth-hover=false'
-    (box :space-evenly false :spacing 2
-      (button :width icon-width :onrightclick '${terminal} bluetui &'
-        (label :xalign 0.75 :text '${bluetooth-poll[0]}'))
-      (revealer :transition 'slideleft'
-        :reveal bluetooth-hover '${bluetooth-poll[1]}'))))
+    (button :onclick '${terminal} bluetui &'
+      (box :space-evenly false :spacing 0
+        (label :width icon-width :text '${bt-poll[0]}')
+        (revealer :transition 'slideleft'
+          :reveal bluetooth-hover '${bt-poll[1]}')))))
 
 (defwidget bar-sink []
   (eventbox :onhover 'eww update sink-hover=true'
     :onhoverlost 'eww update sink-hover=false'
-    (box :space-evenly false :spacing 2
+    (box :space-evenly false :spacing 0
       (button :width icon-width
         :onclick 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-        :onrightclick '${terminal} pulsemixer &'
-        (label :xalign 0.6 :text '${sink-listen[0]}'))
+        :onrightclick '${terminal} pulsemixer &' '${sink-listen[0]}')
       (revealer :transition 'slideleft' :reveal sink-hover
-        (box :space-evenly false :spacing 2
+        (box :space-evenly false :spacing 4
           (button :width icon-width
             :onclick 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
-            :onrightclick '${terminal} pulsemixer &'
-            source-listen)
+            :onrightclick '${terminal} pulsemixer &' source-listen)
           (scale :value '${sink-listen[1]}'
             :onchange 'pactl set-sink-volume @DEFAULT_SINK@ {}%'))))))
 
@@ -104,13 +91,10 @@
   (eventbox :onhover 'eww update battery-hover=true'
     :onhoverlost 'eww update battery-hover=false'
     (box :space-evenly false :spacing 4
-      (button :width icon-width
-        :onrightclick '${terminal} btop &' battery-poll)
+      (button :width icon-width :onclick '${terminal} btop &' battery-poll)
       (revealer :transition 'slideleft' :reveal battery-hover
         (box :space-evenly false :spacing 4
           (button :width icon-width :onclick 'shutdown now' '󰤆')
           (button :width icon-width :onclick 'reboot' '󰑓')
-          (button :width icon-width
-            :onclick 'playerctl -a pause & systemctl suspend &' '󰤄')
-          (button :width icon-width
-            :onclick 'playerctl -a pause & hyprlock &' '󰌾'))))))
+          (button :width icon-width :onclick 'scripts/power.sh -s &' '󰤄')
+          (button :width icon-width :onclick 'scripts/power.sh -l &' '󰌾'))))))
