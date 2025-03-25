@@ -28,7 +28,6 @@ vim.opt.hlsearch = false
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "80"
 
 vim.opt.termguicolors = true
 vim.opt.breakindent = true
