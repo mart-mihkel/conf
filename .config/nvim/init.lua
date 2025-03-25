@@ -11,7 +11,6 @@ require("config.mapping")
 require("config.autocmd")
 require("lazy").setup({
     change_detection = { notify = false },
-    lockfile = "/dev/null",
     spec = {
         { import = "plugins" },
         { "tpope/vim-sleuth" },
