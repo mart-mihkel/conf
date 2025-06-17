@@ -68,9 +68,7 @@ require("lazy").setup({
     lockfile = "/dev/null",
     spec = {
         { "tpope/vim-sleuth" },
-        { "folke/zen-mode.nvim" },
         { "norcalli/nvim-colorizer.lua" },
-        { "nvim-tree/nvim-web-devicons" },
         {
             "shaunsingh/nord.nvim",
             lazy = false,
@@ -82,23 +80,6 @@ require("lazy").setup({
 
                 vim.cmd.colorscheme("nord")
             end,
-        },
-        {
-            "nvim-lualine/lualine.nvim",
-            opts = {
-                options = {
-                    section_separators = { left = "", right = "" },
-                    component_separators = { left = "", right = "" },
-                },
-                sections = {
-                    lualine_a = { "mode" },
-                    lualine_b = { "branch" },
-                    lualine_c = { "filename" },
-                    lualine_x = { "filetype" },
-                    lualine_y = { "progress" },
-                    lualine_z = { "location" },
-                },
-            },
         },
         {
             "lewis6991/gitsigns.nvim",
