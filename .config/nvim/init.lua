@@ -42,8 +42,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
     callback = function(e)
         local opts = { buffer = e.buf }
-        vim.keymap.set("n", "gq", vim.diagnostic.setloclist, opts)
-        vim.keymap.set("n", "ge", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "grD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
+        vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, opts)
+        vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
     end,
 })
 
@@ -129,6 +132,10 @@ require("lazy").setup({
             version = "1.*",
             opts = {
                 completion = {
+                    keymap = {
+                        preset = "default",
+                        ["<Tab>"] = { "accept", "fallback" },
+                    },
                     accept = { auto_brackets = { enabled = false } },
                     menu = {
                         draw = {
