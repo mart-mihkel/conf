@@ -1,0 +1,74 @@
+{
+  "spacing": 6,
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window",
+    "tray"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "network",
+    "bluetooth",
+    "pulseaudio",
+    "battery"
+  ],
+  "hyprland/window": {
+    "format": "{class}",
+    "tooltip-format": "{title}",
+    "rewrite": {
+      "Brave-browser": " brave",
+      "foot": " foot",
+      "": " nixos"
+    }
+  },
+  "tray": {
+    "icon-size": 10,
+    "spacing": 4
+  },
+  "clock": {
+    "format": "󰃰 {:%A, %B %d %H:%M}",
+    "tooltip-format": "{calendar}",
+    "calendar": {
+      "format": {
+        "today": "<span color='#a3be8c'>{}</span>"
+      }
+    }
+  },
+  "network": {
+    "format-wifi": "直 {signalStrength}%",
+    "format-disconnected": "睊",
+    "tooltip-format": "{essid}"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-connected": "",
+    "format-connected-battery": " {device_battery_percentage}%"
+  },
+  "pulseaudio": {
+    "format": "{icon}{volume}%",
+    "format-muted": "婢 {volume}%",
+    "format-icons": {
+      "default": [
+        "奄 ",
+        "奔 ",
+        "墳 "
+      ]
+    }
+  },
+  "battery": {
+    "format": "{icon}{capacity}%",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "states": {
+      "critical": 10,
+      "warning": 20
+    }
+  }
+}

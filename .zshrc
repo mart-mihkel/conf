@@ -1,13 +1,12 @@
 [[ $- != *i* ]] && return
 
-PROMPT="%F{4}%1~%f "
-precmd_functions+=(_rprompt)
-
-HISTFILE=$ZDOTDIR/.zhist
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-ZSH_AUTOSUGGEST_STRATEGY=("completion" "history")
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+precmd_functions+=(_prompt)
 
 autoload -Uz compinit && compinit
 zstyle ":completion:*" menu yes select
@@ -18,20 +17,25 @@ setopt list_packed
 setopt no_case_glob no_case_match
 setopt inc_append_history share_history hist_ignore_dups
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.scripts/zsh-autosuggestions.zsh
 
 alias vim="nvim"
-alias rm="rm -v"
-alias ls="ls --color"
-alias l="ls -A --color"
 
-function _rprompt() {
+alias rm="rm -v"
+alias cp="cp -v"
+alias mv="mv -v"
+
+alias ls="ls --color"
+alias la="la -A --color"
+alias ll="ls -lAh --color"
+
+function _prompt() {
     items=""
     branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+    venv=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
 
-    [[ -n $branch ]] && items="$items 󰊢 $branch"
-    [[ -n $SSH_TTY ]] && items="$items  %n@%M"
+    [[ -n $venv ]] && items="%F{3}$venv%f"
+    [[ -n $branch ]] && items="$items%F{5}$branch%f "
 
-    RPROMPT="%F{8}$items%f"
+    PROMPT="%F{4}%~%f $items"
 }

@@ -1,0 +1,28 @@
+* {
+  text-color: #d8dee9;
+  background-color: transparent;
+}
+
+window {
+  border: 1;
+  padding: 2;
+  y-offset: 8;
+  width: 10%;
+  height: 30%;
+  anchor: center;
+  location: north;
+  border-color: #d8dee9;
+  background-color: #2e3440;
+}
+
+entry {
+  cursor-width: 8px;
+}
+
+inputbar {
+  children: [entry];
+}
+
+element.selected {
+  background-color: #4c566a;
+}

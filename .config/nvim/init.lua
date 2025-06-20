@@ -13,6 +13,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.laststatus = 3
 vim.opt.scrolloff = 4
+vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
@@ -24,10 +25,8 @@ vim.opt.wrap = false
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
-
 vim.keymap.set({ "n", "v" }, "<C-j>", "<cmd>cnext<CR>")
 vim.keymap.set({ "n", "v" }, "<C-k>", "<cmd>cprevious<CR>")
-
 vim.keymap.set({ "n", "v" }, "<C-l>", "<cmd>lnext<CR>")
 vim.keymap.set({ "n", "v" }, "<C-h>", "<cmd>lprevious<CR>")
 
@@ -42,8 +41,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
     callback = function(e)
         local opts = { buffer = e.buf }
-        vim.keymap.set("n", "gq", vim.diagnostic.setloclist, opts)
-        vim.keymap.set("n", "ge", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "grD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
+        vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, opts)
+        vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
     end,
 })
 
@@ -65,12 +67,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     change_detection = { notify = false },
-    lockfile = "/dev/null",
     spec = {
         { "tpope/vim-sleuth" },
-        { "folke/zen-mode.nvim" },
         { "norcalli/nvim-colorizer.lua" },
-        { "nvim-tree/nvim-web-devicons" },
         {
             "shaunsingh/nord.nvim",
             lazy = false,
@@ -82,23 +81,6 @@ require("lazy").setup({
 
                 vim.cmd.colorscheme("nord")
             end,
-        },
-        {
-            "nvim-lualine/lualine.nvim",
-            opts = {
-                options = {
-                    section_separators = { left = "", right = "" },
-                    component_separators = { left = "", right = "" },
-                },
-                sections = {
-                    lualine_a = { "mode" },
-                    lualine_b = { "branch" },
-                    lualine_c = { "filename" },
-                    lualine_x = { "filetype" },
-                    lualine_y = { "progress" },
-                    lualine_z = { "location" },
-                },
-            },
         },
         {
             "lewis6991/gitsigns.nvim",
@@ -129,17 +111,14 @@ require("lazy").setup({
                 { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             },
             config = function()
-                local telescope = require("telescope")
-                local builtin = require("telescope.builtin")
+                require("telescope").setup()
+                require("telescope").load_extension("fzf")
 
-                telescope.setup()
-                telescope.load_extension("fzf")
-
-                vim.keymap.set("n", "<leader>sr", builtin.resume)
-                vim.keymap.set("n", "<leader>so", builtin.oldfiles)
-                vim.keymap.set("n", "<leader>sg", builtin.live_grep)
-                vim.keymap.set("n", "<leader>sG", builtin.git_files)
-                vim.keymap.set("n", "<leader>sf", builtin.find_files)
+                vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume)
+                vim.keymap.set("n", "<leader>so", require("telescope.builtin").oldfiles)
+                vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep)
+                vim.keymap.set("n", "<leader>sG", require("telescope.builtin").git_files)
+                vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files)
             end,
         },
         {
@@ -147,6 +126,16 @@ require("lazy").setup({
             dependencies = { "rafamadriz/friendly-snippets" },
             version = "1.*",
             opts = {
+                keymap = {
+                    preset = "default",
+                    ["<Tab>"] = { "accept", "fallback" },
+                },
+                cmdline = {
+                    keymap = {
+                        preset = "default",
+                        ["<Tab>"] = { "accept", "show_and_insert", "fallback" },
+                    },
+                },
                 completion = {
                     accept = { auto_brackets = { enabled = false } },
                     menu = {
@@ -164,15 +153,11 @@ require("lazy").setup({
         {
             "stevearc/conform.nvim",
             config = function()
-                local conform = require("conform")
-
-                conform.setup({
+                require("conform").setup({
                     formatters_by_ft = {
                         lua = { "stylua" },
                         nix = { "alejandra" },
                         python = { "ruff_format" },
-                        yml = { "yamlfmt" },
-                        yaml = { "yamlfmt" },
                         javascript = { "prettierd" },
                         typescript = { "prettierd" },
                         javascriptreact = { "prettierd" },
@@ -181,7 +166,7 @@ require("lazy").setup({
                 })
 
                 vim.keymap.set("n", "<leader>f", function()
-                    conform.format({ async = true, lsp_format = "fallback" })
+                    require("conform").format({ async = true, lsp_format = "fallback" })
                 end)
             end,
         },
