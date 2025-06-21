@@ -6,11 +6,10 @@
 window {
   border: 1;
   padding: 2;
-  y-offset: 8;
   width: 10%;
   height: 30%;
   anchor: center;
-  location: north;
+  location: center;
   border-color: #d8dee9;
   background-color: #2e3440;
 }
