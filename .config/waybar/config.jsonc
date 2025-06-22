@@ -2,7 +2,6 @@
   "spacing": 6,
   "modules-left": [
     "hyprland/workspaces",
-    "hyprland/window",
     "tray"
   ],
   "modules-center": [
@@ -14,15 +13,6 @@
     "pulseaudio",
     "battery"
   ],
-  "hyprland/window": {
-    "format": "{class}",
-    "tooltip-format": "{title}",
-    "rewrite": {
-      "Brave-browser": " brave",
-      "foot": " foot",
-      "": " nixos"
-    }
-  },
   "tray": {
     "icon-size": 10,
     "spacing": 4
