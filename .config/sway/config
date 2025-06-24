@@ -1,8 +1,12 @@
-gaps inner 16
-gaps outer 8
+tiling_drag modifier
+floating_modifier Mod4
+focus_follows_mouse yes
 
-default_border          pixel 1
-default_floating_border pixel 1
+gaps inner 0
+gaps outer 0
+
+default_border          pixel 0
+default_floating_border pixel 0
 
 client.urgent           #bf616a #bf616a #bf616a #bf616a #bf616a
 client.focused          #d8dee9 #d8dee9 #d8dee9 #d8dee9 #d8dee9
@@ -11,9 +15,22 @@ client.unfocused        #4c566a #4c566a #4c566a #4c566a #4c566a
 client.placeholder      #4c566a #4c566a #4c566a #4c566a #4c566a
 client.background       #4c566a
 
-tiling_drag modifier
-floating_modifier Mod4
-focus_follows_mouse yes
+bar {
+    status_command i3blocks
+    font           pango:cozette 8
+    position       top
+
+    colors {
+        separator  #2e3440
+        background #2e3440
+        statusline #d8dee9
+
+        focused_workspace  #4c566a #4c566a #d8dee9
+        active_workspace   #2e3440 #2e3440 #d8dee9
+        inactive_workspace #2e3440 #2e3440 #d8dee9
+        urgent_workspace   #bf616a #bf616a #d8dee9
+    }
+}
 
 input type:keyboard {
     xkb_layout  ee
@@ -27,18 +44,19 @@ input type:touchpad {
     tap enabled
 }
 
+set $refresh pkill -SIGRTMIN+1 i3blocks
+
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.scripts/backlight.sh 2%-
 bindsym XF86MonBrightnessUp   exec --no-startup-id ~/.scripts/backlight.sh +2%
-bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   -2%
-bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   +2%
-bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@   toggle
+bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   -2%    && $refresh
+bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   +2%    && $refresh
+bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh
+bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@   toggle && $refresh
 bindsym XF86AudioPause        exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
 bindsym XF86AudioNext         exec --no-startup-id playerctl next
-bindsym Mod4+period           exec --no-startup-id rofi -show emoji
-bindsym Mod4+r                exec --no-startup-id rofi -show drun
+bindsym Mod4+r                exec --no-startup-id tofi-drun | xargs swaymsg exec --
 bindsym Mod4+n                exec --no-startup-id ~/.scripts/sway-lock.sh
 bindsym Mod4+s                exec --no-startup-id ~/.scripts/wl-screenshot.sh
 bindsym Mod4+w                exec --no-startup-id ~/.scripts/sway-wallpaper.sh
@@ -82,11 +100,9 @@ bindsym Mod4+Shift+8 move container to workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10
 
-exec_always --no-startup-id autotiling
-
 exec --no-startup-id swayidle -w timeout 300 "~/.scripts/sway-lock.sh" timeout 600 "systemctl suspend"
 exec --no-startup-id gammastep -l 58.38:26.72 -t 6500:3000 -m wayland
 exec --no-startup-id swaybg -i ~/.cache/wallpaper -m fill
 exec --no-startup-id wayland-pipewire-idle-inhibit
-exec --no-startup-id waybar
+exec --no-startup-id autotiling
 exec --no-startup-id dunst

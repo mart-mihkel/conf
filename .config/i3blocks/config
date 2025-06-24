@@ -1,0 +1,19 @@
+separator=true
+separator_block_width=15
+
+[net]
+command=~/.scripts/wifi.sh
+interval=5
+
+[vol]
+command=~/.scripts/volume.sh
+interval=once
+signal=1
+
+[bat]
+command=echo "bat $(cat /sys/class/power_supply/BAT0/capacity)%"
+interval=60
+
+[date]
+command=date +"%A, %B %d %H:%M" | tr '[:upper:]' '[:lower:]'
+interval=5

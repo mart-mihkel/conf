@@ -9,6 +9,7 @@ set path+=**
 set wildmenu
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*/node_modules/*,*/.venv/*
 set complete=.,w,b,u,t
+set clipboard+=unnamedplus
 
 set tabstop=4
 set shiftwidth=4
@@ -28,9 +29,10 @@ set history=1000
 set undolevels=1000
 set undofile
 set swapfile backup undofile
-set undodir=~/.vim
-set backupdir=~/.vim
-set directory=~/.vim
+set undodir=~/.local/state/vim
+set backupdir=~/.local/state/vim
+set directory=~/.local/state/vim
+set viminfofile=~/.local/state/vim/viminfo
 
 set ruler
 set nowrap
