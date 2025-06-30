@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
-dir="$HOME/Pictures/screenshots"
+dir="$HOME/pictures/screenshots"
 target="$dir/$name"
 mkdir --parents "$dir"
 

@@ -6,10 +6,10 @@
 window {
   border: 1;
   padding: 2;
-  y-offset: 8;
+  y-offset: 24;
   width: 10%;
   height: 30%;
-  anchor: center;
+  anchor: north;
   location: north;
   border-color: #d8dee9;
   background-color: #2e3440;
@@ -21,6 +21,10 @@ entry {
 
 inputbar {
   children: [entry];
+}
+
+element-text {
+  highlight: underline;
 }
 
 element.selected {

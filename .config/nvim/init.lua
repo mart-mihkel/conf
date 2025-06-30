@@ -4,28 +4,37 @@ vim.g.netrw_banner = false
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.signcolumn = "yes"
+
 vim.opt.list = true
 vim.opt.listchars = { tab = "··", trail = "·" }
-vim.opt.termguicolors = true
+vim.opt.breakindent = true
+vim.opt.expandtab = true
+
+vim.opt.clipboard = "unnamedplus"
 vim.opt.guicursor = "n-v-c-i:block-nCursor"
-vim.opt.cursorline = true
+vim.opt.termguicolors = true
+
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.laststatus = 3
 vim.opt.scrolloff = 4
-vim.opt.clipboard = "unnamedplus"
-vim.opt.signcolumn = "yes"
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = false
-vim.opt.breakindent = true
-vim.opt.expandtab = true
+
 vim.opt.undofile = true
 vim.opt.wrap = false
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
+
+vim.keymap.set({ "n", "v" }, "<C-D>", "<C-D>zz")
+vim.keymap.set({ "n", "v" }, "<C-U>", "<C-U>zz")
+
 vim.keymap.set({ "n", "v" }, "<C-j>", "<cmd>cnext<CR>")
 vim.keymap.set({ "n", "v" }, "<C-k>", "<cmd>cprevious<CR>")
 vim.keymap.set({ "n", "v" }, "<C-l>", "<cmd>lnext<CR>")
@@ -70,7 +79,13 @@ require("lazy").setup({
     change_detection = { notify = false },
     spec = {
         { "tpope/vim-sleuth" },
+        { "ellisonleao/gruvbox.nvim" },
         { "norcalli/nvim-colorizer.lua" },
+        {
+            "folke/todo-comments.nvim",
+            dependencies = { "nvim-lua/plenary.nvim" },
+            opts = { signs = false },
+        },
         {
             "shaunsingh/nord.nvim",
             lazy = false,
@@ -85,12 +100,20 @@ require("lazy").setup({
         },
         {
             "lewis6991/gitsigns.nvim",
-            opts = {
-                signs = {
-                    add = { text = "+" },
-                    change = { text = "~" },
-                },
-            },
+            config = function()
+                require("gitsigns").setup({
+                    signs = {
+                        add = { text = "+" },
+                        change = { text = "~" },
+                        delete = { text = "-" },
+                        topdelete = { text = "-" },
+                    },
+                    signs_staged_enable = false,
+                })
+
+                vim.keymap.set({ "n", "v" }, "gb", "<cmd>Gitsigns blame_line<CR>")
+                vim.keymap.set({ "n", "v" }, "gp", "<cmd>Gitsigns preview_hunk<CR>")
+            end,
         },
         {
             "nvim-treesitter/nvim-treesitter",
@@ -130,12 +153,6 @@ require("lazy").setup({
                 keymap = {
                     preset = "default",
                     ["<Tab>"] = { "accept", "fallback" },
-                },
-                cmdline = {
-                    keymap = {
-                        preset = "default",
-                        ["<Tab>"] = { "accept", "show_and_insert", "fallback" },
-                    },
                 },
                 completion = {
                     accept = { auto_brackets = { enabled = false } },
@@ -219,9 +236,7 @@ require("lazy").setup({
                 })
 
                 require("mason").setup()
-                require("mason-lspconfig").setup({
-                    automatic_enable = { exclude = { "ruff" } },
-                })
+                require("mason-lspconfig").setup()
             end,
         },
     },

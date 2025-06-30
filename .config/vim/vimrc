@@ -52,10 +52,13 @@ set laststatus=2
 
 syntax on
 filetype plugin on
-colorscheme sorbet
+colorscheme habamax
 
 let mapleader=" "
 let g:netrw_banner=0
 
 nnoremap <space> <nop>
 nnoremap <leader>f :%s/\s\+$//e<CR>
+
+nnoremap Y y$
+nnoremap D d$

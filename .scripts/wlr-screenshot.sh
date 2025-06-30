@@ -4,7 +4,7 @@ geometry=$(slurp)
 [[ -z "$geometry" ]] && exit 1
 
 name="$(date +%b%d%h%m%s | tr '[:upper:]' '[:lower:]').png"
-dir="Pictures/screenshots"
+dir="pictures/screenshots"
 target="$dir/$name"
 mkdir -p "$dir"
 
