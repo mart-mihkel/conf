@@ -1,16 +1,16 @@
 font =      "cozette"
 font-size = 10
 
-text-color =           #d8dee9
-selection-color =      #d8dee9
-selection-background = #4c566a
+text-color =           %%foreground%%
+selection-color =      %%background%%
+selection-background = %%foreground%%
 
 text-cursor-style =     bar
 text-cursor-thickness = 8
 
-background-color = #2e3440
+background-color = %%background%%
 outline-width =    0
-border-color =     #d8dee9
+border-color =     %%border%%
 border-width =     1
 
 padding-top =    2

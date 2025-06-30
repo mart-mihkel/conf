@@ -5,8 +5,8 @@ width = (16, 512)
 height = (16, 256)
 offset = (12, 12)
 origin = top-right
-foreground = "#d8dee9"
-background = "#2e3440"
+foreground = "#%%foreground%%"
+background = "#%%background%%"
 font = cozette 10
 alignment = right
 markup = full
@@ -21,13 +21,13 @@ frame_width = 1
 idle_threshold = 300
 
 [urgency_low]
-frame_color = "#eceff4"
+frame_color = "#%%foreground%%"
 timeout = 4
 
 [urgency_normal]
-frame_color = "#ebcb8b"
+frame_color = "#%%color7.hex%%"
 timeout = 8
 
 [urgency_critical]
-frame_color = "#bf616a"
+frame_color = "#%%color15.hex%%"
 timeout = 16

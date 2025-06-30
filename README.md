@@ -11,14 +11,6 @@ Rice on [old](https://github.com/mart-mihkel/conf/tree/old) branch.
 ![stars](./.github/nord-stars.png)
 ![sea](./.github/nord-sea.png)
 
-## Sway
+## Sway/i3
 
-```bash
-XDG_CURRENT_DESKTOP=sway sway
-```
-
-## i3
-
-```bash
-startx
-```
+Simple minimal and functional setup on [simple](https://github.com/mart-mihkel/conf/tree/simple) branch.
