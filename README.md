@@ -1,16 +1,21 @@
-# Configs
-
-Dotfiles
-
 ## Hyprland
 
-Rice on [old](https://github.com/mart-mihkel/conf/tree/old) branch.
+Hyprland dotfiles on [hyprland](https://github.com/mart-mihkel/conf/tree/hyprland) branch. Old rice on [old](https://github.com/mart-mihkel/conf/tree/old) branch.
 
-![flowers](./.github/nord-flowers.png)
-![flower](./.github/nord-flower.png)
-![stars](./.github/nord-stars.png)
-![sea](./.github/nord-sea.png)
+|![flowers](./.github/old-flowers.png)|![flower](./.github/old-flower.png)
+|-|-|
+|![stars](./.github/old-stars.png)|![sea](./.github/old-sea.png)|
 
-## Sway/i3
+## Niri
 
-Simple minimal and functional setup on [simple](https://github.com/mart-mihkel/conf/tree/simple) branch.
+Scrolling window manager [niri](https://github.com/mart-mihkel/conf/tree/niri) configs.
+
+![overview](./.github/niri-overview.png)
+
+## Sway
+
+Simple, minimal and functional [sway](https://github.com/mart-mihkel/conf/tree/simple) setup.
+
+|![flowers](./.github/sway-flowers.png)|![flower](./.github/sway-flower.png)|
+|-|-|
+|![tiles](./.github/sway-tiles.png)|![mountain](./.github/sway-mountain.png)|

@@ -87,16 +87,27 @@ require("lazy").setup({
             opts = { signs = false },
         },
         {
-            "shaunsingh/nord.nvim",
+            "gbprod/nord.nvim",
             lazy = false,
             priority = 1000,
             config = function()
-                vim.g.nord_disable_background = true
-                vim.g.nord_contrast = true
-                vim.g.nord_bold = false
-
+                require("nord").setup({ transparent = true })
                 vim.cmd.colorscheme("nord")
             end,
+        },
+        {
+            "nvim-lualine/lualine.nvim",
+            opts = {
+                options = {
+                    icons_enabled = false,
+                    component_separators = "",
+                    section_separators = "",
+                },
+                sections = {
+                    lualine_b = { "branch" },
+                    lualine_x = {},
+                },
+            },
         },
         {
             "lewis6991/gitsigns.nvim",
@@ -118,14 +129,13 @@ require("lazy").setup({
         {
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
-            config = function()
-                require("nvim-treesitter.configs").setup({
-                    sync_install = false,
-                    auto_install = true,
-                    indent = { enable = true },
-                    highlight = { enable = true },
-                })
-            end,
+            main = "nvim-treesitter.configs",
+            opts = {
+                sync_install = false,
+                auto_install = true,
+                indent = { enable = true },
+                highlight = { enable = true },
+            },
         },
         {
             "nvim-telescope/telescope.nvim",
@@ -176,16 +186,17 @@ require("lazy").setup({
                         lua = { "stylua" },
                         nix = { "alejandra" },
                         python = { "ruff_format" },
+                        css = { "prettierd" },
+                        scss = { "prettierd" },
                         javascript = { "prettierd" },
                         typescript = { "prettierd" },
                         javascriptreact = { "prettierd" },
                         typescriptreact = { "prettierd" },
                     },
+                    default_format_opts = { async = true, lsp_format = "fallback" },
                 })
 
-                vim.keymap.set("n", "<leader>f", function()
-                    require("conform").format({ async = true, lsp_format = "fallback" })
-                end)
+                vim.keymap.set("n", "<leader>f", require("conform").format)
             end,
         },
         {
