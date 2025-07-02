@@ -1,0 +1,78 @@
+{
+  "spacing": 16,
+  "modules-left": ["hyprland/workspaces", "hyprland/window", "mpris", "tray"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "bluetooth", "pulseaudio", "backlight", "battery"],
+  "hyprland/window": {
+    "format": "{class}",
+    "rewrite": {
+      "Brave-browser": " brave",
+      "Alacritty": "󱎯 alacritty",
+      "Discord": " discord",
+      "spotify": "󰓇 spotify",
+      "ghostty": "󱙝 ghostty",
+      "kitty": "󰄛 kitty",
+      "Slack": " slack",
+      "steam": "󰓓 steam",
+      "foot": "󰽒 foot",
+      "vlc": "󰕼 vlc",
+      "": ""
+    }
+  },
+  "mpris": {
+    "format": "{player_icon}{status_icon}{title}",
+    "title-len": 32,
+    "player-icons": {
+      "default": "󰝚 ",
+      "spotify": "󰓇 ",
+      "vlc": "󰕼 "
+    },
+    "status-icons": {
+      "playing": "󰏤 ",
+      "paused": "󰐊 "
+    }
+  },
+  "tray": {
+    "icon-size": 10,
+    "spacing": 8
+  },
+  "clock": {
+    "format": "󰃰 {:%A %B-%d %H:%M}",
+    "tooltip-format": "{calendar}",
+    "calendar": {
+      "format": {
+        "today": "<span color='#a3be8c'>{}</span>"
+      }
+    }
+  },
+  "network": {
+    "format-wifi": "{icon}{signalStrength}%",
+    "format-disconnected": "󰤮",
+    "tooltip-format": "{essid}",
+    "format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "]
+  },
+  "bluetooth": {
+    "format": "",
+    "format-connected": "󰂱",
+    "format-connected-battery": "󰂱 {device_battery_percentage}%"
+  },
+  "backlight": {
+    "format": "{icon}{percent}%",
+    "format-icons": ["󰃞 ", "󰃟 ", "󰃠 "]
+  },
+  "pulseaudio": {
+    "format": "{icon}{volume}%",
+    "format-muted": "󰖁 {volume}%",
+    "format-icons": {
+      "default": ["󰕾 ", "󰖀 ", "󰕿 "]
+    }
+  },
+  "battery": {
+    "format": "{icon}{capacity}%",
+    "format-icons": ["󰁺 ", "󰁻 ", "󰁼 ", "󰁽 ", "󰁾 ", "󰁿 ", "󰂀 ", "󰂁 ", "󰂂 ", "󰁹 "],
+    "states": {
+      "critical": 10,
+      "warning": 20
+    }
+  }
+}
