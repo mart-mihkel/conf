@@ -1,0 +1,178 @@
+input {
+    keyboard {
+        xkb {
+            layout "ee"
+            variant "nodeadkeys"
+        }
+
+        repeat-delay 256
+        repeat-rate 32
+    }
+
+    touchpad {
+        tap
+    }
+
+    mouse {
+        accel-profile "flat"
+    }
+
+    disable-power-key-handling
+    warp-mouse-to-focus
+    focus-follows-mouse
+}
+
+layout {
+    gaps 16
+
+    default-column-width {}
+
+    background-color "transparent"
+    focus-ring {
+        off
+    }
+
+    border {
+        width 2
+        active-color "#d8dee9"
+        inactive-color "#4c566a"
+        urgent-color "#bf616a"
+    }
+
+    shadow {
+        on
+        softness 30
+        spread 5
+        offset x=0 y=0
+        color "#0007"
+    }
+
+    struts {
+        top 16
+        bottom 16
+        left 16
+        right 16
+    }
+}
+
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="^launcher$"
+    match namespace="^notifications$"
+    geometry-corner-radius 8
+    shadow {
+        on
+    }
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+cursor {
+    hide-after-inactive-ms 1000
+    hide-when-typing
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+    hide-not-bound
+}
+
+environment {
+    DISPLAY ":0"
+}
+
+screenshot-path "~/Pictures/screenshots/%b%d%h%m%s.png"
+prefer-no-csd
+
+binds {
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86AudioPause        allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPlay         allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPrev         allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioNext         allow-when-locked=true { spawn "playerctl" "next"; }
+
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "s" "2%-"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "s" "+2%"; }
+
+    Mod+K       { focus-workspace-up; }
+    Mod+J       { focus-workspace-down; }
+    Mod+H       { focus-column-left; }
+    Mod+L       { focus-column-right; }
+    Mod+Shift+K { move-column-to-workspace-up; }
+    Mod+Shift+J { move-column-to-workspace-down; }
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+L { move-column-right; }
+
+    Mod+WheelScrollUp       cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollDown     cooldown-ms=150 { focus-workspace-down; }
+    Mod+Shift+WheelScrollUp                 { focus-column-left; }
+    Mod+Shift+WheelScrollDown               { focus-column-right; }
+    Mod+TouchpadScrollUp    cooldown-ms=150 { focus-workspace-up; }
+    Mod+TouchpadScrollDown  cooldown-ms=150 { focus-workspace-down; }
+    Mod+TouchpadScrollLeft                  { focus-column-left; }
+    Mod+TouchpadScrollRight                 { focus-column-right; }
+
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Plus  { set-window-height "+10%"; }
+    Mod+Minus       { set-column-width "-10%"; }
+    Mod+Plus        { set-column-width "+10%"; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print  { screenshot-window; }
+    Print      { screenshot; }
+
+    Mod+Shift+F        { fullscreen-window; }
+    Mod+Ctrl+F         { expand-column-to-available-width; }
+    Mod+F              { maximize-column; }
+    Mod+Shift+P        { power-off-monitors; }
+    Mod+Shift+E        { quit skip-confirmation=true; }
+    Mod+O repeat=false { toggle-overview; }
+    Mod+C repeat=false { close-window; }
+    Mod+W              { toggle-column-tabbed-display; }
+    Mod+V              { toggle-window-floating; }
+
+    Mod+Shift+C { spawn "swaylock" "-u" "-i" "~/Pictures/wallpapers/nord_flowers.png"; }
+    Mod+E       { spawn "nautilus"; }
+    Mod+R       { spawn "fuzzel"; }
+    Mod+Q       { spawn "foot"; }
+}
+
+spawn-at-startup "swaybg" "-m" "fill" "-i" "Pictures/wallpapers/nord_flowers.png"
+spawn-at-startup "dunst"
