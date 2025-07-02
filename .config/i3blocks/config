@@ -1,0 +1,23 @@
+separator_block_width=24
+
+[net]
+command=[[ "$(cat /sys/class/net/wlp2s0/operstate)" == "down" ]] && echo "net off" || echo "net $(iw dev wlp2s0 link | grep 'dBm$' | grep -Eoe '-[0-9]{2}' | awk '{print  ($1 > -50 ? 100 :($1 < -100 ? 0 : ($1+100)*2))}')%"
+interval=5
+
+[vol]
+command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo "vol off" || echo "vol $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100"%"}')"
+interval=once
+signal=1
+
+[bkl]
+command=echo "bkl $(brightnessctl -m | awk -F , '{print $4}')"
+interval=once
+signal=1
+
+[bat]
+command=echo "bat $(cat /sys/class/power_supply/BAT0/capacity)%"
+interval=60
+
+[date]
+command=date +"%a %b-%d %H:%M" | tr '[:upper:]' '[:lower:]'
+interval=1
