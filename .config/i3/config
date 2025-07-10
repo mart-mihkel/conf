@@ -11,13 +11,6 @@ gaps outer 0
 default_border          pixel 0
 default_floating_border pixel 0
 
-client.urgent           #bf616a #bf616a #bf616a #bf616a #bf616a
-client.focused          #d8dee9 #d8dee9 #d8dee9 #d8dee9 #d8dee9
-client.focused_inactive #4c566a #4c566a #4c566a #4c566a #4c566a
-client.unfocused        #4c566a #4c566a #4c566a #4c566a #4c566a
-client.placeholder      #4c566a #4c566a #4c566a #4c566a #4c566a
-client.background       #4c566a
-
 bar {
     status_command i3blocks
     font           pango:cozette 8
@@ -34,18 +27,6 @@ bar {
     }
 }
 
-input type:keyboard {
-    xkb_layout  ee
-    xkb_variant nodeadkeys
-
-    repeat_rate  32
-    repeat_delay 256
-}
-
-input type:touchpad {
-    tap enabled
-}
-
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 2%- && $refresh
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl s +2% && $refresh
 
@@ -59,13 +40,13 @@ bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
 bindsym XF86AudioNext         exec --no-startup-id playerctl next
 
-bindsym Control+Print         exec --no-startup-id grimshot --notify savecopy screen
-bindsym Mod1+Print            exec --no-startup-id grimshot --notify savecopy window
-bindsym Print                 exec --no-startup-id grimshot --notify savecopy area
-bindsym Mod4+Shift+c          exec --no-startup-id swaylock -u -i $wallpaper
-bindsym Mod4+r                exec --no-startup-id tofi-drun
+bindsym Control+Print         exec --no-startup-id maim | xclip -selection clipboard -t image/png -i
+bindsym Mod1+Print            exec --no-startup-id maim -w $(xdotool getactivewindow) | xclip -selection clipboard -t image/png -i
+bindsym Print                 exec --no-startup-id maim -s | xclip -selection clipboard -t image/png -i
+bindsym Mod4+Shift+m          exec --no-startup-id i3lock -n -u -i $wallpaper
+bindsym Mod4+r                exec --no-startup-id rofi -show drun
+bindsym Mod4+q                exec --no-startup-id alacritty
 bindsym Mod4+e                exec --no-startup-id nautilus
-bindsym Mod4+q                exec --no-startup-id foot
 
 bindsym Mod4+f fullscreen toggle
 bindsym Mod4+v floating toggle
@@ -106,11 +87,8 @@ bindsym Mod4+Shift+8 move container to workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10
 
-exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec --no-startup-id systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
-exec --no-startup-id xwaylandvideobridge
-
-exec --no-startup-id gammastep -l 58.38:26.72 -t 6500:3000 -m wayland
-exec --no-startup-id swaybg -m fill -i $wallpaper
+exec --no-startup-id feh --no-fehbg --bg-fill $wallpaper
+exec --no-startup-id gammastep -l 58.38:26.72 -t 6500:3000
 exec --no-startup-id autotiling
+exec --no-startup-id picom
 exec --no-startup-id dunst
