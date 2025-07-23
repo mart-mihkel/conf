@@ -1,21 +1,21 @@
-## Hyprland
+# Conf
 
-Hyprland dotfiles on [hyprland](https://github.com/mart-mihkel/conf/tree/hyprland) branch. Old rice on [old](https://github.com/mart-mihkel/conf/tree/old) branch.
+Dotfiles and setup script for debian trixie, run `install-debian.sh`
 
-|![flowers](./.github/old-flowers.png)|![flower](./.github/old-flower.png)
-|-|-|
-|![stars](./.github/old-stars.png)|![sea](./.github/old-sea.png)|
+Configs of old rices are on their respective branches
 
-## Niri
+**Hyprland**
 
-Scrolling window manager [niri](https://github.com/mart-mihkel/conf/tree/niri) configs.
+|![flowers](./.github/old-flowers.png)|![flower](./.github/old-flower.png)|
+|-------------------------------------|-----------------------------------|
+|![stars](./.github/old-stars.png)    |![sea](./.github/old-sea.png)      |
+
+**Niri**
 
 ![overview](./.github/niri-overview.png)
 
-## Sway
+**Sway**
 
-Simple, minimal and functional [sway](https://github.com/mart-mihkel/conf/tree/simple) setup.
-
-|![flowers](./.github/sway-flowers.png)|![flower](./.github/sway-flower.png)|
-|-|-|
-|![tiles](./.github/sway-tiles.png)|![mountain](./.github/sway-mountain.png)|
+|![flowers](./.github/sway-flowers.png)|![flower](./.github/sway-flower.png)    |
+|--------------------------------------|----------------------------------------|
+|![tiles](./.github/sway-tiles.png)    |![mountain](./.github/sway-mountain.png)|
