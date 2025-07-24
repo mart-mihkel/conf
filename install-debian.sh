@@ -22,27 +22,24 @@ catch_errors() {
 trap catch_errors ERR
 
 
-
+echo -e "${FG4}installation starting!${RES}"
 echo -e "\n${FG5}git${RES} ${FG2}[1/${NSTEPS}]${RES}"
-
 sudo apt-get -y install git
 
-echo -n "git username: "
-read GIT_NAME
-
-echo -n "git email: "
-read GIT_EMAIL
-
-git config --global user.name $GIT_NAME
-git config --global user.email $GIT_EMAIL
-git config --global core.editor vim
-git config --global pull.rebase true
-git config --global init.defaultBranch main
+if [[ ! -e ~/.config/git/config ]]; then
+    echo -n "git username: "; read GIT_NAME
+    echo -n "git email: "; read GIT_EMAIL
+    git config --global user.name $GIT_NAME
+    git config --global user.email $GIT_EMAIL
+    git config --global core.editor vim
+    git config --global pull.rebase true
+    git config --global init.defaultBranch main
+    git config --global url."git@github.com:".insteadOf gh:
+fi
 
 
 
 echo -e "\nterminal ${FG2}[2/${NSTEPS}]${RES}"
-
 sudo apt-get -y install zsh zsh-autosuggestions \
     wget curl tmux vim man-db less foot zip unzip \
     fzf fastfetch btop jq ripgrep fdfind batcat \
@@ -52,14 +49,12 @@ cp -rv config/foot ~/.config
 cp -v config/.tmux.conf ~
 cp -v config/.vimrc ~
 cp -v config/.zshrc ~
-
 sudo chsh -s /bin/zsh $USER
 mkdir -p ~/.local/state/vim
 
 
 
 echo -e "\nneovim ${FG2}[3/${NSTEPS}]${RES}"
-
 NVIM_VERSION="v0.11.3"
 rm -r ~/.local/nvim-linux-x86_64
 wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
@@ -71,7 +66,6 @@ rm -v nvim-linux-x86_64.tar.gz
 
 
 echo -e "\ndevel ${FG2}[4/${NSTEPS}]${RES}"
-
 sudo apt-get -y gcc make cmake golang \
     luajit nodejs npm
 
@@ -107,7 +101,6 @@ fi
 
 
 echo -e "\n${FG2}sway${RES} ${FG2}[6/${NSTEPS}]${RES}"
-
 sudo apt-get -y install sway swaybg swaylock \
     autotiling waybar dunst tofi vlc thunar \
     gammastep grimshot wl-clipboard brightnessctl \
@@ -118,14 +111,12 @@ cp -rv config/waybar ~/.config
 cp -rv config/dunst ~/.config
 cp -rv config/sway ~/.config
 cp -rv config/tofi ~/.config
-
 mkdir -p ~/Pictures/walls
 cp -v walls/* ~/Pictures/walls
 
 
 
 echo -e "\naudio ${FG2}[7/${NSTEPS}]${RES}"
-
 sudo apt-get -y install playerctl pipewire \
     pipewire-pulse wireplumber
 
@@ -134,26 +125,21 @@ systemctl --user enable --now pipewire pipewire-pulse wireplumber
 
 
 echo -e "\n${FG4}bluetooth${RES} ${FG2}[7/${NSTEPS}]${RES}"
-
 sudo apt-get -y install bluetooth bluez
 sudo systemctl enable --now bluetooth
 
 
 
 echo -e "\npower ${FG2}[8/${NSTEPS}]${RES}"
-
 sudo apt-get -y tlp thermald
-
 sudo sed -i 's/^#CPU_SCALING_GOVERNOR_ON_BAT=.*/CPU_SCALING_GOVERNOR_ON_BAT=powersave/' /etc/tlp.conf
 sudo sed -i 's/^#START_CHARGE_THRESH_BAT0=.*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
 sudo sed -i 's/^#STOP_CHARGE_THRESH_BAT0=.*/STOP_CHARGE_THRESH_BAT0=80/' /etc/tlp.conf
-
 sudo systemctl enable --now tlp thermald
 
 
 
 echo -e "\nfonts ${FG2}[9/${NSTEPS}]${RES}"
-
 sudo apt-get -y fontconfig fonts-noto
 mkdir -p ~/.local/share/fonts
 
@@ -169,7 +155,6 @@ fi
 
 
 echo -e "\napps ${FG2}[10/${NSTEPS}]${RES}"
-
 sudo apt-get install -y qbittorrent
 
 if ! command -v brave-browser &>/dev/null; then
@@ -179,3 +164,5 @@ fi
 wget -O discord.deb 'https://discord.com/api/download?platform=linux&format=deb'
 sudo apt-get install -y ./discord.deb
 rm discord.deb
+
+echo -e "\n${FG2}installation complete!${RES}"

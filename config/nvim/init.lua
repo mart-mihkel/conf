@@ -9,7 +9,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 
 vim.opt.list = true
-vim.opt.listchars = { tab = "  ", trail = "·" }
+vim.opt.listchars = { tab = "··", trail = "·" }
 vim.opt.breakindent = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
@@ -109,12 +109,6 @@ require("lazy").setup({
             "folke/todo-comments.nvim",
             dependencies = { "nvim-lua/plenary.nvim" },
             opts = { signs = false },
-        },
-        {
-            "j-hui/fidget.nvim",
-            opts = {
-                notification = { window = { winblend = 0 } },
-            },
         },
         {
             "lewis6991/gitsigns.nvim",
@@ -226,6 +220,10 @@ require("lazy").setup({
                 "saghen/blink.cmp",
                 "williamboman/mason.nvim",
                 "williamboman/mason-lspconfig.nvim",
+                {
+                    "j-hui/fidget.nvim",
+                    opts = { notification = { window = { winblend = 0 } } },
+                },
             },
             config = function()
                 vim.diagnostic.config({ virtual_lines = { current_line = true } })
