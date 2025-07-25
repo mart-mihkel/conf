@@ -1,32 +1,18 @@
 #/usr/bin/env bash
 
 ESC="\033"
-FG0="${ESC}[38;5;0m"
-FG1="${ESC}[38;5;1m"
 FG2="${ESC}[38;5;2m"
-FG3="${ESC}[38;5;3m"
-FG4="${ESC}[38;5;4m"
 FG5="${ESC}[38;5;5m"
-FG6="${ESC}[38;5;6m"
-FG7="${ESC}[38;5;7m"
 RES="${ESC}[0m"
-
-NSTEPS=10
 
 set -e
 
-catch_errors() {
-  echo -e "${FG1}installation failed!${RES}"
-}
 
-trap catch_errors ERR
-
-
-echo -e "${FG4}installation starting!${RES}"
-echo -e "\n${FG5}git${RES} ${FG2}[1/${NSTEPS}]${RES}"
+printf "${FG5}installation starting!${RES}\n"
+printf "${FG5}git${RES} ${FG2}[1/9]${RES}\n"
 sudo apt-get -y install git
 
-if [[ ! -e ~/.config/git/config ]]; then
+if [[ ! -e ~/.gitconfig ]]; then
     echo -n "git username: "; read GIT_NAME
     echo -n "git email: "; read GIT_EMAIL
     git config --global user.name $GIT_NAME
@@ -39,49 +25,46 @@ fi
 
 
 
-echo -e "\nterminal ${FG2}[2/${NSTEPS}]${RES}"
+printf "${FG5}terminal${RES} ${FG2}[2/9]${RES}\n"
 sudo apt-get -y install zsh zsh-autosuggestions \
     wget curl tmux vim man-db less foot zip unzip \
-    fzf fastfetch btop jq ripgrep fdfind batcat \
+    fzf fastfetch btop jq ripgrep fd-find bat \
     ca-certificates
 
-cp -rv config/foot ~/.config
-cp -v config/.tmux.conf ~
-cp -v config/.vimrc ~
-cp -v config/.zshrc ~
+cp -r config/foot ~/.config
+cp config/.tmux.conf ~
+cp config/.vimrc ~
+cp config/.zshrc ~
 sudo chsh -s /bin/zsh $USER
-mkdir -p ~/.local/state/vim
 
 
 
-echo -e "\nneovim ${FG2}[3/${NSTEPS}]${RES}"
+printf "${FG5}neovim${RES} ${FG2}[3/9]${RES}\n"
 NVIM_VERSION="v0.11.3"
-rm -r ~/.local/nvim-linux-x86_64
-wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
-tar -xzvf nvim-linux-x86_64.tar.gz -C ~/.local
-ln -s ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
-cp -rv config/nvim ~/.config
-rm -v nvim-linux-x86_64.tar.gz
+wget -q https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
+tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local
+ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
+cp -r config/nvim ~/.config
+rm nvim-linux-x86_64.tar.gz
 
 
 
-echo -e "\ndevel ${FG2}[4/${NSTEPS}]${RES}"
-sudo apt-get -y gcc make cmake golang \
+printf "${FG5}devel${RES} ${FG2}[4/9]${RES}\n"
+sudo apt-get -y install gcc make cmake golang \
     luajit nodejs npm
 
-if ! command -v uv &>/dev/null; then
+if [[ ! command -v uv &>/dev/null ]]; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-if ! command -v cargo &>/dev/null; then
+if [[ ! command -v rustup &>/dev/null ]]; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
 
 
-echo -e "\n${FG4}docker${RES} ${FG2}[5/${NSTEPS}]${RES}"
-
-if ! command -v docker &>/dev/null; then
+printf "${FG5}docker${RES} ${FG2}[5/9]${RES}\n"
+if [[ ! command -v docker &>/dev/null ]]; then
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -96,17 +79,18 @@ if ! command -v docker &>/dev/null; then
         containerd.io docker-buildx-plugin \
         docker-compose-plugin
 
-    sude usermod -aG docker $USER
+    sudo usermod -aG docker $USER
 fi
 
 
-echo -e "\n${FG2}sway${RES} ${FG2}[6/${NSTEPS}]${RES}"
+printf "${FG5}sway${RES} ${FG2}[6/9]${RES}\n"
 sudo apt-get -y install sway swaybg swaylock \
-    autotiling waybar dunst tofi vlc thunar \
-    gammastep grimshot wl-clipboard brightnessctl \
-    dbus xwayland xwaylandvideobridge \
-    xdg-desktop-portal xdg-desktop-portal-wlr
+    autotiling gammastep waybar dunst tofi vlc \
+    thunar grimshot wl-clipboard brightnessctl \
+    xdg-desktop-portal xdg-desktop-portal-wlr \
+    xwayland xwaylandvideobridge dbus
 
+cp -rv config/gammastep ~/.config
 cp -rv config/waybar ~/.config
 cp -rv config/dunst ~/.config
 cp -rv config/sway ~/.config
@@ -116,31 +100,21 @@ cp -v walls/* ~/Pictures/walls
 
 
 
-echo -e "\naudio ${FG2}[7/${NSTEPS}]${RES}"
+printf "${FG5}hardware${RES} ${FG2}[7/9]${RES}\n"
 sudo apt-get -y install playerctl pipewire \
-    pipewire-pulse wireplumber
+    pipewire-pulse wireplumber bluetooth bluez \
+    tlp thermald
 
-systemctl --user enable --now pipewire pipewire-pulse wireplumber
-
-
-
-echo -e "\n${FG4}bluetooth${RES} ${FG2}[7/${NSTEPS}]${RES}"
-sudo apt-get -y install bluetooth bluez
-sudo systemctl enable --now bluetooth
-
-
-
-echo -e "\npower ${FG2}[8/${NSTEPS}]${RES}"
-sudo apt-get -y tlp thermald
 sudo sed -i 's/^#CPU_SCALING_GOVERNOR_ON_BAT=.*/CPU_SCALING_GOVERNOR_ON_BAT=powersave/' /etc/tlp.conf
 sudo sed -i 's/^#START_CHARGE_THRESH_BAT0=.*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
 sudo sed -i 's/^#STOP_CHARGE_THRESH_BAT0=.*/STOP_CHARGE_THRESH_BAT0=80/' /etc/tlp.conf
-sudo systemctl enable --now tlp thermald
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+sudo systemctl enable --now bluetooth tlp thermald
 
 
 
-echo -e "\nfonts ${FG2}[9/${NSTEPS}]${RES}"
-sudo apt-get -y fontconfig fonts-noto
+printf "${FG5}fonts${RES} ${FG2}[8/9]${RES}\n"
+sudo apt-get -y install fontconfig fonts-noto
 mkdir -p ~/.local/share/fonts
 
 if ! fc-list | grep -qi "JetBrainsMono Nerd Font"; then
@@ -154,15 +128,17 @@ fi
 
 
 
-echo -e "\napps ${FG2}[10/${NSTEPS}]${RES}"
+printf "${FG5}apps${RES} ${FG2}[9/9]${RES}\n"
 sudo apt-get install -y qbittorrent
 
-if ! command -v brave-browser &>/dev/null; then
+if [[ ! command -v brave-browser &>/dev/null ]]; then
     curl -fsS https://dl.brave.com/install.sh | sh
 fi
 
-wget -O discord.deb 'https://discord.com/api/download?platform=linux&format=deb'
-sudo apt-get install -y ./discord.deb
-rm discord.deb
+if [[ ! command -v discord &>/dev/null ]]; then
+    wget -qO discord.deb 'https://discord.com/api/download?platform=linux&format=deb'
+    sudo apt-get install -y ./discord.deb
+    rm discord.deb
+fi
 
-echo -e "\n${FG2}installation complete!${RES}"
+printf "${FG2}installation complete!${RES}\n"
