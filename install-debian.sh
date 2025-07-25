@@ -105,6 +105,20 @@ sudo apt-get -y install playerctl pipewire \
     pipewire-pulse wireplumber bluetooth bluez \
     tlp thermald
 
+if [[ ! command -v intel-undervolt &>/dev/null ]]; then
+    git clone https://github.com/kitsunyan/intel-undervolt.git
+    cd intel-undervolt
+    ./configure --enable-systemd
+    make
+    make install
+    cd -
+    rm -rf intel-undervolt
+
+    sudo sed -i "s/^undervolt 0.*/undervolt 0 'CPU' -100/" /etc/intel-undervolt.conf
+    sudo sed -i "s/^undervolt 1.*/undervolt 1 'GPU' -100/" /etc/intel-undervolt.conf
+    sudo sed -i "s/^undervolt 2.*/undervolt 2 'GPU Cache' -100/" /etc/intel-undervolt.conf
+fi
+
 sudo sed -i 's/^#CPU_SCALING_GOVERNOR_ON_BAT=.*/CPU_SCALING_GOVERNOR_ON_BAT=powersave/' /etc/tlp.conf
 sudo sed -i 's/^#START_CHARGE_THRESH_BAT0=.*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
 sudo sed -i 's/^#STOP_CHARGE_THRESH_BAT0=.*/STOP_CHARGE_THRESH_BAT0=80/' /etc/tlp.conf

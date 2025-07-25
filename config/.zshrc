@@ -40,7 +40,7 @@ alias cp="cp -v"
 alias mv="mv -v"
 
 alias ls="ls --color"
-alias la="la -A --color"
+alias la="ls -A --color"
 alias ll="ls -lAh --color"
 
 alias at="source .venv/bin/activate"
