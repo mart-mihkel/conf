@@ -39,17 +39,7 @@ sudo chsh -s /bin/zsh $USER
 
 
 
-printf "${FG5}neovim${RES} ${FG2}[3/9]${RES}\n"
-NVIM_VERSION="v0.11.3"
-wget -q https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
-tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local
-ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
-cp -r config/nvim ~/.config
-rm nvim-linux-x86_64.tar.gz
-
-
-
-printf "${FG5}devel${RES} ${FG2}[4/9]${RES}\n"
+printf "${FG5}devel${RES} ${FG2}[3/9]${RES}\n"
 sudo apt-get -y install gcc make cmake golang \
     luajit nodejs npm
 
@@ -60,6 +50,17 @@ fi
 if [[ ! command -v rustup &>/dev/null ]]; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
+
+
+
+printf "${FG5}neovim${RES} ${FG2}[4/9]${RES}\n"
+NVIM_VERSION="v0.11.3"
+wget -q https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
+tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local
+ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
+cp -r config/nvim ~/.config
+rm nvim-linux-x86_64.tar.gz
+cargo install tree-sitter-cli
 
 
 

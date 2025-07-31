@@ -17,7 +17,7 @@ function pprecmd() {
 }
 
 function tm() {
-    dir=$(fdfind -t=d -d=2 . ~ | fzf)
+    dir=$(fdfind -H -t=d -d=2 . ~ | fzf)
     [[ -z $dir ]] && return
     name=$(basename $dir | tr . _)
     tmux new-session -A -D -c $dir -s $name
@@ -49,6 +49,7 @@ alias jl=".venv/bin/jupyter-lab"
 
 alias vim="nvim"
 alias neofetch="fastfetch --config neofetch"
+alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'
 
 export EDITOR="vim"
 export TERMINAL="foot"
