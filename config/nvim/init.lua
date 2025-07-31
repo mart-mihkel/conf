@@ -2,43 +2,36 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.netrw_banner = false
 
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.cursorline = true
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "80"
-
-vim.opt.list = true
 vim.opt.listchars = { tab = "··", trail = "·" }
-vim.opt.breakindent = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-
-vim.opt.winborder = "single"
-vim.opt.clipboard = "unnamedplus"
 vim.opt.guicursor = "n-v-c-i:block-nCursor"
+vim.opt.clipboard = "unnamedplus"
+vim.opt.relativenumber = true
 vim.opt.termguicolors = true
-
+vim.opt.winborder = "single"
+vim.opt.breakindent = true
+vim.opt.colorcolumn = "80"
+vim.opt.signcolumn = "yes"
+vim.opt.ignorecase = true
+vim.opt.cursorline = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.laststatus = 3
-vim.opt.scrolloff = 4
-
-vim.opt.ignorecase = true
+vim.opt.expandtab = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = false
-
 vim.opt.undofile = true
+vim.opt.shiftwidth = 4
+vim.opt.laststatus = 3
+vim.opt.number = true
+vim.opt.scrolloff = 4
 vim.opt.wrap = false
+vim.opt.list = true
+vim.opt.tabstop = 4
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
-
 vim.keymap.set({ "n", "v" }, "<C-D>", "<C-D>zz")
 vim.keymap.set({ "n", "v" }, "<C-U>", "<C-U>zz")
-
 vim.keymap.set({ "n", "v" }, "<C-j>", "<cmd>cnext<CR>")
 vim.keymap.set({ "n", "v" }, "<C-k>", "<cmd>cprevious<CR>")
 vim.keymap.set({ "n", "v" }, "<C-l>", "<cmd>lnext<CR>")
@@ -49,6 +42,64 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank()
     end,
+})
+
+vim.pack.add({
+    { src = "https://github.com/tpope/vim-sleuth" },
+    { src = "https://github.com/gbprod/nord.nvim" },
+    { src = "https://github.com/j-hui/fidget.nvim" },
+    { src = "https://github.com/nvim-lua/plenary.nvim" },
+    { src = "https://github.com/stevearc/conform.nvim" },
+    { src = "https://github.com/neovim/nvim-lspconfig" },
+    { src = "https://github.com/lewis6991/gitsigns.nvim" },
+    { src = "https://github.com/williamboman/mason.nvim" },
+    { src = "https://github.com/folke/todo-comments.nvim" },
+    { src = "https://github.com/rafamadriz/friendly-snippets" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/williamboman/mason-lspconfig.nvim" },
+    { src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
+    { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
+    {
+        src = "https://github.com/nvim-telescope/telescope.nvim",
+        version = "0.1.8",
+    },
+})
+
+require("nord").setup({ transparent = true })
+
+vim.cmd.colorscheme("nord")
+
+vim.diagnostic.config({ virtual_lines = { current_line = true } })
+
+vim.lsp.config("*", {
+    root_markers = { ".git" },
+    capabilities = require("blink.cmp").get_lsp_capabilities({
+        textDocument = {
+            foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            },
+        },
+    }),
+})
+
+vim.lsp.config("lua_ls", {
+    settings = {
+        Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
+        },
+    },
+})
+
+vim.lsp.config("rust_analyzer", {
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = { features = "all" },
+            check = { command = "clippy" },
+            interpret = { tests = true },
+        },
+    },
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -63,205 +114,92 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
--- NOTE: see telescope.nvim#3436
-vim.api.nvim_create_autocmd("User", {
-    pattern = "TelescopeFindPre",
-    callback = function()
-        vim.opt_local.winborder = "none"
-        vim.api.nvim_create_autocmd("WinLeave", {
-            once = true,
-            callback = function()
-                vim.opt_local.winborder = "single"
-            end,
-        })
-    end,
+require("mason").setup()
+require("mason-lspconfig").setup()
+
+require("todo-comments").setup({ signs = false })
+
+require("fidget").setup({
+    notification = { window = { winblend = 0 } },
 })
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--branch=stable",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    })
-end
+require("nvim-treesitter.configs").setup({
+    auto_install = true,
+    sync_install = false,
+    highlight = { enable = true },
+})
 
-vim.opt.rtp:prepend(lazypath)
+require("gitsigns").setup({
+    signs = {
+        add = { text = "+" },
+        change = { text = "~" },
+        delete = { text = "-" },
+        topdelete = { text = "-" },
+    },
+    signs_staged_enable = false,
+})
 
-require("lazy").setup({
-    change_detection = { notify = false },
-    spec = {
-        { "tpope/vim-sleuth" },
-        { "norcalli/nvim-colorizer.lua" },
-        {
-            "gbprod/nord.nvim",
-            lazy = false,
-            priority = 1000,
-            config = function()
-                require("nord").setup({ transparent = true })
-                vim.cmd.colorscheme("nord")
-            end,
-        },
-        {
-            "folke/todo-comments.nvim",
-            dependencies = { "nvim-lua/plenary.nvim" },
-            opts = { signs = false },
-        },
-        {
-            "lewis6991/gitsigns.nvim",
-            config = function()
-                require("gitsigns").setup({
-                    signs = {
-                        add = { text = "+" },
-                        change = { text = "~" },
-                        delete = { text = "-" },
-                        topdelete = { text = "-" },
-                    },
-                    signs_staged_enable = false,
-                })
+vim.keymap.set({ "n", "v" }, "gb", "<cmd>Gitsigns blame_line<CR>")
+vim.keymap.set({ "n", "v" }, "gp", "<cmd>Gitsigns preview_hunk<CR>")
 
-                vim.keymap.set({ "n", "v" }, "gb", "<cmd>Gitsigns blame_line<CR>")
-                vim.keymap.set({ "n", "v" }, "gp", "<cmd>Gitsigns preview_hunk<CR>")
-            end,
-        },
-        {
-            "nvim-treesitter/nvim-treesitter",
-            build = ":TSUpdate",
-            main = "nvim-treesitter.configs",
-            opts = {
-                auto_install = true,
-                sync_install = false,
-                indent = { enable = true },
-                highlight = { enable = true },
-            },
-        },
-        {
-            "nvim-telescope/telescope.nvim",
-            tag = "0.1.8",
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            },
-            config = function()
-                local telescope = require("telescope")
-                local builtin = require("telescope.builtin")
-
-                telescope.setup()
-                telescope.load_extension("fzf")
-
-                vim.keymap.set("n", "<leader>sr", builtin.resume)
-                vim.keymap.set("n", "<leader>sb", builtin.buffers)
-                vim.keymap.set("n", "<leader>so", builtin.oldfiles)
-                vim.keymap.set("n", "<leader>sh", builtin.help_tags)
-                vim.keymap.set("n", "<leader>sg", builtin.live_grep)
-                vim.keymap.set("n", "<leader>sd", builtin.diagnostics)
-
-                vim.keymap.set("n", "<leader>sf", function()
-                    if vim.uv.fs_stat(".git") then
-                        builtin.git_files({ show_untracked = true })
-                    else
-                        builtin.find_files()
-                    end
-                end)
-            end,
-        },
-        {
-            "saghen/blink.cmp",
-            dependencies = { "rafamadriz/friendly-snippets" },
-            version = "1.*",
-            opts = {
-                keymap = {
-                    preset = "default",
-                    ["<Tab>"] = { "accept", "fallback" },
-                },
-                completion = {
-                    accept = { auto_brackets = { enabled = false } },
-                    menu = {
-                        draw = {
-                            columns = {
-                                { "label", "label_description", gap = 1 },
-                                { "kind" },
-                            },
-                        },
-                    },
-                },
-            },
-            opts_extend = { "sources.default" },
-        },
-        {
-            "stevearc/conform.nvim",
-            config = function()
-                local conform = require("conform")
-                conform.setup({
-                    formatters_by_ft = {
-                        json = { "jq" },
-                        lua = { "stylua" },
-                        nix = { "alejandra" },
-                        python = { "ruff_format" },
-                        css = { "prettierd" },
-                        html = { "prettierd" },
-                        javascript = { "prettierd" },
-                        typescript = { "prettierd" },
-                        javascriptreact = { "prettierd" },
-                        typescriptreact = { "prettierd" },
-                    },
-                    default_format_opts = { async = true, lsp_format = "fallback" },
-                })
-
-                vim.keymap.set("n", "<leader>f", conform.format)
-            end,
-        },
-        {
-            "neovim/nvim-lspconfig",
-            dependencies = {
-                "saghen/blink.cmp",
-                "williamboman/mason.nvim",
-                "williamboman/mason-lspconfig.nvim",
-                {
-                    "j-hui/fidget.nvim",
-                    opts = { notification = { window = { winblend = 0 } } },
-                },
-            },
-            config = function()
-                vim.diagnostic.config({ virtual_lines = { current_line = true } })
-
-                vim.lsp.config("*", {
-                    root_markers = { ".git" },
-                    capabilities = require("blink.cmp").get_lsp_capabilities({
-                        textDocument = {
-                            foldingRange = {
-                                dynamicRegistration = false,
-                                lineFoldingOnly = true,
-                            },
-                        },
-                    }),
-                })
-
-                vim.lsp.config("lua_ls", {
-                    settings = {
-                        Lua = {
-                            runtime = { version = "LuaJIT" },
-                            diagnostics = { globals = { "vim" } },
-                        },
-                    },
-                })
-
-                vim.lsp.config("rust_analyzer", {
-                    settings = {
-                        ["rust-analyzer"] = {
-                            cargo = { features = "all" },
-                            check = { command = "clippy" },
-                            interpret = { tests = true },
-                        },
-                    },
-                })
-
-                require("mason").setup()
-                require("mason-lspconfig").setup()
-            end,
+require("telescope").setup({
+    defaults = {
+        layout_config = {
+            width = { padding = 0 },
+            height = { padding = 0 },
         },
     },
 })
+
+require("telescope").load_extension("fzf")
+
+vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume)
+vim.keymap.set("n", "<leader>sb", require("telescope.builtin").buffers)
+vim.keymap.set("n", "<leader>so", require("telescope.builtin").oldfiles)
+vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags)
+vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep)
+vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics)
+vim.keymap.set("n", "<leader>sf", function()
+    if vim.uv.fs_stat(".git") then
+        require("telescope.builtin").git_files({ show_untracked = true })
+    else
+        require("telescope.builtin").find_files()
+    end
+end)
+
+require("blink.cmp").setup({
+    keymap = {
+        preset = "default",
+        ["<Tab>"] = { "accept", "fallback" },
+    },
+    completion = {
+        accept = { auto_brackets = { enabled = false } },
+        menu = {
+            draw = {
+                columns = {
+                    { "label", "label_description", gap = 1 },
+                    { "kind" },
+                },
+            },
+        },
+    },
+})
+
+require("conform").setup({
+    formatters_by_ft = {
+        json = { "jq" },
+        jsonc = { "jq" },
+        lua = { "stylua" },
+        nix = { "alejandra" },
+        css = { "prettierd" },
+        html = { "prettierd" },
+        python = { "ruff_format" },
+        javascript = { "prettierd" },
+        typescript = { "prettierd" },
+        javascriptreact = { "prettierd" },
+        typescriptreact = { "prettierd" },
+    },
+    default_format_opts = { async = true, lsp_format = "fallback" },
+})
+
+vim.keymap.set("n", "<leader>f", require("conform").format)
