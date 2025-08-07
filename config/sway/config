@@ -1,7 +1,6 @@
 set $wallpaper ~/Pictures/walls/opattern.png
+set $lockpaper ~/Pictures/walls/xpattern.png
 
-tiling_drag modifier
-floating_modifier Mod4
 focus_follows_mouse yes
 
 gaps inner 12
@@ -25,18 +24,16 @@ input type:keyboard {
     repeat_delay 256
 }
 
-input type:touchpad {
-    tap enabled
-}
+input type:touchpad tap enabled
+
+output eDP-1 background $wallpaper fill
 
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 2%-
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl s +2%
-
 bindsym XF86AudioLowerVolume  exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 bindsym XF86AudioRaiseVolume  exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
 bindsym XF86AudioMicMute      exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym XF86AudioMute         exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-
 bindsym XF86AudioPause        exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
@@ -46,9 +43,8 @@ bindsym Control+Print         exec --no-startup-id grimshot --notify savecopy sc
 bindsym Mod1+Print            exec --no-startup-id grimshot --notify savecopy window
 bindsym Print                 exec --no-startup-id grimshot --notify savecopy area
 
-bindsym Mod4+Shift+c          exec --no-startup-id swaylock -u -i $wallpaper
+bindsym Mod4+Shift+c          exec --no-startup-id swaylock -u -i $lockpaper
 bindsym Mod4+r                exec --no-startup-id tofi-drun
-bindsym Mod4+e                exec --no-startup-id thunar
 bindsym Mod4+q                exec --no-startup-id foot
 
 bindsym Mod4+f fullscreen toggle
@@ -92,8 +88,6 @@ bindsym Mod4+Shift+0 move container to workspace number 10
 
 exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec --no-startup-id systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
-
-exec --no-startup-id swaybg -m fill -i $wallpaper
 exec --no-startup-id autotiling
 exec --no-startup-id gammastep
 exec --no-startup-id waybar
