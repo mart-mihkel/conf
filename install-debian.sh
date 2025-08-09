@@ -1,7 +1,5 @@
 #/usr/bin/env bash
 
-# TODO: optional (prompted?) overrides to reinstall/update
-
 ESC="\033"
 FG1="${ESC}[38;5;1m"
 FG2="${ESC}[38;5;2m"
@@ -11,7 +9,7 @@ RES="${ESC}[0m"
 set -e
 
 if ! grep -qi debian /etc/os-release > /dev/null 2>&1; then
-    printf "${FG1}install cancelled: only debian supported${RES}\n"
+    printf "${FG1}install cancelled${RES}: only debian supported\n"
     exit 1
 fi
 
@@ -42,6 +40,22 @@ printf "\n${FG5}terminal${RES} ${FG2}[2/9]${RES}\n"
 sudo apt-get -y install zsh zsh-autosuggestions wget curl tmux vim man-db \
     less zip unzip fzf fastfetch btop jq ripgrep fd-find bat ca-certificates
 
+if ! command -v cloudflared > /dev/null 2>&1; then
+    sudo mkdir -p --mode=0755 /usr/share/keyrings
+
+    curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | \
+        sudo tee /usr/share/keyrings/cloudflare-main.gpg > /dev/null
+
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] \
+        https://pkg.cloudflare.com/cloudflared any main" | \
+        sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+    sudo apt-get update
+    sudo apt-get install cloudflared
+else
+    printf "cloudflared already installed\n"
+fi
+
 sudo chsh -s $(which zsh) $USER
 
 mkdir -p $HOME/.config
@@ -54,7 +68,9 @@ cp -v config/.zshrc $HOME
 
 
 printf "\n${FG5}devel${RES} ${FG2}[3/9]${RES}\n"
-sudo apt-get -y install gcc make cmake golang luajit nodejs npm
+
+sudo apt-get -y install gcc make cmake meson ninja-build golang luajit nodejs \
+    npm
 
 if ! command -v uv > /dev/null 2>&1; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -73,11 +89,9 @@ fi
 printf "\n${FG5}neovim${RES} ${FG2}[4/9]${RES}\n"
 
 if ! command -v nvim >/dev/null 2>&1; then
-    NVIM_VERSION="v0.11.3"
-
     mkdir -p $HOME/.local/bin
 
-    wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-x86_64.tar.gz
+    wget https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.tar.gz
     tar -xzf nvim-linux-x86_64.tar.gz -C $HOME/.local
     ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
     rm nvim-linux-x86_64.tar.gz
@@ -159,7 +173,7 @@ if ! command -v auto-cpufreq > /dev/null 2>&1; then
 
     cd $HOME/git/auto-cpufreq
     sudo ./auto-cpufreq-installer
-    suod auto-cpufreq --install
+    sudo auto-cpufreq --install
     cd -
 else
     printf "auto-cpufreq already installed\n"
