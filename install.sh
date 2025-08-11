@@ -153,8 +153,8 @@ cp -rv walls $HOME/Pictures
 
 printf "\n${FG5}hardware${RES} ${FG2}[7/9]${RES}\n"
 
-sudo apt-get -y install playerctl pipewire pipewire-pulse wireplumber \
-    bluetooth bluez thermald
+sudo apt-get -y install playerctl pipewire pipewire-pulse pipewire-audio \
+    wireplumber bluetooth bluez thermald zram-tools
 
 if ! command -v intel-undervolt > /dev/null 2>&1; then
     mkdir -p $HOME/git
@@ -186,7 +186,7 @@ else
 fi
 
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
-sudo systemctl enable --now bluetooth thermald intel-undervolt
+sudo systemctl enable --now bluetooth thermald intel-undervolt zramswap
 
 
 
