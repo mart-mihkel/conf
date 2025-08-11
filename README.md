@@ -1,6 +1,6 @@
 # Conf
 
-Dotfiles and setup script for debian trixie, run `install-debian.sh`
+Dotfiles and setup script for debian trixie, install with `./install.sh`.
 
 Configs of old rices are on their respective branches
 

@@ -1,88 +1,38 @@
 {
-  "spacing": 16,
+  "spacing": 24,
   "modules-left": [
     "sway/workspaces",
     "tray"
-  ],
-  "modules-center": [
-    "clock"
   ],
   "modules-right": [
     "network",
     "bluetooth",
     "wireplumber",
     "backlight",
-    "battery"
+    "battery",
+    "clock"
   ],
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "format": "{icon}",
-    "format-icons": {
-      "urgent": "",
-      "focused": "",
-      "default": ""
-    }
-  },
   "tray": {
     "icon-size": 12
   },
-  "clock": {
-    "format": "󰃰 {:%A, %B-%d %H:%M}"
-  },
   "network": {
-    "format-wifi": "{icon}{signalStrength}%",
-    "format-disconnected": "󰤮 ",
-    "format-icons": [
-      "󰤯 ",
-      "󰤟 ",
-      "󰤢 ",
-      "󰤥 ",
-      "󰤨 "
-    ]
+    "format-wifi": "net: {signalStrength}%",
+    "format-ethernet": "net: eth",
+    "format-disconnected": "net: off"
   },
   "bluetooth": {
-    "format": "",
-    "format-connected": "󰂱",
-    "format-connected-battery": "󰂱 {device_battery_percentage}%"
-  },
-  "backlight": {
-    "format": "{icon}{percent}%",
-    "format-icons": [
-      "󰃞 ",
-      "󰃟 ",
-      "󰃠 "
-    ]
+    "format": "blu: off",
+    "format-connected": "blu: con",
+    "format-connected-battery": "blu: {device_battery_percentage}%"
   },
   "wireplumber": {
-    "format": "{icon}{volume}%",
-    "format-muted": "󰖁 {volume}%",
-    "format-icons": {
-      "default": [
-        "󰕾 ",
-        "󰖀 ",
-        "󰕿 "
-      ]
-    }
+    "format": "vol: {volume}%",
+    "format-muted": "vol: off"
+  },
+  "backlight": {
+    "format": "bkl: {percent}%"
   },
   "battery": {
-    "format": "{icon}{capacity}%",
-    "format-charging": "󱐋{icon}{capacity}%",
-    "format-icons": [
-      "󰁺 ",
-      "󰁻 ",
-      "󰁼 ",
-      "󰁽 ",
-      "󰁾 ",
-      "󰁿 ",
-      "󰂀 ",
-      "󰂁 ",
-      "󰂂 ",
-      "󰁹 "
-    ],
-    "states": {
-      "critical": 10,
-      "warning": 20
-    }
+    "format": "bat: {capacity}%"
   }
 }

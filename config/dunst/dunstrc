@@ -2,18 +2,14 @@
 font          = Jetbrains Mono Nerd Font 10
 format        = "%s\n%b"
 markup        = full
-
 alignment     = right
 icon_position = right
-
 width         = (16, 512)
 height        = (16, 256)
-offset        = (10, 10)
-
+offset        = (16, 16)
 min_icon_size = 64
 max_icon_size = 64
 frame_width   = 2
-
 foreground    = "#d8dee9"
 background    = "#2e3440"
 
