@@ -23,6 +23,9 @@ fi
 
 printf "\n${FG2}install starting!${RES}\n"
 
+sudo apt-get update
+sudo apt-get upgrade -y
+
 printf "\n${FG5}git${RES} ${FG2}[1/9]${RES}\n"
 
 sudo apt-get -y install git
@@ -213,6 +216,14 @@ fi
 
 printf "\n${FG5}apps${RES} ${FG2}[9/9]${RES}\n"
 
+if ! command -v qdigidoc4 > /dev/null 2>&1; then
+    sudo apt-get install -y pcscd
+    git clone https://github.com/open-eid/linux-installer.git /tmp/linux-installer
+    /tmp/linux-installer/install-open-eid.sh
+else
+    printf "qdigidoc4 already installed\n"
+fi
+
 if ! command -v brave-browser > /dev/null 2>&1; then
     curl -fsS https://dl.brave.com/install.sh | sh
 else
@@ -226,5 +237,7 @@ if ! command -v discord > /dev/null 2>&1; then
 else
     printf "discord already installed\n"
 fi
+
+sudo apt modernize-sources -y
 
 printf "\n${FG2}install finished!${RES}\n"
