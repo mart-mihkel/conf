@@ -23,6 +23,8 @@ source ~/.cargo/env
 source ~/.local/bin/env
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+eval "$(direnv hook zsh)"
+
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
