@@ -90,7 +90,7 @@ vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume)
 vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep)
 vim.keymap.set("n", "<leader>sf", function()
-    if vim.uv.fs_stat(".git") then
+    if vim.fs.find(".git", { upward = true, type = "directory" })[1] ~= nil then
         require("telescope.builtin").git_files({ show_untracked = true })
     else
         require("telescope.builtin").find_files()
