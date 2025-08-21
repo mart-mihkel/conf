@@ -42,7 +42,6 @@ vim.cmd.colorscheme("habamax")
 vim.diagnostic.config({ virtual_text = { current_line = true } })
 vim.lsp.config("*", {
     root_markers = { ".git" },
-    capabilities = require("blink.cmp").get_lsp_capabilities(),
 })
 
 require("mason").setup()
