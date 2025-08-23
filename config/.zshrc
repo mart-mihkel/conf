@@ -14,14 +14,11 @@ setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/bin/env
 source ~/.cargo/env
+alias vim="nvim"
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
-alias vim="nvim"
-alias fd="fdfind"
-alias bat="batcat"
-alias ls="ls --color"
-alias ll="ls -lAh --color"
+alias ll="ls -lah --color"
 alias venv="source .venv/bin/activate"
 alias sway="XDG_SCREENSHOTS_DIR=$HOME/Pictures/screenshots sway"
 alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'

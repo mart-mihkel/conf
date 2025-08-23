@@ -91,9 +91,14 @@ fi
 
 if ! command -v rustup > /dev/null 2>&1; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    source ~/.cargo/env
 else
     printf "rust already installed\n"
 fi
+
+mkdir -p $HOME/.config
+
+cp -rv config/direnv $HOME/.config
 
 
 
@@ -109,7 +114,7 @@ if ! command -v nvim > /dev/null 2>&1; then
     ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
     rm nvim-linux-x86_64.tar.gz
 
-    $HOME/.cargo/bin/cargo install tree-sitter-cli
+    cargo install tree-sitter-cli
 else
     printf "neovim already installed\n"
 fi
