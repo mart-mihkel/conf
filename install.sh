@@ -67,7 +67,6 @@ fi
 sudo chsh -s $(which zsh) $USER
 
 cp -v config/.tmux.conf $HOME
-cp -v config/.vimrc $HOME
 cp -v config/.zshrc $HOME
 
 
