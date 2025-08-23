@@ -33,13 +33,10 @@ sudo apt-get -y install git
 if [ ! -e $HOME/.gitconfig ]; then
     echo -n "git username: "; read GIT_NAME
     echo -n "git email: "; read GIT_EMAIL
-
     git config --global user.name $GIT_NAME
     git config --global user.email $GIT_EMAIL
     git config --global core.editor nvim
     git config --global pull.rebase true
-    git config --global init.defaultBranch main
-    git config --global url."git@github.com:".insteadOf gh:
 else
     printf "git already configured\n"
 fi
@@ -49,7 +46,7 @@ fi
 printf "\n${FG5}terminal${RES} ${FG2}[2/9]${RES}\n"
 
 sudo apt-get -y install zsh zsh-autosuggestions wget curl tmux vim man-db \
-    less zip unzip fzf fastfetch btop jq ripgrep fd-find bat ca-certificates
+    less zip unzip btop jq ripgrep fd-find bat ca-certificates
 
 if ! command -v cloudflared > /dev/null 2>&1; then
     sudo mkdir -p --mode=0755 /usr/share/keyrings
@@ -84,6 +81,12 @@ if ! command -v uv > /dev/null 2>&1; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 else
     printf "uv already installed\n"
+fi
+
+if [ ! -d $HOME/.local/share/pnpm ]; then
+    curl -fsSL https://get.pnpm.io/install.sh | sh -
+else
+    printf "pnpm already installed\n"
 fi
 
 if ! command -v rustup > /dev/null 2>&1; then
@@ -137,8 +140,8 @@ fi
 
 printf "\n${FG5}sway${RES} ${FG2}[6/9]${RES}\n"
 
-sudo apt-get -y install sway swaybg swaylock autotiling gammastep waybar \
-    alacritty dunst tofi vlc thunar grimshot wl-clipboard brightnessctl dbus \
+sudo apt-get install -y sway swaybg swaylock autotiling gammastep waybar \
+    alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl dbus \
     xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge
 
 mkdir -p $HOME/.config
@@ -147,7 +150,6 @@ mkdir -p $HOME/Pictures/walls
 cp -rv config/alacritty $HOME/.config
 cp -rv config/gammastep $HOME/.config
 cp -rv config/waybar $HOME/.config
-cp -rv config/dunst $HOME/.config
 cp -rv config/sway $HOME/.config
 cp -rv config/tofi $HOME/.config
 cp -rv walls $HOME/Pictures
@@ -169,9 +171,9 @@ if ! command -v intel-undervolt > /dev/null 2>&1; then
     sudo make install
     cd -
 
-    sudo sed -i "s/^undervolt 0.*/undervolt 0 'CPU' -100/" /etc/intel-undervolt.conf
-    sudo sed -i "s/^undervolt 1.*/undervolt 1 'GPU' -100/" /etc/intel-undervolt.conf
-    sudo sed -i "s/^undervolt 2.*/undervolt 2 'GPU Cache' -100/" /etc/intel-undervolt.conf
+    sudo sed -i "s|^undervolt 0.*|undervolt 0 'CPU' -100|" /etc/intel-undervolt.conf
+    sudo sed -i "s|^undervolt 1.*|undervolt 1 'GPU' -100|" /etc/intel-undervolt.conf
+    sudo sed -i "s|^undervolt 2.*|undervolt 2 'GPU Cache' -100|" /etc/intel-undervolt.conf
 else
     printf "intel-undervolt already installed\n"
 fi

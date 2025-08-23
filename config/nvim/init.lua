@@ -1,52 +1,45 @@
 vim.g.mapleader = " "
 vim.g.netrw_banner = false
-
-vim.o.guicursor = "n-v-c-i:block-nCursor"
 vim.o.clipboard = "unnamedplus"
-vim.o.signcolumn = "yes"
-vim.o.colorcolumn = "80"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
-vim.o.breakindent = true
+vim.o.winborder = "single"
+vim.o.signcolumn = "yes"
+vim.o.colorcolumn = "80"
 vim.o.ignorecase = true
 vim.o.cursorline = true
-vim.o.splitright = true
-vim.o.splitbelow = true
 vim.o.expandtab = true
 vim.o.smartcase = true
-vim.o.incsearch = true
 vim.o.swapfile = false
 vim.o.hlsearch = false
 vim.o.undofile = true
+vim.o.laststatus = 3
+vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = false
 vim.o.list = true
-vim.o.shiftwidth = 4
-vim.o.scrolloff = 4
 vim.o.tabstop = 4
 
 vim.pack.add({
-    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/vague2k/vague.nvim",
+    "https://github.com/echasnovski/mini.pick",
     "https://github.com/stevearc/conform.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/williamboman/mason.nvim",
     "https://github.com/NMAC427/guess-indent.nvim",
-    "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/williamboman/mason-lspconfig.nvim",
     { src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
 })
 
-vim.cmd.colorscheme("habamax")
+vim.cmd.colorscheme("vague")
+vim.lsp.config("*", { root_markers = { ".git" } })
 vim.diagnostic.config({ virtual_text = { current_line = true } })
-vim.lsp.config("*", {
-    root_markers = { ".git" },
-})
 
 require("mason").setup()
 require("gitsigns").setup()
-require("telescope").setup()
+require("mini.pick").setup()
 require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
@@ -56,43 +49,39 @@ require("nvim-treesitter.configs").setup({
 })
 
 require("conform").setup({
-    default_format_opts = { async = true, lsp_format = "fallback" },
+    default_format_opts = { lsp_format = "fallback" },
     formatters_by_ft = {
         json = { "jq" },
         lua = { "stylua" },
+        nix = { "alejandra" },
         css = { "prettierd" },
         html = { "prettierd" },
         python = { "ruff_format" },
-        javascript = { "prettierd" },
         typescript = { "prettierd" },
+        typescriptreact = { "prettierd" },
     },
 })
 
-vim.keymap.set({ "n", "v" }, "j", "gj")
-vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "<C-j>", ":cnext<CR>")
 vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
-vim.keymap.set("n", "<C-l>", ":lnext<CR>")
-vim.keymap.set("n", "<C-h>", ":lprevious<CR>")
-vim.keymap.set("n", "<M-t>", ":tabnew<CR>")
-for i = 1, 10 do
-    vim.keymap.set("n", "<M-" .. i .. ">", i .. "gt")
-end
-
+vim.keymap.set("n", "<C-j>", ":cnext<CR>")
+vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
+vim.keymap.set("n", "<M-1>", "1gt")
+vim.keymap.set("n", "<M-2>", "2gt")
+vim.keymap.set("n", "<M-3>", "3gt")
+vim.keymap.set("n", "<M-4>", "4gt")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
-vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
 vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
-vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume)
-vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep)
+vim.keymap.set("n", "<leader>sr", require("mini.pick").builtin.resume)
+vim.keymap.set("n", "<leader>sg", require("mini.pick").builtin.grep_live)
 vim.keymap.set("n", "<leader>sf", function()
-    if vim.fs.find(".git", { upward = true, type = "directory" })[1] ~= nil then
-        require("telescope.builtin").git_files({ show_untracked = true })
+    if vim.uv.fs_stat(".git") then
+        require("mini.pick").builtin.files({ tool = "git" })
     else
-        require("telescope.builtin").find_files()
+        require("mini.pick").builtin.files()
     end
 end)

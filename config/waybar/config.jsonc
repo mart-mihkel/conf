@@ -1,14 +1,13 @@
 {
   "spacing": 24,
   "modules-left": [
-    "sway/workspaces",
-    "tray"
+    "sway/workspaces"
   ],
   "modules-right": [
+    "tray",
     "network",
     "bluetooth",
     "wireplumber",
-    "backlight",
     "battery",
     "clock"
   ],
@@ -21,16 +20,13 @@
     "format-disconnected": "net: off"
   },
   "bluetooth": {
-    "format": "blu: off",
-    "format-connected": "blu: con",
-    "format-connected-battery": "blu: {device_battery_percentage}%"
+    "format": "blt: off",
+    "format-connected": "blt: con",
+    "format-connected-battery": "blt: {device_battery_percentage}%"
   },
   "wireplumber": {
     "format": "vol: {volume}%",
     "format-muted": "vol: off"
-  },
-  "backlight": {
-    "format": "bkl: {percent}%"
   },
   "battery": {
     "format": "bat: {capacity}%"

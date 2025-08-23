@@ -31,7 +31,7 @@ bindsym Print+Control exec grimshot --notify savecopy screen
 bindsym Print+Mod1 exec grimshot --notify savecopy window
 bindsym Print exec grimshot --notify savecopy area
 
-bindsym Mod4+Shift+c exec swaylock -uei ~/Pictures/walls/debian.png
+bindsym Mod4+Shift+c exec swaylock -uei ~/Pictures/walls/flowers.png
 bindsym Mod4+period exec tofi-emoji
 bindsym Mod4+r exec tofi-drun
 bindsym Mod4+q exec alacritty
@@ -80,4 +80,3 @@ exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
 exec autotiling
 exec gammastep
 exec waybar
-exec dunst
