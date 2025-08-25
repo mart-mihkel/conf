@@ -74,7 +74,7 @@ cp -v config/.zshrc $HOME
 printf "\n${FG5}devel${RES} ${FG2}[3/9]${RES}\n"
 
 sudo apt-get -y install gcc make cmake meson ninja-build golang luajit nodejs \
-    npm direnv
+    npm direnv default-jre default-jdk maven gradle
 
 if ! command -v uv > /dev/null 2>&1; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
