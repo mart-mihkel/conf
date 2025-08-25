@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 use_nvm() {
-    if [[ -e ~/.nvm/nvm.sh ]]; then
-        source ~/.nvm/nvm.sh
+    if [ -e $HOME/.nvm/nvm.sh ]; then
+        source $HOME/.nvm/nvm.sh
         nvm use $1
     fi
 }
@@ -12,20 +12,20 @@ layout_lombok() {
 }
 
 layout_pnpm() {
-    PNPM_HOME=~/.local/share/pnpm
-    if [[ -d $PNPM_HOME ]]; then
+    PNPM_HOME=$HOME/.local/share/pnpm
+    if [ -d $PNPM_HOME ]; then
         PATH_add $PNPM_HOME
         export PNPM_HOME
     fi
 }
 
 layout_uv() {
-    VIRTUAL_ENV="$(pwd)/.venv"
-    if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+    VIRTUAL_ENV=$(pwd)/.venv
+    if [ ! -d $VIRTUAL_ENV ]; then
         uv venv
     fi
 
-    PATH_add "$VIRTUAL_ENV/bin"
+    PATH_add $VIRTUAL_ENV/bin
     export VIRTUAL_ENV
     export UV_ACTIVE=1
 }

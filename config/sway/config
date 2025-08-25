@@ -1,11 +1,10 @@
-gaps inner 12
-
+gaps inner 4
+gaps outer 8
+default_border none
 floating_modifier Mod4
 focus_follows_mouse yes
 
-default_border none
-default_floating_border none
-
+input type:touchpad tap enabled
 input type:keyboard {
     xkb_layout ee
     xkb_variant nodeadkeys
@@ -13,35 +12,34 @@ input type:keyboard {
     repeat_delay 256
 }
 
-input type:touchpad tap enabled
-
 output * background ~/Pictures/walls/flowers.png fill
 
-bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
-bindsym XF86MonBrightnessUp exec brightnessctl s +2%
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
+exec autotiling
+exec gammastep
+exec waybar
+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
 bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
+bindsym XF86MonBrightnessUp exec brightnessctl s +2%
 bindsym XF86AudioPause exec playerctl play-pause
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioNext exec playerctl next
-bindsym Print+Control exec grimshot --notify savecopy screen
-bindsym Print+Mod1 exec grimshot --notify savecopy window
 bindsym Print exec grimshot --notify savecopy area
-
-bindsym Mod4+Shift+c exec swaylock -uei ~/Pictures/walls/flowers.png
-bindsym Mod4+period exec tofi-emoji
+bindsym Mod4+n exec swaylock -uei ~/Pictures/walls/flowers.png
+bindsym Mod4+e exec tofi-emoji
 bindsym Mod4+r exec tofi-drun
 bindsym Mod4+q exec alacritty
 
 bindsym Mod4+f fullscreen toggle
 bindsym Mod4+v floating toggle
 bindsym Mod4+c kill
-
-bindsym Mod4+Shift+r reload
-bindsym Mod4+Shift+e exit
+bindsym Mod4+m exit
 
 bindsym Mod4+h focus left
 bindsym Mod4+j focus down
@@ -74,9 +72,3 @@ bindsym Mod4+Shift+7 move container to workspace number 7
 bindsym Mod4+Shift+8 move container to workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10
-
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
-exec autotiling
-exec gammastep
-exec waybar
