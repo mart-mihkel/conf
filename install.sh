@@ -6,6 +6,10 @@ FG2="${ESC}[38;5;2m"
 FG5="${ESC}[38;5;5m"
 RES="${ESC}[0m"
 
+BIN=$HOME/.local/bin
+CFG=$HOME/.config
+GIT=$HOME/git
+
 set -e
 
 while getopts "f" ARG; do
@@ -16,234 +20,161 @@ while getopts "f" ARG; do
 done
 
 if ! grep -qi debian /etc/os-release > /dev/null 2>&1 && [ -z $FORCE ]; then
-    printf "${FG1}install cancelled${RES}: "
-    printf "only debian supported, use -f to force\n"
+    printf "${FG1}install cancelled${RES}: only debian supported, use -f to force\n"
     exit 1
 fi
 
-printf "\n${FG2}install starting!${RES}\n"
+printf "${FG2}install starting!${RES}\n"
+printf "${FG2}installing${RES}: devel\n"
+sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
+    zip unzip jq ripgrep fd-find ca-certificates gcc make cmake meson \
+    ninja-build golang luajit nodejs npm direnv default-jre default-jdk \
+    maven gradle
 
-sudo apt-get update
-sudo apt-get upgrade -y
-
-printf "\n${FG5}git${RES} ${FG2}[1/9]${RES}\n"
-
-sudo apt-get -y install git
+sudo chsh -s $(which zsh) $USER
+mkdir -p $BIN $CFG $GIT
+cp -r scripts/* $BIN
+cp -r config/* $CFG
+cp .zshrc $HOME
 
 if [ ! -e $HOME/.gitconfig ]; then
-    echo -n "git username: "; read GIT_NAME
+    printf "${FG2}configuring${RES}: git\n"
+    echo -n "git name: "; read GIT_NAME
     echo -n "git email: "; read GIT_EMAIL
     git config --global user.name $GIT_NAME
     git config --global user.email $GIT_EMAIL
     git config --global core.editor nvim
     git config --global pull.rebase true
 else
-    printf "git already configured\n"
+    printf "${FG1}skipping${RES}: git, already configured\n"
 fi
 
-
-
-printf "\n${FG5}terminal${RES} ${FG2}[2/9]${RES}\n"
-
-sudo apt-get -y install zsh zsh-autosuggestions wget curl tmux vim man-db \
-    less zip unzip btop jq ripgrep fd-find bat ca-certificates
-
-if ! command -v cloudflared > /dev/null 2>&1; then
-    sudo mkdir -p --mode=0755 /usr/share/keyrings
-
-    curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | \
-        sudo tee /usr/share/keyrings/cloudflare-main.gpg > /dev/null
-
-    echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] \
-        https://pkg.cloudflare.com/cloudflared any main" | \
-        sudo tee /etc/apt/sources.list.d/cloudflared.list
-
-    sudo apt-get update
-    sudo apt-get install cloudflared
+if ! command -v nvim > /dev/null 2>&1; then
+    printf "${FG2}installing${RES}: neovim\n"
+    wget -q "https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.tar.gz"
+    tar -xzf nvim-linux-x86_64.tar.gz -C $HOME/.local
+    ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $BIN/nvim
+    rm nvim-linux-x86_64.tar.gz
 else
-    printf "cloudflared already installed\n"
+    printf "${FG1}skipping${RES}: neovim, already installed\n"
 fi
-
-sudo chsh -s $(which zsh) $USER
-
-cp -v config/.tmux.conf $HOME
-cp -v config/.zshrc $HOME
-
-
-
-printf "\n${FG5}devel${RES} ${FG2}[3/9]${RES}\n"
-
-sudo apt-get -y install gcc make cmake meson ninja-build golang luajit nodejs \
-    npm direnv default-jre default-jdk maven gradle
 
 if ! command -v uv > /dev/null 2>&1; then
+    printf "${FG2}installing${RES}: uv\n"
     curl -LsSf https://astral.sh/uv/install.sh | sh
+    cp .zshrc $HOME
 else
-    printf "uv already installed\n"
+    printf "${FG1}skipping${RES}: uv, already installed\n"
 fi
 
 if [ ! -d $HOME/.local/share/pnpm ]; then
+    printf "${FG2}installing${RES}: pnpm\n"
     curl -fsSL https://get.pnpm.io/install.sh | sh -
+    cp .zshrc $HOME
 else
-    printf "pnpm already installed\n"
+    printf "${FG1}skipping${RES}: pnpm, already installed\n"
 fi
 
 if ! command -v rustup > /dev/null 2>&1; then
+    printf "${FG1}installing${RES}: rustup\n"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    source ~/.cargo/env
+    cp .zshrc $HOME
 else
-    printf "rust already installed\n"
+    printf "${FG1}skipping${RES}: rustup, already installed\n"
 fi
-
-mkdir -p $HOME/.config
-
-cp -rv config/direnv $HOME/.config
-
-
-
-printf "\n${FG5}neovim${RES} ${FG2}[4/9]${RES}\n"
-
-if ! command -v nvim > /dev/null 2>&1; then
-    mkdir -p $HOME/.config
-    mkdir -p $HOME/.local/bin
-    cp -r config/nvim $HOME/.config
-
-    wget https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.tar.gz
-    tar -xzf nvim-linux-x86_64.tar.gz -C $HOME/.local
-    ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
-    rm nvim-linux-x86_64.tar.gz
-
-    cargo install tree-sitter-cli
-else
-    printf "neovim already installed\n"
-fi
-
-
-
-printf "\n${FG5}docker${RES} ${FG2}[5/9]${RES}\n"
 
 if ! command -v docker > /dev/null 2>&1; then
+    printf "${FG2}installing${RES}: docker\n"
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io \
-        docker-buildx-plugin docker-compose-plugin
-
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo usermod -aG docker $USER
 else
-    printf "docker already installed\n"
+    printf "${FG1}skipping${RES}: docker, already installed\n"
 fi
 
+if ! command -v cloudflared > /dev/null 2>&1; then
+    printf "${FG2}installing${RES}: cloudflared\n"
+    sudo mkdir -p --mode=0755 /usr/share/keyrings
+    curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg > /dev/null
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
+    sudo apt-get update
+    sudo apt-get install -y cloudflared
+else
+    printf "${FG1}skipping${RES}: cloudflared, already installed\n"
+fi
 
-printf "\n${FG5}sway${RES} ${FG2}[6/9]${RES}\n"
-
+printf "${FG2}installing${RES}: windomanager\n"
 sudo apt-get install -y sway swaybg swaylock autotiling gammastep waybar \
     alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl dbus \
-    xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge
+    xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
+    playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
+    bluez thermald zram-tools fontconfig fonts-noto fonts-jetbrains-mono pcscd
 
-mkdir -p $HOME/.config
-mkdir -p $HOME/Pictures/walls
-
-cp -rv config/alacritty $HOME/.config
-cp -rv config/gammastep $HOME/.config
-cp -rv config/waybar $HOME/.config
-cp -rv config/sway $HOME/.config
-cp -rv config/tofi $HOME/.config
-cp -rv walls $HOME/Pictures
-
-
-
-printf "\n${FG5}hardware${RES} ${FG2}[7/9]${RES}\n"
-
-sudo apt-get -y install playerctl pipewire pipewire-pulse pipewire-audio \
-    wireplumber bluetooth bluez thermald zram-tools
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+sudo systemctl enable --now bluetooth thermald zramswap
 
 if ! command -v intel-undervolt > /dev/null 2>&1; then
-    mkdir -p $HOME/git
-    git clone https://github.com/kitsunyan/intel-undervolt.git $HOME/git/intel-undervolt
-
-    cd $HOME/git/intel-undervolt
+    printf "${FG2}installing${RES}: intel-undervolt\n"
+    pushd $GIT
+    git clone https://github.com/kitsunyan/intel-undervolt.git
+    pushd intel-undervolt
     ./configure --enable-systemd --unitdir=/lib/systemd/system
     make
     sudo make install
-    cd -
+    popd
+    popd
 
     sudo sed -i "s|^undervolt 0.*|undervolt 0 'CPU' -100|" /etc/intel-undervolt.conf
     sudo sed -i "s|^undervolt 1.*|undervolt 1 'GPU' -100|" /etc/intel-undervolt.conf
     sudo sed -i "s|^undervolt 2.*|undervolt 2 'GPU Cache' -100|" /etc/intel-undervolt.conf
+    sudo systemctl enable --now intel-undervolt 
 else
-    printf "intel-undervolt already installed\n"
+    printf "${FG1}skipping${RES}: intel-undervolt, already installed\n"
 fi
 
 if ! command -v auto-cpufreq > /dev/null 2>&1; then
-    mkdir -p $HOME/git
-    git clone https://github.com/AdnanHodzic/auto-cpufreq.git $HOME/git/auto-cpufreq
-
-    cd $HOME/git/auto-cpufreq
+    printf "${FG2}installing${RES}: auto-cpufreq\n"
+    pushd $GIT
+    git clone https://github.com/AdnanHodzic/auto-cpufreq.git $GIT/auto-cpufreq
+    pushd auto-cpufreq
     sudo ./auto-cpufreq-installer
     sudo auto-cpufreq --install
-    cd -
+    popd
+    popd
 else
-    printf "auto-cpufreq already installed\n"
+    printf "${FG1}skipping${RES}: auto-cpufreq, already installed\n"
 fi
-
-systemctl --user enable --now pipewire pipewire-pulse wireplumber
-sudo systemctl enable --now bluetooth thermald intel-undervolt zramswap
-
-
-
-printf "\n${FG5}fonts${RES} ${FG2}[8/9]${RES}\n"
-
-sudo apt-get -y install fontconfig fonts-noto
-
-mkdir -p $HOME/.local/share/fonts
-
-if ! fc-list | grep -qi "JetBrainsMono Nerd Font"; then
-    mkdir -p /tmp/fonts
-    mkdir -p $HOME/.local/share/fonts
-    cd /tmp/fonts
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
-    unzip JetBrainsMono.zip
-    cp JetBrainsMonoNerdFont-Regular.ttf $HOME/.local/share/fonts
-    fc-cache
-    cd -
-else
-    printf "jetbrains mono nerd font already installed\n"
-fi
-
-
-
-printf "\n${FG5}apps${RES} ${FG2}[9/9]${RES}\n"
 
 if ! command -v qdigidoc4 > /dev/null 2>&1; then
-    sudo apt-get install -y pcscd
-    git clone https://github.com/open-eid/linux-installer.git /tmp/linux-installer
-    /tmp/linux-installer/install-open-eid.sh
+    printf "${FG2}installing${RES}: qdigidoc4\n"
+    pushd $GIT
+    git clone https://github.com/open-eid/linux-installer.git
+    pushd linux-installer
+    ./install-open-eid.sh
+    popd
+    popd
 else
-    printf "qdigidoc4 already installed\n"
+    printf "${FG1}skipping${RES}: qdigidoc4, already installed\n"
 fi
 
 if ! command -v brave-browser > /dev/null 2>&1; then
+    printf "${FG2}installing${RES}: brave-browser\n"
     curl -fsS https://dl.brave.com/install.sh | sh
 else
-    printf "brave-browser already installed\n"
+    printf "${FG1}skipping${RES}: brave-browser, already installed\n"
 fi
 
 if ! command -v discord > /dev/null 2>&1; then
-    wget -O discord.deb 'https://discord.com/api/download?platform=linux&format=deb'
+    printf "${FG2}installing${RES}: discord\n"
+    wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
     sudo apt-get install -y ./discord.deb
     rm discord.deb
 else
-    printf "discord already installed\n"
+    printf "${FG1}skipping${RES}: discord, already installed\n"
 fi
 
-sudo apt modernize-sources -y
-
-printf "\n${FG2}install finished!${RES}\n"
+printf "${FG2}install finished!${RES}\n"

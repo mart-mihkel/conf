@@ -1,4 +1,4 @@
-font = Jetbrains Mono Nerd Font
+font = JetBrainsMono
 font-size = 10
 fuzzy-match = true
 drun-launch = true

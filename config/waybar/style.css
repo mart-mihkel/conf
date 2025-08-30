@@ -1,5 +1,10 @@
 * {
   all: unset;
-  font-family: Jetbrains Mono Nerd Font;
   font-size: 12px;
+  font-family: JetBrainsMono;
+  background-color: black;
+}
+
+#workspaces button {
+  padding: 0 2px 0 0;
 }

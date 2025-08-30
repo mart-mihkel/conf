@@ -11,18 +11,16 @@ vim.o.cursorline = true
 vim.o.expandtab = true
 vim.o.smartcase = true
 vim.o.swapfile = false
-vim.o.hlsearch = false
 vim.o.undofile = true
 vim.o.laststatus = 3
 vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = false
 vim.o.list = true
-vim.o.tabstop = 4
 
 vim.pack.add({
 	"https://github.com/vague2k/vague.nvim",
-	"https://github.com/echasnovski/mini.pick",
+	"https://github.com/nvim-mini/mini.pick",
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/lewis6991/gitsigns.nvim",

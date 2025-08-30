@@ -20,6 +20,5 @@ alias cp="cp -v"
 alias mv="mv -v"
 alias ll="ls -lah --color"
 alias venv="source .venv/bin/activate"
-alias sway="XDG_SCREENSHOTS_DIR=$HOME/Pictures/screenshots sway"
 alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'
 eval "$(direnv hook zsh)"

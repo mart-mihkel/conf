@@ -1,9 +1,10 @@
-gaps inner 4
-gaps outer 8
+set $wall ~/Pictures/walls/moomin-sea.jpg
+
 default_border none
 floating_modifier Mod4
 focus_follows_mouse yes
 
+output * background $wall fill
 input type:touchpad tap enabled
 input type:keyboard {
     xkb_layout ee
@@ -11,8 +12,6 @@ input type:keyboard {
     repeat_rate 32
     repeat_delay 256
 }
-
-output * background ~/Pictures/walls/flowers.png fill
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
@@ -31,7 +30,7 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioNext exec playerctl next
 bindsym Print exec grimshot --notify savecopy area
-bindsym Mod4+n exec swaylock -uei ~/Pictures/walls/flowers.png
+bindsym Mod4+n exec swaylock -uei $wall
 bindsym Mod4+e exec tofi-emoji
 bindsym Mod4+r exec tofi-drun
 bindsym Mod4+q exec alacritty
