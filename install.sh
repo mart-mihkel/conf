@@ -51,7 +51,7 @@ fi
 
 if ! command -v nvim > /dev/null 2>&1; then
     printf "${FG2}installing${RES}: neovim\n"
-    wget -q "https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.tar.gz"
+    wget -q "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
     tar -xzf nvim-linux-x86_64.tar.gz -C $HOME/.local
     ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $BIN/nvim
     rm nvim-linux-x86_64.tar.gz
