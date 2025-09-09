@@ -17,6 +17,7 @@ vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = false
 vim.o.list = true
+vim.o.tabstop = 4
 
 vim.pack.add({
 	"https://github.com/vague2k/vague.nvim",
