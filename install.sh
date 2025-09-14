@@ -29,7 +29,7 @@ printf "${FG2}installing${RES}: devel\n"
 sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
     zip unzip jq ripgrep fd-find ca-certificates gcc make cmake meson \
     ninja-build golang luajit nodejs npm direnv default-jre default-jdk \
-    maven gradle
+    maven gradle python3 python3-venv python3-pynvim
 
 sudo chsh -s $(which zsh) $USER
 mkdir -p $BIN $CFG $GIT
@@ -112,10 +112,11 @@ sudo apt-get install -y sway swaybg swaylock autotiling gammastep waybar \
     alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl dbus \
     xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
     playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
-    bluez thermald zram-tools fontconfig fonts-noto fonts-jetbrains-mono pcscd
+    network-manager bluez thermald zram-tools fontconfig fonts-noto \
+    fonts-jetbrains-mono pcscd
 
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
-sudo systemctl enable --now bluetooth thermald zramswap
+sudo systemctl enable --now NetworkManager bluetooth thermald zramswap
 
 if ! command -v intel-undervolt > /dev/null 2>&1; then
     printf "${FG2}installing${RES}: intel-undervolt\n"
