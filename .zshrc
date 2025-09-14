@@ -3,7 +3,7 @@
 SAVEHIST=10000
 HISTSIZE=10000
 HISTFILE=~/.zhist
-PROMPT="%F{2}%m%f:%F{4}%1~%f%# "
+PROMPT="%F{4}%~%f "
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 autoload -Uz compinit && compinit
@@ -18,6 +18,8 @@ alias vim="nvim"
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
+alias fd="fdfind"
+alias bat="batcat"
 alias ll="ls -lah --color"
 alias venv="source .venv/bin/activate"
 alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'

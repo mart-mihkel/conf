@@ -27,6 +27,7 @@ vim.pack.add({
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/williamboman/mason.nvim",
 	"https://github.com/NMAC427/guess-indent.nvim",
+	"https://github.com/rafamadriz/friendly-snippets",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/williamboman/mason-lspconfig.nvim",
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
