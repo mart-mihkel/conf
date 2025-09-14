@@ -1,0 +1,5 @@
+timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+timeout 330 'swaylock -uei ~/Pictures/walls/moomin-my.jpg'
+timeout 360 'systemctl suspend'
+before-sleep 'playerctl -a pause'
+before-sleep 'swaylock -uei ~/Pictures/walls/moomin-my.jpg'

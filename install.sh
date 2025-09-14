@@ -7,6 +7,7 @@ FG5="${ESC}[38;5;5m"
 RES="${ESC}[0m"
 
 BIN=$HOME/.local/bin
+PIC=$HOME/Pictures
 CFG=$HOME/.config
 GIT=$HOME/git
 
@@ -32,9 +33,10 @@ sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
     maven gradle python3 python3-venv python3-pynvim
 
 sudo chsh -s $(which zsh) $USER
-mkdir -p $BIN $CFG $GIT
+mkdir -p $BIN $PIC $CFG $GIT
 cp -r scripts/* $BIN
 cp -r config/* $CFG
+cp -r walls $PIC
 cp .zshrc $HOME
 
 if [ ! -e $HOME/.gitconfig ]; then
@@ -108,11 +110,11 @@ else
 fi
 
 printf "${FG2}installing${RES}: windomanager\n"
-sudo apt-get install -y sway swaybg swaylock autotiling gammastep waybar \
-    alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl dbus \
+sudo apt-get install -y sway swaybg swaylock swayidle autotiling waybar \
+    gammastep alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl \
     xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
     playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
-    network-manager bluez thermald zram-tools fontconfig fonts-noto \
+    network-manager bluez thermald zram-tools fontconfig fonts-noto dbus \
     fonts-jetbrains-mono pcscd
 
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
