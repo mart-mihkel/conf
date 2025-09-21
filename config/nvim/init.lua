@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 vim.g.netrw_banner = false
 vim.o.clipboard = "unnamedplus"
+vim.o.winborder = "rounded"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
-vim.o.winborder = "single"
 vim.o.colorcolumn = "80"
 vim.o.signcolumn = "yes"
 vim.o.ignorecase = true
@@ -13,6 +13,7 @@ vim.o.smartcase = true
 vim.o.swapfile = false
 vim.o.undofile = true
 vim.o.laststatus = 3
+vim.o.shiftwidth = 4
 vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = false
@@ -20,8 +21,8 @@ vim.o.list = true
 vim.o.tabstop = 4
 
 vim.pack.add({
+	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/vague2k/vague.nvim",
-	"https://github.com/nvim-mini/mini.pick",
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/lewis6991/gitsigns.nvim",
@@ -33,14 +34,12 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
 })
 
-vim.cmd.colorscheme("vague")
-
 require("mason").setup()
 require("gitsigns").setup()
-require("mini.pick").setup()
 require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
+require("vague").setup({ transparent = true })
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	auto_install = true,
@@ -50,6 +49,7 @@ require("conform").setup({
 	default_format_opts = { lsp_format = "fallback" },
 	formatters_by_ft = {
 		json = { "jq" },
+		jsonc = { "jq" },
 		lua = { "stylua" },
 		nix = { "alejandra" },
 		css = { "prettierd" },
@@ -59,6 +59,8 @@ require("conform").setup({
 		typescriptreact = { "prettierd" },
 	},
 })
+
+vim.cmd.colorscheme("vague")
 
 vim.keymap.set("n", "<M-1>", "1gt")
 vim.keymap.set("n", "<M-2>", "2gt")
@@ -73,12 +75,13 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
 vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
-vim.keymap.set("n", "<leader>sr", require("mini.pick").builtin.resume)
-vim.keymap.set("n", "<leader>sg", require("mini.pick").builtin.grep_live)
+vim.keymap.set("n", "<leader>sr", require("fzf-lua").resume)
+vim.keymap.set("n", "<leader>so", require("fzf-lua").oldfiles)
+vim.keymap.set("n", "<leader>sg", require("fzf-lua").live_grep)
 vim.keymap.set("n", "<leader>sf", function()
 	if vim.uv.fs_stat(".git") then
-		require("mini.pick").builtin.files({ tool = "git" })
+		require("fzf-lua").git_files()
 	else
-		require("mini.pick").builtin.files()
+		require("fzf-lua").files()
 	end
 end)
