@@ -1,8 +1,10 @@
+set $wallpaper ~/Pictures/walls/papa-groke.png
+
 default_border none
 floating_modifier Mod4
 focus_follows_mouse yes
 
-output * background ~/Pictures/walls/moomin-sea.jpg fill
+output * background $wallpaper fill
 input type:touchpad tap enabled
 input type:keyboard {
     xkb_layout ee
@@ -29,7 +31,7 @@ bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym Print exec grimshot --notify savecopy area
-bindsym Mod4+n exec swaylock -uei ~/Pictures/walls/moomin-my.jpg
+bindsym Mod4+n exec swaylock -uei $wallpaper
 bindsym Mod4+e exec tofi-emoji
 bindsym Mod4+r exec tofi-drun
 bindsym Mod4+q exec alacritty

@@ -27,6 +27,7 @@ vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/williamboman/mason.nvim",
+	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/NMAC427/guess-indent.nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
@@ -39,7 +40,7 @@ require("gitsigns").setup()
 require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
-require("vague").setup({ transparent = true })
+require("todo-comments").setup({ signs = false })
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	auto_install = true,
@@ -54,8 +55,11 @@ require("conform").setup({
 		nix = { "alejandra" },
 		css = { "prettierd" },
 		html = { "prettierd" },
+		typst = { "prettypst" },
 		python = { "ruff_format" },
+		javascript = { "prettierd" },
 		typescript = { "prettierd" },
+		javascriptreact = { "prettierd" },
 		typescriptreact = { "prettierd" },
 	},
 })
@@ -66,8 +70,8 @@ vim.keymap.set("n", "<M-1>", "1gt")
 vim.keymap.set("n", "<M-2>", "2gt")
 vim.keymap.set("n", "<M-3>", "3gt")
 vim.keymap.set("n", "<M-4>", "4gt")
-vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
 vim.keymap.set("n", "<C-j>", ":cnext<CR>")
+vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
 vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
