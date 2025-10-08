@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo -n "login mail: "
+read LOGIN
+
+echo -n "password: "
+read -s PASSWORD
+
+sudo cat << EOF > /var/lib/iwd/eduroam.8021x
+[Security]
+EAP-Method=PEAP
+EAP-Identity=${LOGIN}
+EAP-PEAP-Phase2-Method=MSCHAPV2
+EAP-PEAP-Phase2-Identity=${LOGIN}
+EAP-PEAP-Phase2-Password=${PASSWORD}
+
+[Settings]
+AutoConnect=true
+EOF
