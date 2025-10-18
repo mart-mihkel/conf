@@ -7,6 +7,11 @@ use_nvm() {
     fi
 }
 
+layout_bun() {
+    export BUN_INSTALL=$HOME/.bun
+    PATH_add $BUN_INSTALL/bin
+}
+
 layout_pnpm() {
     PNPM_HOME=$HOME/.local/share/pnpm
     if [ -d $PNPM_HOME ]; then
