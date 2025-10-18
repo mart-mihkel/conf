@@ -29,8 +29,7 @@ printf "${FG2}install starting!${RES}\n"
 printf "${FG2}installing${RES}: devel\n"
 sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
     zip unzip jq ripgrep fd-find ca-certificates gcc make cmake meson \
-    ninja-build golang luajit nodejs npm direnv default-jre default-jdk \
-    maven gradle python3 python3-venv python3-pynvim
+    ninja-build golang luajit nodejs npm direnv python3 python3-venv
 
 sudo chsh -s $(which zsh) $USER
 mkdir -p $BIN $PIC $CFG $GIT
@@ -53,6 +52,7 @@ fi
 
 if ! command -v nvim > /dev/null 2>&1; then
     printf "${FG2}installing${RES}: neovim\n"
+    sudo apt-get -y install python3-pynvim
     wget -q "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
     tar -xzf nvim-linux-x86_64.tar.gz -C $HOME/.local
     ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $BIN/nvim

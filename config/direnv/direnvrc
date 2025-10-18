@@ -7,13 +7,6 @@ use_nvm() {
     fi
 }
 
-layout_maven() {
-    lombok=$HOME/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar
-    if [ -e $lombok ]; then
-        export JDTLS_JVM_ARGS="-javaagent:$lombok"
-    fi
-}
-
 layout_pnpm() {
     PNPM_HOME=$HOME/.local/share/pnpm
     if [ -d $PNPM_HOME ]; then
