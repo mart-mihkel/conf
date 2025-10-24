@@ -7,6 +7,12 @@ use_nvm() {
     fi
 }
 
+use_conda() {
+    PATH_add $HOME/miniconda3/bin
+    eval "$(conda shell.zsh hook)"
+    conda activate $1
+}
+
 layout_bun() {
     export BUN_INSTALL=$HOME/.bun
     PATH_add $BUN_INSTALL/bin
