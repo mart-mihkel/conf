@@ -1,12 +1,14 @@
 font = JetBrainsMono
-font-size = 9
+font-size = 10
 
 fuzzy-match = true
 drun-launch = true
 
+background-color = #000000
+
 horizontal = true
 anchor = bottom
-width = 100%
+width = 75%
 height = 14
 
 padding-top = 0

@@ -110,8 +110,8 @@ else
 fi
 
 printf "${FG2}installing${RES}: windomanager\n"
-sudo apt-get install -y sway swaybg swaylock swayidle autotiling waybar \
-    gammastep alacritty tofi vlc thunar grimshot wl-clipboard brightnessctl \
+sudo apt-get install -y sway swaybg swaylock swayidle autotiling gammastep \
+    alacritty tofi vlc thunar grimshot wtype wl-clipboard brightnessctl \
     xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
     playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
     network-manager bluez thermald zram-tools fontconfig fonts-noto dbus \

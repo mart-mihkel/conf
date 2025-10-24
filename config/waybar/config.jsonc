@@ -1,7 +1,0 @@
-{
-  "spacing": 12,
-  "position": "bottom",
-  "modules-left": ["sway/workspaces"],
-  "modules-right": ["tray", "battery", "clock"],
-  "tray": {"icon-size": 12, "spacing": 6}
-}
