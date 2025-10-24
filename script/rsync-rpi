@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+RPI=rpi.risuhunnik.xyz
+
+rsync -rv --exclude='.venv' ~/ut $RPI:nas
+rsync -rv ~/Documents $RPI:nas
+rsync -rv ~/Pictures $RPI:nas
