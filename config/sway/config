@@ -13,12 +13,20 @@ input type:keyboard {
     repeat_delay 256
 }
 
+bar {
+    status_command while echo "$(cat /sys/class/power_supply/BAT0/capacity)% $(date +'%H:%M')"; do sleep 1; done
+    font pango:JetBrains Mono 8
+    colors {
+        focused_workspace  #000000 #000000 #ffffff
+        inactive_workspace #000000 #000000 #888888
+    }
+}
+
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
 exec autotiling
 exec gammastep
 exec swayidle
-exec waybar
 
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
