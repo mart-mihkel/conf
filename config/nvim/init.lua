@@ -36,14 +36,24 @@ vim.pack.add({
 })
 
 require("mason").setup()
-require("gitsigns").setup()
 require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
 require("todo-comments").setup({ signs = false })
+
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	auto_install = true,
+})
+
+require("gitsigns").setup({
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "-" },
+		topdelete = { text = "-" },
+		changedelete = { text = "~" },
+	},
 })
 
 require("conform").setup({
@@ -57,6 +67,7 @@ require("conform").setup({
 		html = { "prettierd" },
 		typst = { "prettypst" },
 		python = { "ruff_format" },
+		markdown = { "prettierd" },
 		javascript = { "prettierd" },
 		typescript = { "prettierd" },
 		javascriptreact = { "prettierd" },
@@ -70,15 +81,18 @@ vim.keymap.set("n", "<M-1>", "1gt")
 vim.keymap.set("n", "<M-2>", "2gt")
 vim.keymap.set("n", "<M-3>", "3gt")
 vim.keymap.set("n", "<M-4>", "4gt")
-vim.keymap.set("n", "<C-j>", ":cnext<CR>")
 vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
+
+vim.keymap.set("n", "<C-j>", ":cnext<CR>")
 vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
+
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
 vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
+
 vim.keymap.set("n", "<leader>sr", require("fzf-lua").resume)
 vim.keymap.set("n", "<leader>so", require("fzf-lua").oldfiles)
 vim.keymap.set("n", "<leader>sg", require("fzf-lua").live_grep)
