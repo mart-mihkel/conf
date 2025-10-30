@@ -15,10 +15,13 @@ input type:keyboard {
 
 bar {
     status_command while echo "$(cat /sys/class/power_supply/BAT0/capacity)% $(date +'%H:%M')"; do sleep 1; done
-    font pango:JetBrains Mono 8
+    font pango:JetBrainsMono Bold 10
+
     colors {
-        focused_workspace  #000000 #000000 #ffffff
-        inactive_workspace #000000 #000000 #888888
+        background #141415
+        statusline #cdcdcd
+        focused_workspace  #141415 #141415 #cdcdcd
+        inactive_workspace #141415 #141415 #888888
     }
 }
 
@@ -27,6 +30,7 @@ exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
 exec autotiling
 exec gammastep
 exec swayidle
+exec dunst
 
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
@@ -42,7 +46,7 @@ bindsym Print exec grimshot --notify savecopy area
 bindsym Mod4+n exec swaylock -uei $wallpaper
 bindsym Mod4+e exec tofi-emoji
 bindsym Mod4+r exec tofi-drun
-bindsym Mod4+q exec alacritty
+bindsym Mod4+q exec foot
 
 bindsym Mod4+f fullscreen toggle
 bindsym Mod4+v floating toggle

@@ -1,0 +1,26 @@
+[global]
+font = JetBrainsMono 10
+foreground = "#141415"
+background = "#ffffff"
+
+height = (16, 256)
+width = (16, 512)
+offset = (8, 8)
+
+min_icon_size = 32
+max_icon_size = 32
+corner_radius = 0
+frame_width = 1
+gap_size = 8
+
+[urgency_low]
+timeout = 2
+frame_color = "#141415"
+
+[urgency_normal]
+timeout = 2
+frame_color = "#646464"
+
+[urgency_critical]
+timeout = 8
+frame_color = "#c9c9c9"
