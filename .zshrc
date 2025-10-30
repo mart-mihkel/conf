@@ -3,8 +3,19 @@
 SAVEHIST=10000
 HISTSIZE=10000
 HISTFILE=~/.zhist
-PROMPT="%F{4}%~%f "
+precm_functions+=(_prompt)
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+function _prompt() {
+    ITEMS=""
+    BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
+    VENV=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
+
+    [[ -n $VENV ]] && ITEMS="%F{3}$VENV%f "
+    [[ -n $BRANCH ]] && ITEMS="$ITEMS%F{5}$BRANCH%f "
+
+    PROMPT="%F{4}%1~%f $ITEMS"
+}
 
 autoload -Uz compinit && compinit
 zstyle ":completion:*" menu yes select

@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 vim.g.netrw_banner = false
 vim.o.clipboard = "unnamedplus"
-vim.o.winborder = "rounded"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
+vim.o.winborder = "single"
 vim.o.colorcolumn = "80"
 vim.o.signcolumn = "yes"
 vim.o.ignorecase = true
@@ -90,6 +90,7 @@ vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
+vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
 vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 

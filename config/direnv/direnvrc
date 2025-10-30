@@ -8,6 +8,7 @@ use_nvm() {
 }
 
 use_conda() {
+    export PIPENV_VENV_IN_PROJECT=1
     PATH_add $HOME/miniconda3/bin
     eval "$(conda shell.zsh hook)"
     conda activate $1
