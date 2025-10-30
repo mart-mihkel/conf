@@ -1,6 +1,0 @@
-[font]
-normal = { family = "JetBrainsMono" }
-size = 12.0
-
-[window]
-dynamic_padding = true
