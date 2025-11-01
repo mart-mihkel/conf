@@ -13,23 +13,17 @@ GIT=$HOME/git
 
 set -e
 
-while getopts "f" ARG; do
-    case $ARG in
-        f) FORCE=1;;
-        *) printf "usage: $0 [-f]\n"; exit 1;;
-    esac
-done
-
-if ! grep -qi debian /etc/os-release > /dev/null 2>&1 && [ -z $FORCE ]; then
+if ! grep -qi debian /etc/os-release > /dev/null 2>&1; then
     printf "${FG1}install cancelled${RES}: only debian supported, use -f to force\n"
     exit 1
 fi
 
 printf "${FG2}install starting!${RES}\n"
+
 printf "${FG2}installing${RES}: devel\n"
 sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
-    zip unzip jq ripgrep fd-find ca-certificates gcc make cmake meson \
-    ninja-build golang luajit nodejs npm direnv python3 python3-venv
+    zip unzip jq ripgrep fd-find ca-certificates gcc make cmake luajit nodejs \
+    golang npm glow btop fzf direnv python3 python3-venv
 
 sudo chsh -s $(which zsh) $USER
 mkdir -p $BIN $PIC $CFG $GIT
@@ -38,13 +32,24 @@ cp -r config/* $CFG
 cp -r walls $PIC
 cp .zshrc $HOME
 
+printf "${FG2}installing${RES}: windomanager\n"
+sudo apt-get install -y sway swaybg swaylock swayidle autotiling gammastep \
+    foot tofi vlc grimshot wtype wl-clipboard brightnessctl pcscd dbus \
+    xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
+    playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
+    network-manager bluez thermald zram-tools fontconfig fonts-noto \
+    fonts-jetbrains-mono
+
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+sudo systemctl enable --now NetworkManager bluetooth thermald zramswap
+
 if [ ! -e $HOME/.gitconfig ]; then
     printf "${FG2}configuring${RES}: git\n"
     echo -n "git name: "; read GIT_NAME
     echo -n "git email: "; read GIT_EMAIL
     git config --global user.name $GIT_NAME
     git config --global user.email $GIT_EMAIL
-    git config --global core.editor nvim
+    git config --global core.editor vim
     git config --global pull.rebase true
 else
     printf "${FG1}skipping${RES}: git, already configured\n"
@@ -59,30 +64,6 @@ if ! command -v nvim > /dev/null 2>&1; then
     rm nvim-linux-x86_64.tar.gz
 else
     printf "${FG1}skipping${RES}: neovim, already installed\n"
-fi
-
-if ! command -v uv > /dev/null 2>&1; then
-    printf "${FG2}installing${RES}: uv\n"
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    cp .zshrc $HOME
-else
-    printf "${FG1}skipping${RES}: uv, already installed\n"
-fi
-
-if [ ! -d $HOME/.local/share/pnpm ]; then
-    printf "${FG2}installing${RES}: pnpm\n"
-    curl -fsSL https://get.pnpm.io/install.sh | sh -
-    cp .zshrc $HOME
-else
-    printf "${FG1}skipping${RES}: pnpm, already installed\n"
-fi
-
-if ! command -v rustup > /dev/null 2>&1; then
-    printf "${FG1}installing${RES}: rustup\n"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    cp .zshrc $HOME
-else
-    printf "${FG1}skipping${RES}: rustup, already installed\n"
 fi
 
 if ! command -v docker > /dev/null 2>&1; then
@@ -108,17 +89,6 @@ if ! command -v cloudflared > /dev/null 2>&1; then
 else
     printf "${FG1}skipping${RES}: cloudflared, already installed\n"
 fi
-
-printf "${FG2}installing${RES}: windomanager\n"
-sudo apt-get install -y sway swaybg swaylock swayidle autotiling gammastep \
-    alacritty tofi vlc thunar grimshot wtype wl-clipboard brightnessctl \
-    xdg-desktop-portal xdg-desktop-portal-wlr xwayland xwaylandvideobridge \
-    playerctl pipewire pipewire-pulse pipewire-audio wireplumber bluetooth \
-    network-manager bluez thermald zram-tools fontconfig fonts-noto dbus \
-    fonts-jetbrains-mono pcscd
-
-systemctl --user enable --now pipewire pipewire-pulse wireplumber
-sudo systemctl enable --now NetworkManager bluetooth thermald zramswap
 
 if ! command -v intel-undervolt > /dev/null 2>&1; then
     printf "${FG2}installing${RES}: intel-undervolt\n"
