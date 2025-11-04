@@ -30,10 +30,7 @@ alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'
 eval "$(direnv hook zsh)"
 
 function tm() {
-    PROJECT=$(
-        (tmux list-sessions -F "#S" 2>/dev/null; fd -d=1 -t=d . ~/git) | fzf
-    )
-
+    PROJECT=$(fd -d=1 -t=d . ~/git | fzf)
     [[ -z $PROJECT ]] && return 1
 
     SESSION=$(basename $PROJECT | tr . _)
@@ -55,10 +52,9 @@ function precmd_prompt() {
     fi
 
     ITEMS=""
-    VENV=$(echo $VIRTUAL_ENV_PROMPT | tr -d "()")
     BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
 
-    [[ -n $VENV ]] && ITEMS="%F{3}$VENV%f "
+    [[ -n $VIRTUAL_ENV_PROMPT ]] && ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
     [[ -n $BRANCH ]] && ITEMS="$ITEMS%F{5}$BRANCH%f "
 
     PROMPT="%F{4}%1~%f $ITEMS"

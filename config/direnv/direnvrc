@@ -8,7 +8,6 @@ use_nvm() {
 }
 
 use_conda() {
-    export PIPENV_VENV_IN_PROJECT=1
     PATH_add $HOME/miniconda3/bin
     eval "$(conda shell.zsh hook)"
     conda activate $1
@@ -33,7 +32,6 @@ layout_uv() {
         uv venv
     fi
 
-    PATH_add $VIRTUAL_ENV/bin
-    export VIRTUAL_ENV
+    source $VIRTUAL_ENV/bin/activate
     export UV_ACTIVE=1
 }

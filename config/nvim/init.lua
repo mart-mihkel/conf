@@ -94,13 +94,7 @@ vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
 vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 
+vim.keymap.set("n", "<leader>sf", require("fzf-lua").files)
 vim.keymap.set("n", "<leader>sr", require("fzf-lua").resume)
 vim.keymap.set("n", "<leader>so", require("fzf-lua").oldfiles)
 vim.keymap.set("n", "<leader>sg", require("fzf-lua").live_grep)
-vim.keymap.set("n", "<leader>sf", function()
-	if vim.uv.fs_stat(".git") then
-		require("fzf-lua").git_files()
-	else
-		require("fzf-lua").files()
-	end
-end)
