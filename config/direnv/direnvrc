@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 use_nvm() {
-    if [ -e $HOME/.nvm/nvm.sh ]; then
-        source $HOME/.nvm/nvm.sh
-        nvm use $1
-    fi
+    source $HOME/.nvm/nvm.sh
+    nvm use $1
 }
 
 use_conda() {
@@ -19,19 +17,12 @@ layout_bun() {
 }
 
 layout_pnpm() {
-    PNPM_HOME=$HOME/.local/share/pnpm
-    if [ -d $PNPM_HOME ]; then
-        PATH_add $PNPM_HOME
-        export PNPM_HOME
-    fi
+    export PNPM_HOME=$HOME/.local/share/pnpm
+    PATH_add $PNPM_HOME
 }
 
 layout_uv() {
     VIRTUAL_ENV=$(pwd)/.venv
-    if [ ! -d $VIRTUAL_ENV ]; then
-        uv venv
-    fi
-
     source $VIRTUAL_ENV/bin/activate
     export UV_ACTIVE=1
 }
