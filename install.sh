@@ -51,6 +51,7 @@ if [ ! -e $HOME/.gitconfig ]; then
     git config --global user.email $GIT_EMAIL
     git config --global core.editor vim
     git config --global pull.rebase true
+    git config --global push.autoSetupRemote true
 else
     printf "${FG1}skipping${RES}: git, already configured\n"
 fi
