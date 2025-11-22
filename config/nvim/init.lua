@@ -5,9 +5,9 @@ vim.g.netrw_preview = 1
 vim.o.clipboard = "unnamedplus"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
-vim.o.winborder = "single"
 vim.o.colorcolumn = "80"
 vim.o.signcolumn = "yes"
+vim.o.winborder = "none"
 vim.o.ignorecase = true
 vim.o.cursorline = true
 vim.o.splitright = true
@@ -27,7 +27,6 @@ vim.o.tabstop = 4
 
 vim.pack.add({
 	"https://github.com/saghen/blink.cmp",
-	"https://github.com/vague2k/vague.nvim",
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
@@ -90,7 +89,7 @@ require("conform").setup({
 	},
 })
 
-vim.cmd.colorscheme("vague")
+vim.cmd.colorscheme("habamax")
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
@@ -99,11 +98,12 @@ vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
 vim.keymap.set({ "n", "v" }, "<c-n>", ":cnext<cr>")
 vim.keymap.set({ "n", "v" }, "<c-p>", ":cprevious<cr>")
 
-vim.keymap.set("n", "<c-h>", "1gt")
-vim.keymap.set("n", "<c-j>", "2gt")
-vim.keymap.set("n", "<c-k>", "3gt")
-vim.keymap.set("n", "<c-l>", "4gt")
-vim.keymap.set("n", "<c-t>", ":tabnew %<cr>")
+vim.keymap.set("n", "<leader>e", ":args<cr>")
+vim.keymap.set("n", "<leader>a", ":argadd %<cr>:argdedupe<cr>")
+vim.keymap.set("n", "<c-h>", ":1argument<cr>")
+vim.keymap.set("n", "<c-j>", ":2argument<cr>")
+vim.keymap.set("n", "<c-k>", ":3argument<cr>")
+vim.keymap.set("n", "<c-l>", ":4argument<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)

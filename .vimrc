@@ -29,6 +29,7 @@ set hidden
 
 syntax on
 filetype plugin on
+colorscheme habamax
 
 nnoremap Y y$
 nnoremap D d$
@@ -43,13 +44,12 @@ nnoremap <c-u> <c-u>zz
 vnoremap <c-d> <c-d>zz
 vnoremap <c-u> <c-u>zz
 
-nnoremap <c-n> :cnext<cr>
-nnoremap <c-p> :cprevious<cr>
-nnoremap <c-t> :tabnew %<cr>
-nnoremap <c-h> 1gt
-nnoremap <c-j> 2gt
-nnoremap <c-k> 3gt
-nnoremap <c-l> 4gt
+nnoremap <leader>e :args<cr>
+nnoremap <leader>a :argadd %<cr>:argdedupe<cr>
+nnoremap <c-h> :1argument<cr>
+nnoremap <c-j> :2argument<cr>
+nnoremap <c-k> :3argument<cr>
+nnoremap <c-l> :4argument<cr>
 
 nnoremap <space> <nop>
 nnoremap <leader>gf :%s/\s\+$//e<cr>
