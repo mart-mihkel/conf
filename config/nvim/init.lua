@@ -5,9 +5,9 @@ vim.g.netrw_preview = 1
 vim.o.clipboard = "unnamedplus"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
+vim.o.winborder = "single"
 vim.o.colorcolumn = "80"
 vim.o.signcolumn = "yes"
-vim.o.winborder = "none"
 vim.o.ignorecase = true
 vim.o.cursorline = true
 vim.o.splitright = true
@@ -19,6 +19,7 @@ vim.o.hlsearch = false
 vim.o.undofile = true
 vim.o.laststatus = 3
 vim.o.shiftwidth = 4
+vim.o.cmdheight = 0
 vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = true
@@ -90,6 +91,11 @@ require("conform").setup({
 })
 
 vim.cmd.colorscheme("habamax")
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "none", fg = "none" })
+vim.api.nvim_set_hl(0, "PmenuKind", { bg = "none", fg = "none" })
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", fg = "none" })
+vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none", fg = "none" })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
