@@ -3,9 +3,9 @@ vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 
 vim.o.clipboard = "unnamedplus"
+vim.o.winborder = "rounded"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
-vim.o.winborder = "single"
 vim.o.colorcolumn = "80"
 vim.o.signcolumn = "yes"
 vim.o.ignorecase = true
@@ -18,33 +18,30 @@ vim.o.swapfile = false
 vim.o.hlsearch = false
 vim.o.undofile = true
 vim.o.laststatus = 3
-vim.o.shiftwidth = 4
 vim.o.cmdheight = 0
 vim.o.scrolloff = 4
 vim.o.number = true
 vim.o.wrap = true
 vim.o.list = true
-vim.o.tabstop = 4
 
 vim.pack.add({
-	"https://github.com/saghen/blink.cmp",
-	"https://github.com/nvim-lua/plenary.nvim",
-	"https://github.com/stevearc/conform.nvim",
-	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/williamboman/mason.nvim",
-	"https://github.com/NMAC427/guess-indent.nvim",
-	"https://github.com/rafamadriz/friendly-snippets",
-	"https://github.com/nvim-telescope/telescope.nvim",
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/williamboman/mason-lspconfig.nvim",
+	{ src = "https://github.com/saghen/blink.cmp" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/stevearc/conform.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+	{ src = "https://github.com/williamboman/mason.nvim" },
+	{ src = "https://github.com/NMAC427/guess-indent.nvim" },
+	{ src = "https://github.com/rafamadriz/friendly-snippets" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+	{ src = "https://github.com/williamboman/mason-lspconfig.nvim" },
+	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 })
 
 require("mason").setup()
-require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
-
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	auto_install = true,
@@ -62,11 +59,24 @@ require("gitsigns").setup({
 
 require("telescope").setup({
 	defaults = {
-		borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
 		layout_config = {
 			horizontal = {
 				width = { padding = 0 },
 				height = { padding = 0 },
+			},
+		},
+	},
+})
+
+require("blink.cmp").setup({
+	completion = {
+		menu = {
+			scrollbar = false,
+			draw = {
+				columns = {
+					{ "label", "label_description", gap = 1 },
+					{ "kind" },
+				},
 			},
 		},
 	},
@@ -101,15 +111,16 @@ vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "<c-d>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
-vim.keymap.set({ "n", "v" }, "<c-n>", ":cnext<cr>")
-vim.keymap.set({ "n", "v" }, "<c-p>", ":cprevious<cr>")
+vim.keymap.set({ "n", "v" }, "<c-n>", ":silent! cnext<cr>")
+vim.keymap.set({ "n", "v" }, "<c-p>", ":silent! cprevious<cr>")
 
 vim.keymap.set("n", "<leader>e", ":args<cr>")
+vim.keymap.set("n", "<leader>d", ":silent! :argdel %<cr>")
 vim.keymap.set("n", "<leader>a", ":argadd %<cr>:argdedupe<cr>")
-vim.keymap.set("n", "<c-h>", ":1argument<cr>")
-vim.keymap.set("n", "<c-j>", ":2argument<cr>")
-vim.keymap.set("n", "<c-k>", ":3argument<cr>")
-vim.keymap.set("n", "<c-l>", ":4argument<cr>")
+vim.keymap.set("n", "<c-h>", ":silent! 1argument<cr>")
+vim.keymap.set("n", "<c-j>", ":silent! 2argument<cr>")
+vim.keymap.set("n", "<c-k>", ":silent! 3argument<cr>")
+vim.keymap.set("n", "<c-l>", ":silent! 4argument<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
@@ -121,6 +132,7 @@ vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
 vim.keymap.set("n", "<leader>fo", require("telescope.builtin").oldfiles)
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
+vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 vim.keymap.set("n", "<leader>fs", require("telescope.builtin").git_status)
 vim.keymap.set("n", "<leader>ff", function()
 	if vim.uv.fs_stat(".git") then

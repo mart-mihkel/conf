@@ -8,7 +8,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 autoload -Uz compinit && compinit
 zstyle ":completion:*" menu yes select
-zstyle ":completion::complete:*" gain-privileges 1
+zstyle ":completion:*" special-dirs yes
+zstyle ":completion::complete:*" gain-privileges yes
 
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 

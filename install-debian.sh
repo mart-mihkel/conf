@@ -14,7 +14,7 @@ GIT=$HOME/git
 set -e
 
 if ! grep -qi debian /etc/os-release > /dev/null 2>&1; then
-    printf "${FG1}install cancelled${RES}: only debian supported, use -f to force\n"
+    printf "${FG1}install cancelled${RES}: only debian supported\n"
     exit 1
 fi
 
@@ -27,9 +27,13 @@ sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
 
 sudo chsh -s $(which zsh) $USER
 mkdir -p $BIN $PIC $CFG $GIT
+
 cp -r scripts/* $BIN
 cp -r config/* $CFG
 cp -r walls $PIC
+
+cp .tmux.conf $HOME
+cp .vimrc $HOME
 cp .zshrc $HOME
 
 printf "${FG2}installing${RES}: windomanager\n"
@@ -45,15 +49,15 @@ sudo systemctl enable --now NetworkManager bluetooth thermald zramswap
 
 if [ ! -e $HOME/.gitconfig ]; then
     printf "${FG2}configuring${RES}: git\n"
-    echo -n "git name: "; read GIT_NAME
-    echo -n "git email: "; read GIT_EMAIL
+    printf "git user-name: "; read GIT_NAME
+    printf "git user-email: "; read GIT_EMAIL
     git config --global user.name $GIT_NAME
     git config --global user.email $GIT_EMAIL
     git config --global core.editor vim
     git config --global pull.rebase true
     git config --global push.autoSetupRemote true
 else
-    printf "${FG1}skipping${RES}: git, already configured\n"
+    printf "${FG1}skipping${RES}: git\n"
 fi
 
 if ! command -v nvim > /dev/null 2>&1; then
@@ -64,7 +68,7 @@ if ! command -v nvim > /dev/null 2>&1; then
     ln -sf $HOME/.local/nvim-linux-x86_64/bin/nvim $BIN/nvim
     rm nvim-linux-x86_64.tar.gz
 else
-    printf "${FG1}skipping${RES}: neovim, already installed\n"
+    printf "${FG1}skipping${RES}: neovim\n"
 fi
 
 if ! command -v docker > /dev/null 2>&1; then
@@ -77,7 +81,7 @@ if ! command -v docker > /dev/null 2>&1; then
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo usermod -aG docker $USER
 else
-    printf "${FG1}skipping${RES}: docker, already installed\n"
+    printf "${FG1}skipping${RES}: docker\n"
 fi
 
 if ! command -v cloudflared > /dev/null 2>&1; then
@@ -88,7 +92,7 @@ if ! command -v cloudflared > /dev/null 2>&1; then
     sudo apt-get update
     sudo apt-get install -y cloudflared
 else
-    printf "${FG1}skipping${RES}: cloudflared, already installed\n"
+    printf "${FG1}skipping${RES}: cloudflared\n"
 fi
 
 if ! command -v intel-undervolt > /dev/null 2>&1; then
@@ -107,7 +111,7 @@ if ! command -v intel-undervolt > /dev/null 2>&1; then
     sudo sed -i "s|^undervolt 2.*|undervolt 2 'GPU Cache' -100|" /etc/intel-undervolt.conf
     sudo systemctl enable --now intel-undervolt 
 else
-    printf "${FG1}skipping${RES}: intel-undervolt, already installed\n"
+    printf "${FG1}skipping${RES}: intel-undervolt\n"
 fi
 
 if ! command -v auto-cpufreq > /dev/null 2>&1; then
@@ -120,7 +124,7 @@ if ! command -v auto-cpufreq > /dev/null 2>&1; then
     popd
     popd
 else
-    printf "${FG1}skipping${RES}: auto-cpufreq, already installed\n"
+    printf "${FG1}skipping${RES}: auto-cpufreq\n"
 fi
 
 if ! command -v qdigidoc4 > /dev/null 2>&1; then
@@ -132,14 +136,14 @@ if ! command -v qdigidoc4 > /dev/null 2>&1; then
     popd
     popd
 else
-    printf "${FG1}skipping${RES}: qdigidoc4, already installed\n"
+    printf "${FG1}skipping${RES}: qdigidoc4\n"
 fi
 
 if ! command -v brave-browser > /dev/null 2>&1; then
     printf "${FG2}installing${RES}: brave-browser\n"
     curl -fsS https://dl.brave.com/install.sh | sh
 else
-    printf "${FG1}skipping${RES}: brave-browser, already installed\n"
+    printf "${FG1}skipping${RES}: brave-browser\n"
 fi
 
 if ! command -v discord > /dev/null 2>&1; then
@@ -148,7 +152,7 @@ if ! command -v discord > /dev/null 2>&1; then
     sudo apt-get install -y ./discord.deb
     rm discord.deb
 else
-    printf "${FG1}skipping${RES}: discord, already installed\n"
+    printf "${FG1}skipping${RES}: discord\n"
 fi
 
 printf "${FG2}install finished!${RES}\n"
