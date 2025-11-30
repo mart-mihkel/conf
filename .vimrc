@@ -20,7 +20,6 @@ set splitbelow
 set expandtab
 set smartcase
 set incsearch
-set tabstop=4
 set smarttab
 set undofile
 set path+=**
@@ -41,15 +40,15 @@ vnoremap k gk
 
 nnoremap <c-d> <c-d>zz
 nnoremap <c-u> <c-u>zz
-vnoremap <c-d> <c-d>zz
-vnoremap <c-u> <c-u>zz
+nnoremap <c-n> :silent! cnext<cr>
+nnoremap <c-p> :silent! cprevious<cr>
 
 nnoremap <leader>e :args<cr>
 nnoremap <leader>a :argadd %<cr>:argdedupe<cr>
-nnoremap <c-h> :1argument<cr>
-nnoremap <c-j> :2argument<cr>
-nnoremap <c-k> :3argument<cr>
-nnoremap <c-l> :4argument<cr>
+nnoremap <c-h> :silent! 1argument<cr>
+nnoremap <c-j> :silent! 2argument<cr>
+nnoremap <c-k> :silent! 3argument<cr>
+nnoremap <c-l> :silent! 4argument<cr>
 
 nnoremap <space> <nop>
 nnoremap <leader>gf :%s/\s\+$//e<cr>
