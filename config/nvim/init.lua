@@ -39,7 +39,6 @@ vim.pack.add({
 })
 
 require("mason").setup()
-require("blink.cmp").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
 
@@ -65,6 +64,19 @@ require("telescope").setup({
 			horizontal = {
 				width = { padding = 0 },
 				height = { padding = 0 },
+			},
+		},
+	},
+})
+
+require("blink.cmp").setup({
+	completion = {
+		menu = {
+			draw = {
+				columns = {
+					{ "label", "label_description", gap = 1 },
+					{ "kind" },
+				},
 			},
 		},
 	},
@@ -119,6 +131,7 @@ vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
 vim.keymap.set("n", "<leader>fo", require("telescope.builtin").oldfiles)
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
+vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 vim.keymap.set("n", "<leader>fs", require("telescope.builtin").git_status)
 vim.keymap.set("n", "<leader>ff", function()
 	if vim.uv.fs_stat(".git") then
