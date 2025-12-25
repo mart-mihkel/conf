@@ -1,4 +1,5 @@
 set $wallpaper ~/Pictures/walls/snufkin-coffer.png
+set $battery /sys/class/power_supply/BAT0/capacity
 
 default_border none
 floating_modifier Mod4
@@ -14,9 +15,8 @@ input type:keyboard {
 }
 
 bar {
-    status_command while echo "$(cat /sys/class/power_supply/BAT0/capacity)% $(date +'%H:%M')"; do sleep 1; done
-    font pango:JetBrainsMono Bold 10
-
+    status_command while sleep 1; do echo "$(cat $battery) $(date +'%H:%M')"; done
+    font pango:JetBrainsMono 10
     colors {
         background #181818
         statusline #d8d8d8
@@ -32,17 +32,21 @@ exec gammastep
 exec swayidle
 exec dunst
 
-bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
-bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
-bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_AUDIO_SINK@   2%-
+bindsym --locked XF86AudioRaiseVolume  exec wpctl set-volume @DEFAULT_AUDIO_SINK@   2%+
+bindsym --locked XF86AudioMicMute      exec wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86AudioMute         exec wpctl set-mute   @DEFAULT_AUDIO_SINK@   toggle
+
 bindsym --locked XF86MonBrightnessDown exec brightnessctl s 2%-
-bindsym --locked XF86MonBrightnessUp exec brightnessctl s +2%
+bindsym --locked XF86MonBrightnessUp   exec brightnessctl s +2%
+
 bindsym --locked XF86AudioPause exec playerctl play-pause
-bindsym --locked XF86AudioPlay exec playerctl play-pause
-bindsym --locked XF86AudioPrev exec playerctl previous
-bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPlay  exec playerctl play-pause
+bindsym --locked XF86AudioPrev  exec playerctl previous
+bindsym --locked XF86AudioNext  exec playerctl next
+
 bindsym --locked Print exec grimshot --notify savecopy area
+
 bindsym Mod4+n exec swaylock -uei $wallpaper
 bindsym Mod4+t exec foot $(tofi-run)
 bindsym Mod4+e exec tofi-emoji

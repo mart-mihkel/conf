@@ -44,6 +44,7 @@ nnoremap <c-n> :silent! cnext<cr>
 nnoremap <c-p> :silent! cprevious<cr>
 
 nnoremap <leader>e :args<cr>
+nnoremap <leader>d :silent! :argdel %<cr>
 nnoremap <leader>a :argadd %<cr>:argdedupe<cr>
 nnoremap <c-h> :silent! 1argument<cr>
 nnoremap <c-j> :silent! 2argument<cr>

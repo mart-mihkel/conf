@@ -3,10 +3,11 @@
 SAVEHIST=10000
 HISTSIZE=10000
 HISTFILE=~/.zhist
-precmd_functions+=(precmd_prompt)
+precmd_functions+=(precmd)
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 autoload -Uz compinit && compinit
+
 zstyle ":completion:*" menu yes select
 zstyle ":completion:*" special-dirs yes
 zstyle ":completion::complete:*" gain-privileges yes
@@ -26,13 +27,34 @@ alias bat="batcat"
 alias l="ls -lah --color"
 alias ll="ls -lh --color"
 alias venv="source .venv/bin/activate"
-alias cssh='ssh -o ProxyCommand="cloudflared access ssh --hostname %h"'
 
 eval "$(direnv hook zsh)"
 
-function tm() {
-    PROJECT=$(fd -d=1 -t=d . ~/git | fzf)
-    [[ -z $PROJECT ]] && return 1
+function precmd() {
+    if [[ -n $TMUX ]]; then
+        cd .
+    fi
+
+    ITEMS=""
+    BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
+
+    if [[ -n $VIRTUAL_ENV_PROMPT ]]; then
+        ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
+    fi
+
+    if [[ -n $BRANCH ]]; then
+        ITEMS="$ITEMS%F{5}$BRANCH%f "
+    fi
+
+    PROMPT="%F{4}%1~%f $ITEMS"
+}
+
+function tmux-fzf() {
+    PROJECTS=$(fd -d 1 -t d . ~/git ~/ut)
+    PROJECT=$(echo $PROJECTS | fzf --style full --delimiter / --with-nth "{5}")
+    if [[ -z $PROJECT ]]; then
+        return 1
+    fi
 
     SESSION=$(basename $PROJECT | tr . _)
     if ! tmux has-session -t $SESSION 2>/dev/null; then
@@ -45,18 +67,4 @@ function tm() {
     else
         tmux attach-session -t $SESSION
     fi
-}
-
-function precmd_prompt() {
-    if [[ -n $TMUX ]]; then
-        cd . # hack to refresh prompt in new tmux session
-    fi
-
-    ITEMS=""
-    BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
-
-    [[ -n $VIRTUAL_ENV_PROMPT ]] && ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
-    [[ -n $BRANCH ]] && ITEMS="$ITEMS%F{5}$BRANCH%f "
-
-    PROMPT="%F{4}%1~%f $ITEMS"
 }
