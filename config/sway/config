@@ -1,5 +1,5 @@
 set $wallpaper ~/Pictures/walls/snufkin-coffer.png
-set $battery /sys/class/power_supply/BAT0/capacity
+set $bat /sys/class/power_supply/BAT0/capacity
 
 default_border none
 floating_modifier Mod4
@@ -15,18 +15,23 @@ input type:keyboard {
 }
 
 bar {
-    status_command while sleep 1; do echo "$(cat $battery) $(date +'%H:%M')"; done
+    status_command while sleep 1; do echo "$(cat $bat) $(date +%H:%M)"; done
     font pango:JetBrainsMono 10
     colors {
-        background #181818
-        statusline #d8d8d8
-        focused_workspace  #181818 #181818 #d8d8d8
-        inactive_workspace #181818 #181818 #888888
+        focused_workspace  #000000 #000000 #ffffff
+        inactive_workspace #000000 #000000 #888888
     }
 }
 
+exec swayidle \
+    timeout 300 'swaymsg "output * dpms off"' \
+         resume 'swaymsg "output * dpms on"' \
+    timeout 330 'swaylock -fei $wallpaper' \
+    timeout 600 'systemctl suspend' \
+    before-sleep 'playerctl -a pause'
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec systemctl --user start xdg-desktop-portal xdg-desktop-portal-wlr
+exec wayland-pipewire-idle-inhibit
 exec autotiling
 exec gammastep
 exec swayidle
@@ -47,7 +52,7 @@ bindsym --locked XF86AudioNext  exec playerctl next
 
 bindsym --locked Print exec grimshot --notify savecopy area
 
-bindsym Mod4+n exec swaylock -uei $wallpaper
+bindsym Mod4+n exec swaylock -ei $wallpaper
 bindsym Mod4+t exec foot $(tofi-run)
 bindsym Mod4+e exec tofi-emoji
 bindsym Mod4+r exec tofi-drun

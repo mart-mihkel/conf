@@ -4,7 +4,7 @@ font-size = 10
 fuzzy-match = true
 drun-launch = true
 
-background-color = #181818
+background-color = #000000
 selection-color = #888888
 horizontal = true
 anchor = bottom

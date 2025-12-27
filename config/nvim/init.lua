@@ -40,32 +40,14 @@ vim.pack.add({
 })
 
 require("mason").setup()
+require("telescope").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
+require("gitsigns").setup({ signcolumn = false })
+require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	auto_install = true,
-})
-
-require("gitsigns").setup({
-	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
-		delete = { text = "-" },
-		topdelete = { text = "-" },
-		changedelete = { text = "~" },
-	},
-})
-
-require("telescope").setup({
-	defaults = {
-		layout_config = {
-			horizontal = {
-				width = { padding = 0 },
-				height = { padding = 0 },
-			},
-		},
-	},
 })
 
 require("blink.cmp").setup({
@@ -111,8 +93,9 @@ vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "<c-d>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
-vim.keymap.set({ "n", "v" }, "<c-n>", ":silent! cnext<cr>")
-vim.keymap.set({ "n", "v" }, "<c-p>", ":silent! cprevious<cr>")
+
+vim.keymap.set("n", "<c-n>", ":silent! cnext<cr>")
+vim.keymap.set("n", "<c-p>", ":silent! cprevious<cr>")
 
 vim.keymap.set("n", "<leader>e", ":args<cr>")
 vim.keymap.set("n", "<leader>d", ":silent! :argdel %<cr>")

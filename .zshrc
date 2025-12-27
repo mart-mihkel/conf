@@ -42,6 +42,10 @@ function precmd() {
         ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
     fi
 
+    if [[ -n $CONDA_PROMPT_MODIFIER ]]; then
+        ITEMS="%F{2}($CONDA_PROMPT_MODIFIER)%f "
+    fi
+
     if [[ -n $BRANCH ]]; then
         ITEMS="$ITEMS%F{5}$BRANCH%f "
     fi
@@ -50,7 +54,7 @@ function precmd() {
 }
 
 function tmux-fzf() {
-    PROJECTS=$(fd -d 1 -t d . ~/git ~/ut)
+    PROJECTS=$(fd -d 1 -t d . ~/git)
     PROJECT=$(echo $PROJECTS | fzf --style full --delimiter / --with-nth "{5}")
     if [[ -z $PROJECT ]]; then
         return 1

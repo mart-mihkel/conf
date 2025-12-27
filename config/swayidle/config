@@ -1,5 +1,0 @@
-timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
-timeout 330 'swaylock -uei ~/Pictures/walls/snufkin-coffer.png'
-timeout 600 'systemctl suspend'
-
-before-sleep 'playerctl -a pause'

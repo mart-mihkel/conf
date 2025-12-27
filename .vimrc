@@ -40,6 +40,9 @@ vnoremap k gk
 
 nnoremap <c-d> <c-d>zz
 nnoremap <c-u> <c-u>zz
+vnoremap <c-d> <c-d>zz
+vnoremap <c-u> <c-u>zz
+
 nnoremap <c-n> :silent! cnext<cr>
 nnoremap <c-p> :silent! cprevious<cr>
 

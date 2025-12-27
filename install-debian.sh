@@ -1,13 +1,11 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 ESC="\033"
 FG1="${ESC}[38;5;1m"
 FG2="${ESC}[38;5;2m"
-FG5="${ESC}[38;5;5m"
 RES="${ESC}[0m"
 
 BIN=$HOME/.local/bin
-PIC=$HOME/Pictures
 CFG=$HOME/.config
 GIT=$HOME/git
 
@@ -26,11 +24,10 @@ sudo apt-get -y install git zsh zsh-autosuggestions wget curl tmux vim man-db \
     golang npm glow btop fzf direnv python3 python3-venv
 
 sudo chsh -s $(which zsh) $USER
-mkdir -p $BIN $PIC $CFG $GIT
+mkdir -p $BIN $CFG $GIT
 
-cp -r scripts/* $BIN
+cp -r bin/* $BIN
 cp -r config/* $CFG
-cp -r walls $PIC
 
 cp .tmux.conf $HOME
 cp .vimrc $HOME
