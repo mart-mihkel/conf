@@ -111,8 +111,9 @@ vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "<c-d>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
-vim.keymap.set({ "n", "v" }, "<c-n>", ":silent! cnext<cr>")
-vim.keymap.set({ "n", "v" }, "<c-p>", ":silent! cprevious<cr>")
+
+vim.keymap.set("n", "<c-n>", ":silent! cnext<cr>")
+vim.keymap.set("n", "<c-p>", ":silent! cprevious<cr>")
 
 vim.keymap.set("n", "<leader>e", ":args<cr>")
 vim.keymap.set("n", "<leader>d", ":silent! :argdel %<cr>")
