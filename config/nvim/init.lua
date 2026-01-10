@@ -25,6 +25,7 @@ vim.o.wrap = true
 vim.o.list = true
 
 vim.pack.add({
+	{ src = "https://github.com/nordtheme/vim" },
 	{ src = "https://github.com/saghen/blink.cmp" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
@@ -82,7 +83,7 @@ require("conform").setup({
 	},
 })
 
-vim.cmd.colorscheme("habamax")
+vim.cmd.colorscheme("nord")
 vim.api.nvim_set_hl(0, "Pmenu", { bg = "none", fg = "none" })
 vim.api.nvim_set_hl(0, "PmenuKind", { bg = "none", fg = "none" })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
@@ -93,17 +94,16 @@ vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "<c-d>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
+vim.keymap.set({ "n", "v" }, "<c-n>", ":cnext<cr>")
+vim.keymap.set({ "n", "v" }, "<c-p>", ":cprevious<cr>")
 
-vim.keymap.set("n", "<c-n>", ":silent! cnext<cr>")
-vim.keymap.set("n", "<c-p>", ":silent! cprevious<cr>")
-
+vim.keymap.set("n", "<c-h>", ":1argu<cr>")
+vim.keymap.set("n", "<c-j>", ":2argu<cr>")
+vim.keymap.set("n", "<c-k>", ":3argu<cr>")
+vim.keymap.set("n", "<c-l>", ":4argu<cr>")
 vim.keymap.set("n", "<leader>e", ":args<cr>")
-vim.keymap.set("n", "<leader>d", ":silent! :argdel %<cr>")
-vim.keymap.set("n", "<leader>a", ":argadd %<cr>:argdedupe<cr>")
-vim.keymap.set("n", "<c-h>", ":silent! 1argument<cr>")
-vim.keymap.set("n", "<c-j>", ":silent! 2argument<cr>")
-vim.keymap.set("n", "<c-k>", ":silent! 3argument<cr>")
-vim.keymap.set("n", "<c-l>", ":silent! 4argument<cr>")
+vim.keymap.set("n", "<leader>d", ":argdel %<cr>")
+vim.keymap.set("n", "<leader>a", ":argadd %<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
