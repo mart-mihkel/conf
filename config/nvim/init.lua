@@ -41,14 +41,21 @@ vim.pack.add({
 })
 
 require("mason").setup()
-require("telescope").setup()
-require("guess-indent").setup()
 require("mason-lspconfig").setup()
-require("gitsigns").setup({ signcolumn = false })
-require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
+
+require("guess-indent").setup()
+
+require("gitsigns").setup({
+	signcolumn = false,
+})
+
+require("telescope").setup({
+	defaults = { layout_strategy = "vertical" },
+})
+
 require("nvim-treesitter.configs").setup({
-	highlight = { enable = true },
 	auto_install = true,
+	highlight = { enable = true },
 })
 
 require("blink.cmp").setup({
@@ -66,21 +73,22 @@ require("blink.cmp").setup({
 })
 
 require("conform").setup({
-	default_format_opts = { lsp_format = "fallback" },
 	formatters_by_ft = {
-		json = { "jq" },
 		lua = { "stylua" },
 		nix = { "alejandra" },
-		css = { "prettierd" },
-		html = { "prettierd" },
 		typst = { "prettypst" },
 		python = { "ruff_format" },
-		markdown = { "prettierd" },
-		javascript = { "prettierd" },
-		typescript = { "prettierd" },
-		javascriptreact = { "prettierd" },
-		typescriptreact = { "prettierd" },
+
+		css = { "biome" },
+		html = { "biome" },
+		json = { "biome" },
+		jsonc = { "biome" },
+		javascript = { "biome" },
+		typescript = { "biome" },
+		javascriptreact = { "biome" },
+		typescriptreact = { "biome" },
 	},
+	default_format_opts = { lsp_format = "fallback" },
 })
 
 vim.cmd.colorscheme("nord")
@@ -97,13 +105,13 @@ vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
 vim.keymap.set({ "n", "v" }, "<c-n>", ":cnext<cr>")
 vim.keymap.set({ "n", "v" }, "<c-p>", ":cprevious<cr>")
 
-vim.keymap.set("n", "<c-h>", ":1argu<cr>")
-vim.keymap.set("n", "<c-j>", ":2argu<cr>")
-vim.keymap.set("n", "<c-k>", ":3argu<cr>")
-vim.keymap.set("n", "<c-l>", ":4argu<cr>")
-vim.keymap.set("n", "<leader>e", ":args<cr>")
+vim.keymap.set("n", "<c-h>", ":silent! 1argu<cr>")
+vim.keymap.set("n", "<c-j>", ":silent! 2argu<cr>")
+vim.keymap.set("n", "<c-k>", ":silent! 3argu<cr>")
+vim.keymap.set("n", "<c-l>", ":silent! 4argu<cr>")
 vim.keymap.set("n", "<leader>d", ":argdel %<cr>")
 vim.keymap.set("n", "<leader>a", ":argadd %<cr>")
+vim.keymap.set("n", "<leader>e", ":args<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)

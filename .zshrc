@@ -2,7 +2,7 @@
 
 SAVEHIST=10000
 HISTSIZE=10000
-HISTFILE=~/.zhist
+HISTFILE=~/.zsh_history
 precmd_functions+=(precmd)
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
@@ -31,10 +31,6 @@ alias venv="source .venv/bin/activate"
 eval "$(direnv hook zsh)"
 
 function precmd() {
-    if [[ -n $TMUX ]]; then
-        cd .
-    fi
-
     ITEMS=""
     BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
 
