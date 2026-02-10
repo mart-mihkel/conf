@@ -3,7 +3,6 @@ vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 
 vim.o.clipboard = "unnamedplus"
-vim.o.winborder = "rounded"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.colorcolumn = "80"
@@ -45,13 +44,9 @@ require("mason-lspconfig").setup()
 
 require("guess-indent").setup()
 
-require("gitsigns").setup({
-	signcolumn = false,
-})
+require("gitsigns").setup({ signcolumn = false })
 
-require("telescope").setup({
-	defaults = { layout_strategy = "vertical" },
-})
+require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
 
 require("nvim-treesitter.configs").setup({
 	auto_install = true,
@@ -60,14 +55,11 @@ require("nvim-treesitter.configs").setup({
 
 require("blink.cmp").setup({
 	completion = {
+		accept = { auto_brackets = { enabled = false } },
 		menu = {
 			scrollbar = false,
-			draw = {
-				columns = {
-					{ "label", "label_description", gap = 1 },
-					{ "kind" },
-				},
-			},
+			documentation = { auto_show = true },
+			draw = { columns = { { "label" }, { "kind" } } },
 		},
 	},
 })
@@ -78,6 +70,7 @@ require("conform").setup({
 		nix = { "alejandra" },
 		typst = { "prettypst" },
 		python = { "ruff_format" },
+		markdown = { "prettierd" },
 
 		css = { "biome" },
 		html = { "biome" },
@@ -92,11 +85,8 @@ require("conform").setup({
 })
 
 vim.cmd.colorscheme("nord")
-vim.api.nvim_set_hl(0, "Pmenu", { bg = "none", fg = "none" })
-vim.api.nvim_set_hl(0, "PmenuKind", { bg = "none", fg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", fg = "none" })
-vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none", fg = "none" })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
