@@ -50,8 +50,8 @@ function precmd() {
 }
 
 function tmux-fzf() {
-    PROJECTS=$(fd -d 1 -t d . ~/git)
-    PROJECT=$(echo $PROJECTS | fzf --style full --delimiter / --with-nth "{5}")
+    PROJECT=$(fd -d 1 -t d . ~/git | \
+        fzf --gutter " " --pointer " " --delimiter / --with-nth "{5}")
     if [[ -z $PROJECT ]]; then
         return 1
     fi

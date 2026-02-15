@@ -40,12 +40,9 @@ vim.pack.add({
 })
 
 require("mason").setup()
-require("mason-lspconfig").setup()
-
 require("guess-indent").setup()
-
+require("mason-lspconfig").setup()
 require("gitsigns").setup({ signcolumn = false })
-
 require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
 
 require("nvim-treesitter.configs").setup({
@@ -58,7 +55,6 @@ require("blink.cmp").setup({
 		accept = { auto_brackets = { enabled = false } },
 		menu = {
 			scrollbar = false,
-			documentation = { auto_show = true },
 			draw = { columns = { { "label" }, { "kind" } } },
 		},
 	},
@@ -90,24 +86,12 @@ vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
-vim.keymap.set({ "n", "v" }, "<c-d>", "<c-d>zz")
-vim.keymap.set({ "n", "v" }, "<c-u>", "<c-u>zz")
-vim.keymap.set({ "n", "v" }, "<c-n>", ":cnext<cr>")
-vim.keymap.set({ "n", "v" }, "<c-p>", ":cprevious<cr>")
-
-vim.keymap.set("n", "<c-h>", ":silent! 1argu<cr>")
-vim.keymap.set("n", "<c-j>", ":silent! 2argu<cr>")
-vim.keymap.set("n", "<c-k>", ":silent! 3argu<cr>")
-vim.keymap.set("n", "<c-l>", ":silent! 4argu<cr>")
-vim.keymap.set("n", "<leader>d", ":argdel %<cr>")
-vim.keymap.set("n", "<leader>a", ":argadd %<cr>")
-vim.keymap.set("n", "<leader>e", ":args<cr>")
+vim.keymap.set({ "n", "v" }, "<c-n>", ":silent! cnext<cr>")
+vim.keymap.set({ "n", "v" }, "<c-p>", ":silent! cprevious<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
 vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
-vim.keymap.set("n", "<leader>gs", require("gitsigns").stage_hunk)
-vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
 vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 
 vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
