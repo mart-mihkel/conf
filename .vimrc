@@ -36,16 +36,6 @@ noremap Y y$
 noremap D d$
 noremap j gj
 noremap k gk
-noremap <c-d> <c-d>zz
-noremap <c-u> <c-u>zz
-
-nnoremap <c-h> :1argu<cr>
-nnoremap <c-j> :2argu<cr>
-nnoremap <c-k> :3argu<cr>
-nnoremap <c-l> :4argu<cr>
-nnoremap <leader>e :args<cr>
-nnoremap <leader>a :arga %<cr>
-nnoremap <leader>d :argd %<cr>
 
 nnoremap <leader>ff :find<space>
 nnoremap <leader>fo :browse oldfiles<cr>

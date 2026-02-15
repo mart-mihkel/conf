@@ -36,7 +36,6 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/williamboman/mason-lspconfig.nvim" },
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 })
 
 require("mason").setup()
@@ -44,11 +43,6 @@ require("guess-indent").setup()
 require("mason-lspconfig").setup()
 require("gitsigns").setup({ signcolumn = false })
 require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
-
-require("nvim-treesitter.configs").setup({
-	auto_install = true,
-	highlight = { enable = true },
-})
 
 require("blink.cmp").setup({
 	completion = {
@@ -86,13 +80,11 @@ vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
-vim.keymap.set({ "n", "v" }, "<c-n>", ":silent! cnext<cr>")
-vim.keymap.set({ "n", "v" }, "<c-p>", ":silent! cprevious<cr>")
+vim.keymap.set("n", "<c-n>", ":silent! cnext<cr>")
+vim.keymap.set("n", "<c-p>", ":silent! cprevious<cr>")
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>gf", require("conform").format)
-vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
-vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
 
 vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
 vim.keymap.set("n", "<leader>fo", require("telescope.builtin").oldfiles)

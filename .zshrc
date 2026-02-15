@@ -34,27 +34,20 @@ function precmd() {
     ITEMS=""
     BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
 
-    if [[ -n $VIRTUAL_ENV_PROMPT ]]; then
-        ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
-    fi
-
-    if [[ -n $CONDA_PROMPT_MODIFIER ]]; then
-        ITEMS="%F{2}($CONDA_PROMPT_MODIFIER)%f "
-    fi
-
-    if [[ -n $BRANCH ]]; then
-        ITEMS="$ITEMS%F{5}$BRANCH%f "
-    fi
+    [[ -n $VIRTUAL_ENV_PROMPT ]] && ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
+    [[ -n $CONDA_PROMPT_MODIFIER ]] && ITEMS="%F{2}($CONDA_PROMPT_MODIFIER)%f "
+    [[ -n $BRANCH ]] && ITEMS="$ITEMS%F{5}$BRANCH%f "
 
     PROMPT="%F{4}%1~%f $ITEMS"
 }
 
-function tmux-fzf() {
-    PROJECT=$(fd -d 1 -t d . ~/git | \
-        fzf --gutter " " --pointer " " --delimiter / --with-nth "{5}")
-    if [[ -z $PROJECT ]]; then
-        return 1
-    fi
+function tfzf() {
+    PROJECT=$(
+        fd -d 1 -t d . ~/git | \
+        fzf --gutter " " --pointer " " --delimiter / --with-nth "{5}"
+    )
+
+    [[ -z $PROJECT ]] && return 1
 
     SESSION=$(basename $PROJECT | tr . _)
     if ! tmux has-session -t $SESSION 2>/dev/null; then
