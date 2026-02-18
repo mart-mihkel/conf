@@ -41,7 +41,6 @@ vim.pack.add({
 require("mason").setup()
 require("guess-indent").setup()
 require("mason-lspconfig").setup()
-require("gitsigns").setup({ signcolumn = false })
 require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
 
 require("blink.cmp").setup({
@@ -51,6 +50,17 @@ require("blink.cmp").setup({
 			scrollbar = false,
 			draw = { columns = { { "label" }, { "kind" } } },
 		},
+	},
+})
+
+require("gitsigns").setup({
+	signs_staged_enable = false,
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "-" },
+		topdelete = { text = "-" },
+		changedelete = { text = "~" },
 	},
 })
 
