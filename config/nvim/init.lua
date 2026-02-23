@@ -68,7 +68,7 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		nix = { "alejandra" },
-		typst = { "prettypst" },
+		typst = { "typstyle" },
 		python = { "ruff_format" },
 		markdown = { "prettierd" },
 
@@ -80,6 +80,11 @@ require("conform").setup({
 		typescript = { "biome" },
 		javascriptreact = { "biome" },
 		typescriptreact = { "biome" },
+	},
+	formatters = {
+		typstyle = {
+			prepend_args = { "--wrap-text" },
+		},
 	},
 	default_format_opts = { lsp_format = "fallback" },
 })
@@ -99,7 +104,6 @@ vim.keymap.set("n", "<leader>gf", require("conform").format)
 vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
 vim.keymap.set("n", "<leader>fo", require("telescope.builtin").oldfiles)
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
-vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 vim.keymap.set("n", "<leader>fs", require("telescope.builtin").git_status)
 vim.keymap.set("n", "<leader>ff", function()
 	if vim.uv.fs_stat(".git") then
