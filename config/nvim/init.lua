@@ -3,6 +3,7 @@ vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 
 vim.o.clipboard = "unnamedplus"
+vim.o.winborder = "rounded"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.colorcolumn = "80"
@@ -24,7 +25,6 @@ vim.o.wrap = true
 vim.o.list = true
 
 vim.pack.add({
-	{ src = "https://github.com/nordtheme/vim" },
 	{ src = "https://github.com/saghen/blink.cmp" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
@@ -32,6 +32,7 @@ vim.pack.add({
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/williamboman/mason.nvim" },
 	{ src = "https://github.com/NMAC427/guess-indent.nvim" },
+	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/rafamadriz/friendly-snippets" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/williamboman/mason-lspconfig.nvim" },
@@ -89,8 +90,7 @@ require("conform").setup({
 	default_format_opts = { lsp_format = "fallback" },
 })
 
-vim.cmd.colorscheme("nord")
-vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
+vim.cmd.colorscheme("github_light")
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
