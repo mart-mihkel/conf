@@ -35,7 +35,7 @@ function precmd() {
     BRANCH=$(git symbolic-ref --short HEAD 2> /dev/null)
 
     [[ -n $VIRTUAL_ENV_PROMPT ]] && ITEMS="%F{3}($VIRTUAL_ENV_PROMPT)%f "
-    [[ -n $CONDA_PROMPT_MODIFIER ]] && ITEMS="%F{2}($CONDA_PROMPT_MODIFIER)%f "
+    [[ -n $CONDA_PROMPT_MODIFIER ]] && ITEMS="%F{2}$CONDA_PROMPT_MODIFIER%f"
     [[ -n $BRANCH ]] && ITEMS="$ITEMS%F{5}$BRANCH%f "
 
     PROMPT="%F{4}%1~%f $ITEMS"
