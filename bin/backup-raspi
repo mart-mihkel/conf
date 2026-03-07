@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+RPI=<rpi>
+TARBALL="backup-$(date +"%Y-%m-%d").tar.gz"
+TARGETS=<targets>
+
+tar -czvf $TARBALL --exclude '.venv' $TARGETS
+scp $TARBALL $RPI:backups/
+rm -v $TARBALL

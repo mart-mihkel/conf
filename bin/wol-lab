@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+RPI=<rpi>
+BIN=git/etherwake/ether-wake
+MAC=<mac>
+INT=eth0
+
+# sudo setcap cap_net_raw,cap_net_admin+ep $BIN
+
+echo "Sending magic packet to $MAC on $INT"
+ssh $RPI $BIN -i $INT $MAC
