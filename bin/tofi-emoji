@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+awk -F '\t' '{ print $1 " " $4 }' ~/.cache/emoji.txt | \
+    tofi | awk '{print $1}' | wl-copy

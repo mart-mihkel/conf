@@ -29,7 +29,6 @@ set hidden
 
 syntax on
 filetype plugin on
-colorscheme shine
 
 noremap <space> <nop>
 
