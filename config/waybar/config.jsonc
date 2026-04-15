@@ -1,0 +1,18 @@
+{
+  "spacing": 8,
+  "position": "bottom",
+  "reload_style_on_change": true,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "battery",
+    "clock"
+  ],
+  "battery": {
+    "format": "{capacity}%"
+  },
+  "clock": {
+    "format": "{:%H:%M}"
+  }
+}

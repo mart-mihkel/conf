@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+WALLPAPERS=~/Pictures/walls
+
+PICK=$(ls $WALLPAPERS | tofi)
+
+[[ -z $PICK ]] && exit 1
+
+hellwal --skip-term-colors -l -i $WALLPAPERS/$PICK &
+awww img $WALLPAPERS/$PICK \
+    --transition-type random \
+    --transition-duration 2 \
+    --transition-fps 60

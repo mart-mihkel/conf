@@ -1,0 +1,27 @@
+@import url("../../.cache/hellwal/colors-gtk2.css");
+
+* {
+  all: unset;
+  font-size: 12px;
+  font-family: JetBrainsMono;
+}
+
+#waybar {
+  background-color: #000000;
+}
+
+tooltip,
+#clock,
+#battery,
+#workspaces {
+  color: #ffffff;
+}
+
+#workspaces button {
+  color: #888888;
+  padding: 0 4px;
+}
+
+#workspaces button.active {
+  color: #ffffff;
+}
