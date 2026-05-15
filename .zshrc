@@ -21,12 +21,6 @@ zstyle ":completion::complete:*" gain-privileges yes
 
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
-source ~/.cargo/env
-source ~/.local/bin/env
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-eval "$(direnv hook zsh)"
-
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
@@ -37,3 +31,10 @@ alias l="ls -lAh --color"
 alias glow="glow --style light"
 alias bat="batcat --theme light"
 alias venv="source .venv/bin/activate"
+alias follow="tail --follow --lines +0"
+
+eval "$(direnv hook zsh)"
+
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.local/bin/env
+source ~/.cargo/env

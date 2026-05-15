@@ -11,16 +11,6 @@ use_conda() {
     conda activate $1
 }
 
-layout_bun() {
-    export BUN_INSTALL=$HOME/.bun
-    PATH_add $BUN_INSTALL/bin
-}
-
-layout_pnpm() {
-    export PNPM_HOME=$HOME/.local/share/pnpm
-    PATH_add $PNPM_HOME
-}
-
 layout_uv() {
     VIRTUAL_ENV=$(pwd)/.venv
     source $VIRTUAL_ENV/bin/activate
