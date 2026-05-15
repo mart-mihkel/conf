@@ -33,7 +33,7 @@ vim.pack.add({
 	"https://github.com/rafamadriz/friendly-snippets",
 	"https://github.com/nvim-telescope/telescope.nvim",
 	"https://github.com/williamboman/mason-lspconfig.nvim",
-	{ src = "https://github.com/saghen/blink.cmp", version = "v1.9.1" },
+	{ src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 })
 
 require("mason").setup()
@@ -64,12 +64,16 @@ require("gitsigns").setup({
 
 require("conform").setup({
 	default_format_opts = { lsp_format = "fallback" },
-	formatters = { typstyle = { prepend_args = { "--wrap-text" } } },
+	formatters = {
+		typstyle = { prepend_args = { "--wrap-text" } },
+		["tex-fmt"] = { prepend_args = { "--format-tables" } },
+	},
 	formatters_by_ft = {
 		css = { "biome" },
 		html = { "biome" },
 		json = { "biome" },
 		lua = { "stylua" },
+		tex = { "tex-fmt" },
 		nix = { "alejandra" },
 		typst = { "typstyle" },
 		javascript = { "biome" },

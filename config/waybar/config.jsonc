@@ -1,5 +1,6 @@
 {
   "spacing": 8,
+  "margin-top": -8,
   "position": "bottom",
   "reload_style_on_change": true,
   "modules-left": [

@@ -5,7 +5,7 @@ fuzzy-match = true
 drun-launch = true
 
 background-color = #00000000
-selection-color = #ffffff
+selection-color = #000000
 text-color = #888888
 horizontal = true
 anchor = bottom
