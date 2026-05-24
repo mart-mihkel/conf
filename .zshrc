@@ -6,9 +6,9 @@ HISTFILE=~/.zsh_history
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 function _prompt() {
-    _REF=$(git symbolic-ref --short HEAD 2> /dev/null)
-    _REF=${_REF:+:%F{5}$_REF%f}
-    PROMPT="%F{2}%n@%m%f${_REF}:%F{4}%~%f %% "
+    local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
+    local ref=${ref:+:%F{5}$ref%f}
+    PROMPT="%F{2}%n@%m%f${ref}:%F{4}%~%f "
 }
 
 precmd_functions+=(_prompt)

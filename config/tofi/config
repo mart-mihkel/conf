@@ -10,7 +10,7 @@ text-color = #888888
 horizontal = true
 anchor = bottom
 width = 75%
-height = 16
+height = 20
 
 padding-top = 0
 padding-left = 0
