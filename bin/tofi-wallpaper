@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 WALLPAPERS=~/Pictures/walls
-PICK=$(ls $WALLPAPERS | tofi)
+PICK=$(ls $WALLPAPERS | tofi --prompt-text img:)
 [[ -z $PICK ]] && exit 1
 
 awww img $WALLPAPERS/$PICK \

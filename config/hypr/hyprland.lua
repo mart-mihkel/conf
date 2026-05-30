@@ -2,11 +2,10 @@ hl.config({
 	general = {
 		gaps_in = 4,
 		gaps_out = 8,
-		border_size = 1,
-		col = { active_border = "#000000", inactive_border = "#000000" },
+		border_size = 0,
 	},
 	decoration = {
-		rounding = 0,
+		rounding = 4,
 		shadow = { enabled = false },
 		blur = { enabled = false },
 	},

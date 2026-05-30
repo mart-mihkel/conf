@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-awk -F '\t' '{ print $1 " " $4 }' ~/.cache/emoji.txt | \
-    tofi | awk '{print $1}' | wl-copy
+cat ~/.cache/emoji.txt | tofi --prompt-text emoji: | awk '{print $1}' | ydotool type -

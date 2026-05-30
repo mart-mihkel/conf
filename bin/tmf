@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+PROJECT=$(
+    fdfind -d 1 -t d . ~/git | \
+    fzf --gutter " " --pointer " " --delimiter / --with-nth "{5}"
+)
+
+[[ -z $PROJECT ]] && exit 1
+
+SESSION=$(basename $PROJECT | tr . _)
+if ! tmux has-session -t $SESSION 2>/dev/null; then
+    tmux new-session -d -s $SESSION -c $PROJECT
+fi
+
+if [[ -n $TMUX ]]; then
+    CLIENT=$(tmux display-message -p "#{client_name}")
+    tmux switch-client -c $CLIENT -t $SESSION
+else
+    tmux attach-session -t $SESSION
+fi

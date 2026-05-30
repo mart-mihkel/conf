@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-use_nvm() {
-    source $HOME/.nvm/nvm.sh
-    nvm use $1
-}
-
 use_conda() {
     PATH_add $HOME/miniconda3/bin
     eval "$(conda shell.zsh hook)"
