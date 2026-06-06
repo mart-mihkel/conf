@@ -1,12 +1,27 @@
 #!/usr/bin/env bash
 
-mkdir -pv ~/.local/bin
-mkdir -pv ~/.config
-mkdir -pv ~/.cache
-mkdir -pv ~/Pictures
+set -euo pipefail
 
-cp -rv ./config/* ~/.config
-cp -rv ./assets/walls ~/Pictures
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+NC='\033[0m'
 
-cp -v ./bin/* ~/.local/bin
-cp -v ./assets/emojis.txt ~/.cache/
+echo -e "${CYAN}==>${NC} ${GREEN}Creating directories...${NC}"
+mkdir -p ~/.local/bin
+mkdir -p ~/.config
+mkdir -p ~/.cache
+mkdir -p ~/Pictures
+
+echo -e "${CYAN}==>${NC} ${GREEN}Copying configs...${NC}"
+cp -r ./config/* ~/.config
+
+echo -e "${CYAN}==>${NC} ${GREEN}Copying wallpapers...${NC}"
+cp -r ./assets/walls ~/Pictures
+
+echo -e "${CYAN}==>${NC} ${GREEN}Copying scripts...${NC}"
+cp ./bin/* ~/.local/bin
+
+echo -e "${CYAN}==>${NC} ${GREEN}Copying assets...${NC}"
+cp ./assets/emojis.txt ~/.cache/
+
+echo -e "${CYAN}==>${NC} ${GREEN}Done.${NC}"
