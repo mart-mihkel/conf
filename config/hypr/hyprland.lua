@@ -40,6 +40,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("dunst")
 end)
 
+hl.bind("SUPER + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("tofi-wallpaper"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
