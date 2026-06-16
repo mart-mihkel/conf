@@ -1,0 +1,13 @@
+[user]
+	name = mart-mihkel
+	email = mart.mihkel.aun@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+[push]
+	autoSetupRemote = true
