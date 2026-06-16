@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-cat ~/.cache/emoji.txt | tofi --prompt-text emoji: | awk '{print $1}' | ydotool type -
+EMOJI=$(cat ~/.cache/emoji.txt | tofi --prompt-text emoji: | awk '{print $1}')
+wl-copy "$EMOJI"
+wtype -M ctrl v -m ctrl
