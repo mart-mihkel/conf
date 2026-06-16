@@ -1,38 +1,30 @@
 hl.config({
-	general = {
-		gaps_in = 4,
-		gaps_out = 8,
-		border_size = 0,
-	},
-	decoration = {
-		rounding = 4,
-		shadow = { enabled = false },
-		blur = { enabled = false },
-	},
-	animations = { enabled = false },
 	input = {
 		kb_layout = "ee",
 		kb_variant = "nodeadkeys",
-		repeat_rate = 32,
 		repeat_delay = 256,
-		follow_mouse = 1,
-		sensitivity = 0,
-		touchpad = { natural_scroll = false },
+		repeat_rate = 32,
 	},
-	misc = { disable_hyprland_logo = true },
+	general = { gaps_in = 4, gaps_out = 8, border_size = 0 },
+	decoration = { blur = { enabled = false } },
 	cursor = { inactive_timeout = 1 },
+	animations = { enabled = false },
 })
 
-hl.monitor({
-	output = "",
-	mode = "preferred",
-	position = "auto",
-	mirror = "eDP-1",
-	scale = 1,
-})
+-- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
+hl.monitor({ output = "DP-1", mode = "preferred", position = "0x0", scale = 1 })
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
+
+-- hl.layer_rule({ match = { namespace = "notifications" }, blur = true })
+-- hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
+-- hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+
+for i = 1, 5 do
+	hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = (i == 1) })
+end
 
 hl.on("hyprland.start", function()
-	hl.exec_cmd("wayland-piperwire-idle-inhibit")
+	hl.exec_cmd("wayland-pipewire-idle-inhibit")
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd("gammastep")
 	hl.exec_cmd("hypridle")
@@ -64,15 +56,15 @@ for i = 1, 10 do
 	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
+hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+
 hl.bind("CONTROL + Print", hl.dsp.exec_cmd("grimblast --notify copysave screen"), { locked = true })
 hl.bind("ALT + Print", hl.dsp.exec_cmd("grimblast --notify copysave active"), { locked = true })
 hl.bind("Print", hl.dsp.exec_cmd("grimblast --notify copysave area"), { locked = true })
 
-hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
-
-hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 
 local xf_opts = { locked = true, repeating = true }
 

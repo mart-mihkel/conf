@@ -25,37 +25,50 @@ vim.o.wrap = true
 vim.o.list = true
 
 ---@param repo string
----@return string
+---@return string url
 local function gh(repo)
 	return "https://github.com/" .. repo
 end
 
 vim.pack.add({
 	gh("rakr/vim-one.git"),
-	gh("nvim-lua/plenary.nvim"),
-	gh("stevearc/conform.nvim"),
-	gh("neovim/nvim-lspconfig"),
+	gh("folke/zen-mode.nvim"),
 	gh("lewis6991/gitsigns.nvim"),
-	gh("williamboman/mason.nvim"),
 	gh("nmac427/guess-indent.nvim"),
-	gh("rafamadriz/friendly-snippets"),
+	gh("nvim-tree/nvim-web-devicons"),
+
+	gh("nvim-lua/plenary.nvim"),
 	gh("nvim-telescope/telescope.nvim"),
+	gh("nvim-telescope/telescope-fzf-native.nvim"),
+
+	gh("neovim/nvim-lspconfig"),
+	gh("stevearc/conform.nvim"),
+	gh("williamboman/mason.nvim"),
 	gh("williamboman/mason-lspconfig.nvim"),
-	{ src = gh("saghen/blink.cmp"), version = "v1.10.4" },
+
+	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
+	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
 })
 
-require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
-require("mason").setup({ ui = { backdrop = 100 } })
-require("mason-lspconfig").setup()
 require("guess-indent").setup()
 
+require("zen-mode").setup({ window = { backdrop = 1 } })
+
+require("mason").setup({ ui = { backdrop = 100 } })
+require("mason-lspconfig").setup()
+
+-- make --directory ~/.local/share/nvim/site/pack/core/opt/telescope-fzf-native.nvim
+require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
+require("telescope").load_extension("fzf")
+
+-- make --directory ~/.local/share/nvim/site/pack/core/opt/LuaSnip install_jsregexp
+require("luasnip").setup()
 require("blink.cmp").setup({
+	signature = { enabled = true },
+	snippets = { preset = "luasnip" },
 	completion = {
+		menu = { scrollbar = false },
 		accept = { auto_brackets = { enabled = false } },
-		menu = {
-			scrollbar = false,
-			draw = { columns = { { "label" }, { "kind" } } },
-		},
 	},
 })
 
@@ -65,7 +78,7 @@ require("gitsigns").setup({
 		add = { text = "+" },
 		change = { text = "~" },
 		delete = { text = "_" },
-		topdelete = { text = "-" },
+		topdelete = { text = "‾" },
 		changedelete = { text = "~" },
 	},
 })
@@ -103,17 +116,24 @@ vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set("n", "<c-n>", ":cnext<cr>")
 vim.keymap.set("n", "<c-p>", ":cprevious<cr>")
 
+vim.keymap.set("n", "grn", vim.lsp.buf.rename)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+vim.keymap.set("n", "gra", vim.lsp.buf.code_action)
+
 vim.keymap.set("n", "<leader>gf", require("conform").format)
 
-vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line)
-vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
-vim.keymap.set("n", "<leader>gs", require("gitsigns").stage_hunk)
-vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
+local gs = require("gitsigns")
 
-vim.keymap.set("n", "<leader>fr", require("telescope.builtin").resume)
-vim.keymap.set("n", "<leader>fo", require("telescope.builtin").oldfiles)
-vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
-vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
-vim.keymap.set("n", "<leader>fs", require("telescope.builtin").git_status)
-vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
+vim.keymap.set("n", "<leader>gb", gs.blame_line)
+vim.keymap.set("n", "<leader>gr", gs.reset_hunk)
+vim.keymap.set("n", "<leader>gs", gs.stage_hunk)
+vim.keymap.set("n", "<leader>gp", gs.preview_hunk)
+
+local builtin = require("telescope.builtin")
+
+vim.keymap.set("n", "<leader>fr", builtin.resume)
+vim.keymap.set("n", "<leader>fo", builtin.oldfiles)
+vim.keymap.set("n", "<leader>fg", builtin.live_grep)
+vim.keymap.set("n", "<leader>fh", builtin.help_tags)
+vim.keymap.set("n", "<leader>fs", builtin.git_status)
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
