@@ -1,0 +1,13 @@
+#clock,
+#network,
+#battery,
+#bluetooth,
+#workspaces,
+#wireplumber,
+#workspaces button.active {
+  color: black;
+}
+
+#workspaces button {
+  color: darkslategrey;
+}

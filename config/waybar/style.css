@@ -1,49 +1,13 @@
-/* @import url("../../.cache/hellwal/colors-gtk2.css"); */
-
-@define-color foreground #000000;
-@define-color background #ffffff;
-
 * {
   all: unset;
-}
-
-#waybar>box {
-  padding: 2px 4px;
-}
-
-tooltip>box {
-  color: @foreground;
-  background-color: @background;
 
   font-size: 12px;
-  font-family: JetBrainsMono NerdFont;
-
-  opacity: 0.8;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-#clock,
-#workspaces {
-  color: @foreground;
-  font-size: 12px;
-  font-family: JetBrainsMono NerdFont;
-}
-
-#network,
-#battery,
-#bluetooth,
-#wireplumber {
-  color: @foreground;
-  font-size: 12px;
-  font-family: JetBrainsMono NerdFont;
+  font-weight: bold;
+  font-family: "JetBrainsMono NerdFont";
 }
 
 #workspaces button {
-  color: #444444;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
-#workspaces button.active {
-  color: @foreground;
-}
+@import url("colors.css");

@@ -1,66 +1,36 @@
 {
-  "spacing": 16,
+  "spacing": 8,
   "margin-bottom": -8,
+  "reload_style_on_change": true,
   "modules-center": [
     "hyprland/workspaces",
-    "network",
-    "bluetooth",
-    "wireplumber",
-    "battery",
-    "clock"
+    "clock",
+    "battery"
   ],
-  "network": {
-    "on-click": "foot impala",
-    "format-disabled": "",
-    "format-ethernet": "󰌗 eth",
-    "format-disconnected": "󰤮 off",
-    "format-wifi": "{icon} {signalStrength}%",
-    "format-icons": [
-      "󰤯 ",
-      "󰤟 ",
-      "󰤢 ",
-      "󰤥 ",
-      "󰤨 "
-    ]
-  },
-  "bluetooth": {
-    "on-click": "foot bluetui",
-    "format-on": "󰂯 on",
-    "format-off": "󰂲 off",
-    "format-disabled": "󰂲 off",
-    "format-no-controller": "󰂲 off",
-    "format-connected": "󰂱 {device_alias}",
-    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%"
-  },
-  "wireplumber": {
-    "on-click": "foot pulsemixer",
-    "format": "{icon}{volume}%",
-    "format-muted": "󰖁 off",
-    "format-icons": {
-      "default": [
-        "󰕿 ",
-        "󰖀 ",
-        "󰕾 "
-      ]
-    }
-  },
   "battery": {
-    "on-click": "foot btop",
     "format": "{icon}{capacity}%",
     "format-icons": [
-      "󰁺 ",
-      "󰁻 ",
-      "󰁼 ",
-      "󰁽 ",
-      "󰁾 ",
-      "󰁿 ",
-      "󰂀 ",
-      "󰂁 ",
-      "󰂂 ",
-      "󰁹 "
-    ]
+      " 󰁺 ",
+      " 󰁻 ",
+      " 󰁼 ",
+      " 󰁽 ",
+      " 󰁾 ",
+      " 󰁿 ",
+      " 󰂀 ",
+      " 󰂁 ",
+      " 󰂂 ",
+      " 󰁹 "
+    ],
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "events": {
+      "on-discharging-warning": "notify-send -u normal 'Power' 'Battery at 20%'",
+      "on-discharging-critical": "notify-send -u critical 'Power' 'Battery at 10%'"
+    }
   },
   "clock": {
-    "format": "󰃰 {:%H:%M}"
+    "format": " 󰃰 {:%H:%M}"
   }
 }
