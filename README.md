@@ -4,49 +4,14 @@ For debian unstable
 
 ## Dependencies
 
-### Desktop
-
-| Package    | Method                                       |
-| ---------- | -------------------------------------------- |
-| `hyprland` | `apt`                                        |
-| `hyprlock` | `apt`                                        |
-| `hypridle` | `apt`                                        |
-| `waybar`   | `apt`                                        |
-| `dunst`    | `apt`                                        |
-| `foot`     | `apt`                                        |
-| `tofi`     | `apt`                                        |
-| `hellwal`  | [source](https://github.com/danihek/hellwal) |
-| `awww`     | [source](https://codeberg.org/LGFae/awww)    |
-
-### Tools
-
-| Tool                            | Method  |
-| ------------------------------- | ------- |
-| `wayland-pipewire-idle-inhibit` | `cargo` |
-| `brightnessctl`                 | `apt`   |
-| `wireplumber`                   | `apt`   |
-| `playerctl`                     | `apt`   |
-| `gammastep`                     | `apt`   |
-| `bluez`                         | `apt`   |
-
-### Devtools
-
-| Devtool               | Method                                  |
-| --------------------- | --------------------------------------- |
-| `zsh-autosuggestions` | `apt`                                   |
-| `batcat`              | `apt`                                   |
-| `fdfind`              | `apt`                                   |
-| `direnv`              | `apt`                                   |
-| `glow`                | `apt`                                   |
-| `tmux`                | `apt`                                   |
-| `zsh`                 | `apt`                                   |
-| `vim`                 | `apt`                                   |
-| `git`                 | `apt`                                   |
-| `opencode`            | [script](./scripts/install-devtools.sh) |
-| `neovim`              | [script](./scripts/install-neovim.sh)   |
-| `cargo`               | [script](./scripts/install-devtools.sh) |
-| `pnpm`                | [script](./scripts/install-devtools.sh) |
-| `uv`                  | [script](./scripts/install-devtools.sh) |
+| Type         | Method                                          | Packages                                                                                  |
+| ------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Desktop**  | `apt`                                           | `dunst foot hypridle hyprland hyprlock tofi waybar`                                       |
+|              | build from source                               | [`awww`](https://codeberg.org/LGFae/awww) [`hellwal`](https://github.com/danihek/hellwal) |
+| **Tools**    | `apt`                                           | `bluez brightnessctl btop gammastep playerctl wireplumber`                                |
+|              | `cargo`                                         | `bluetui impala wayland-pipewire-idle-inhibit`                                            |
+| **Devtools** | `apt`                                           | `batcat direnv fdfind git glow ripgrep tmux vim zsh zsh-autosuggestions`                  |
+|              | [install script](./scripts/install-devtools.sh) | `cargo neovim opencode pnpm uv`                                                           |
 
 ## Install
 

@@ -10,9 +10,6 @@ source ./scripts/install-configs.sh
 log "Running install-nerdfont"
 source ./scripts/install-nerdfont.sh
 
-log "Running install-neovim"
-source ./scripts/install-neovim.sh
-
 log "Running install-devtools"
 source ./scripts/install-devtools.sh
 

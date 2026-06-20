@@ -4,6 +4,9 @@ set -euo pipefail
 
 log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
+TMPDIR="$(mktemp -d)"
+trap 'rm -rf "${TMPDIR}"' EXIT
+
 if ! command -v uv &>/dev/null; then
     log "Installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -30,6 +33,16 @@ if ! command -v opencode &>/dev/null; then
     curl -fsSL https://opencode.ai/install.sh | sh
 else
     log "Opencode already installed"
+fi
+
+if ! command -v nvim &>/dev/null; then
+    log "Installing Neovim stable..."
+    wget -q "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -O "${TMPDIR}/nvim-linux-x86_64.tar.gz"
+    tar -xzf "${TMPDIR}/nvim-linux-x86_64.tar.gz" -C "${TMPDIR}"
+    rm -rf ~/.nvim
+    mv "${TMPDIR}/nvim-linux-x86_64" ~/.nvim
+else
+    log "Neovim already installed"
 fi
 
 log "Devtools installed"

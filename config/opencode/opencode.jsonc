@@ -1,12 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "shell": "/usr/bin/zsh",
   "provider": {
-    "llama.cpp": {
-      "npm": "@ai-sdk/openai-compatible",
+    "karuteene": {
       "name": "Karuteene",
       "models": {
-        "qwen3.6-35B-A3B-IQ2": {
-          "name": "Qwen3.6 MoE",
+        "qwen36-35b-a3b-iq2": {
+          "name": "Qwen 3.6 MoE",
           "limit": {
             "context": 131072,
             "output": 65536
