@@ -2,7 +2,7 @@
 
 SAVEHIST=10000
 HISTSIZE=10000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.zshist
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 function _prompt() {
