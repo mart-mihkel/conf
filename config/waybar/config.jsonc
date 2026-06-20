@@ -1,25 +1,58 @@
 {
+  "width": 225,
   "spacing": 8,
-  "margin-bottom": -8,
+  "margin-bottom": -24,
   "reload_style_on_change": true,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
   "modules-center": [
-    "hyprland/workspaces",
-    "clock",
+    "clock"
+  ],
+  "modules-right": [
+    "network",
+    // "bluetooth",
+    "wireplumber",
     "battery"
   ],
-  "battery": {
-    "format": "{icon}{capacity}%",
+  "hyprland/workspaces": {
+    "persistent-workspaces": {
+      "*": 4
+    }
+  },
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰌗 ",
+    "format-disconnected": "󰤮 ",
     "format-icons": [
-      " 󰁺 ",
-      " 󰁻 ",
-      " 󰁼 ",
-      " 󰁽 ",
-      " 󰁾 ",
-      " 󰁿 ",
-      " 󰂀 ",
-      " 󰂁 ",
-      " 󰂂 ",
-      " 󰁹 "
+      "󰤯 ",
+      "󰤟 ",
+      "󰤢 ",
+      "󰤥 ",
+      "󰤨 "
+    ]
+  },
+  "bluetooth": {
+    "format-on": "󰂯 ",
+    "format-connected": "󰂱 "
+  },
+  "wireplumber": {
+    "format": "󰕾 ",
+    "format-muted": "󰖁 "
+  },
+  "battery": {
+    "format": "{icon}",
+    "format-icons": [
+      "󰁺 ",
+      "󰁻 ",
+      "󰁼 ",
+      "󰁽 ",
+      "󰁾 ",
+      "󰁿 ",
+      "󰂀 ",
+      "󰂁 ",
+      "󰂂 ",
+      "󰁹 "
     ],
     "states": {
       "warning": 20,
@@ -31,6 +64,6 @@
     }
   },
   "clock": {
-    "format": " 󰃰 {:%H:%M}"
+    "format": "󰃰 {:%H:%M}  "
   }
 }

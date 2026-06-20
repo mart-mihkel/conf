@@ -2,25 +2,37 @@ hl.config({
 	input = {
 		kb_layout = "ee",
 		kb_variant = "nodeadkeys",
-		repeat_delay = 256,
-		repeat_rate = 32,
+		repeat_delay = 250,
+		repeat_rate = 30,
 	},
-	general = { gaps_in = 4, gaps_out = 8, border_size = 0 },
-	decoration = { blur = { enabled = false } },
+	general = {
+		gaps_in = 8,
+		gaps_out = 24,
+		border_size = 0,
+	},
+	decoration = {
+		blur = {
+			enabled = true,
+			passes = 2,
+			size = 4,
+		},
+	},
 	cursor = { inactive_timeout = 1 },
 	animations = { enabled = false },
 })
 
--- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
-hl.monitor({ output = "DP-1", mode = "preferred", position = "0x0", scale = 1 })
-hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
+hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
 
--- hl.layer_rule({ match = { namespace = "notifications" }, blur = true })
--- hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
--- hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+-- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
+hl.monitor({ output = "DP-1", mode = "preferred", position = "0x0", scale = 1 })
 
 for i = 1, 5 do
-	hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = (i == 1) })
+	hl.workspace_rule({
+		workspace = tostring(i),
+		default = (i == 1),
+		monitor = "DP-1",
+	})
 end
 
 hl.on("hyprland.start", function()

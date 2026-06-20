@@ -1,20 +1,19 @@
-font = JetBrainsMono
-font-size = 12
+include        = ./colors
 
-fuzzy-match = true
-drun-launch = true
+fuzzy-match    = true
+drun-launch    = true
 
-text-color = #888888
-selection-color = #000000
-background-color = #ffffffdd
+font           = JetBrainsMono
+font-size      = 14
 
-width = 100%
-height = 100%
+height         = 100%
+width          = 100%
 
-padding-top = 25%
-padding-left = 40%
-padding-bottom = 25%
+padding-left   = 35%
+padding-top    = 35%
 
-border-width = 0
-outline-width = 0
-result-spacing = 12
+result-spacing = 10
+num-results    = 10
+
+border-width   = 0
+outline-width  = 0

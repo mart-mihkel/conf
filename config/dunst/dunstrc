@@ -1,5 +1,5 @@
 [global]
-font = JetBrainsMono 10
+font = JetBrainsMono 12
 format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
 
 frame_width = 1
@@ -7,25 +7,7 @@ offset = (4, 4)
 gap_size = 4
 
 height = 100
-width = 300
+width = 350
 
-min_icon_size = 44
-max_icon_size = 44
-
-[urgency_low]
-background = "#ffffff"
-foreground = "#000000"
-frame_color = "#000000"
-default_icon = "~/.config/dunst/icons/bell-low.svg"
-
-[urgency_normal]
-background = "#ffffff"
-foreground = "#f4bf75"
-frame_color = "#f4bf75"
-default_icon = "~/.config/dunst/icons/bell-normal.svg"
-
-[urgency_critical]
-background = "#ffffff"
-foreground = "#ac4142"
-frame_color = "#ac4142"
-default_icon = "~/.config/dunst/icons/bell-critical.svg"
+min_icon_size = 64
+max_icon_size = 64

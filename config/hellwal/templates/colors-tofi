@@ -1,0 +1,4 @@
+text-color       = #%% foreground.hex alpha=0.5 %%
+border-color     = #%% foreground %%
+selection-color  = #%% foreground %%
+background-color = #%% background.hex alpha=0.5 %%
