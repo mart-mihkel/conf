@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-WALLPAPERS=~/Pictures/walls
+WALLPAPERS=~/.cache/rice/walls
 PICK=$(ls $WALLPAPERS | tofi --prompt-text img:)
+
 [[ -z $PICK ]] && exit 1
+
+case $PICK in
+    light-*) MODE=--light ;;
+    dark-*) MODE=--dark ;;
+    *) MODE= ;;
+esac
+
+hellwal --image $WALLPAPERS/$PICK $MODE --skip-term-colors &
 
 awww img $WALLPAPERS/$PICK \
     --transition-type random \
