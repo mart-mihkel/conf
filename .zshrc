@@ -6,9 +6,11 @@ HISTFILE=~/.zshist
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 function _prompt() {
+    [[ -n $TMUX ]] && cd .
+
     local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
     local ref=${ref:+:%F{5}$ref%f}
-    PROMPT="%F{2}%n@%m%f${ref}:%F{4}%~%f "
+    PROMPT="%F{4}%1~%f${ref} %% "
 }
 
 precmd_functions+=(_prompt)

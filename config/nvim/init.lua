@@ -115,6 +115,7 @@ vim.keymap.set({ "n", "v" }, "k", "gk")
 
 vim.keymap.set("n", "<c-n>", ":cnext<cr>")
 vim.keymap.set("n", "<c-p>", ":cprevious<cr>")
+vim.keymap.set("n", "<leader>e", ":Explore<cr>")
 
 vim.keymap.set("n", "grn", vim.lsp.buf.rename)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)

@@ -13,5 +13,8 @@ source ./scripts/install-nerdfont.sh
 log "Running install-neovim"
 source ./scripts/install-neovim.sh
 
+log "Running install-devtools"
+source ./scripts/install-devtools.sh
+
 log "Running install-post"
 source ./scripts/install-post.sh
