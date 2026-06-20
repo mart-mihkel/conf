@@ -2,25 +2,23 @@
 
 set -euo pipefail
 
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-NC='\033[0m'
+log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
 FONTDIR="${HOME}/.local/share/fonts"
 TMPDIR="$(mktemp -d)"
 
 trap 'rm -rf "${TMPDIR}"' EXIT
 
-echo -e "${CYAN}==>${NC} ${GREEN}Creating font directory...${NC}"
+log "Creating font directory..."
 mkdir -p "${FONTDIR}"
 
-echo -e "${CYAN}==>${NC} ${GREEN}Downloading JetBrainsMono NerdFont...${NC}"
-wget -q "wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz" -O "${TMPDIR}/jetbrains-mono.tar.xz"
+log "Downloading JetBrainsMono NerdFont..."
+wget -q "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz" -O "${TMPDIR}/jetbrains-mono.tar.xz"
 
-echo -e "${CYAN}==>${NC} ${GREEN}Extracting fonts...${NC}"
+log "Extracting fonts..."
 tar -xf "${TMPDIR}/jetbrains-mono.tar.xz" -C "${FONTDIR}"
 
-echo -e "${CYAN}==>${NC} ${GREEN}Updating font cache...${NC}"
+log "Updating font cache..."
 fc-cache -f
 
-echo -e "${CYAN}==>${NC} ${GREEN}Done.${NC}"
+log "Nerdfont installed"

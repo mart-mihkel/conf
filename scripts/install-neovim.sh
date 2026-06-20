@@ -2,21 +2,19 @@
 
 set -euo pipefail
 
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-NC='\033[0m'
+log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "${TMPDIR}"' EXIT
 
-echo -e "${CYAN}==>${NC} ${GREEN}Downloading Neovim stable...${NC}"
+log "Downloading Neovim stable..."
 wget -q "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -O "${TMPDIR}/nvim-linux-x86_64.tar.gz"
 
-echo -e "${CYAN}==>${NC} ${GREEN}Extracting...${NC}"
+log "Extracting..."
 tar -xzf "${TMPDIR}/nvim-linux-x86_64.tar.gz" -C "${TMPDIR}"
 
-echo -e "${CYAN}==>${NC} ${GREEN}Installing to ~/.nvim...${NC}"
+log "Installing to ~/.nvim..."
 rm -rf ~/.nvim
 mv "${TMPDIR}/nvim-linux-x86_64" ~/.nvim
 
-echo -e "${CYAN}==>${NC} ${GREEN}Done.${NC}"
+log "Neovim installed"

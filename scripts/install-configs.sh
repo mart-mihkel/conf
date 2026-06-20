@@ -2,26 +2,24 @@
 
 set -euo pipefail
 
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-NC='\033[0m'
+log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
-echo -e "${CYAN}==>${NC} ${GREEN}Creating directories...${NC}"
+log "Creating directories..."
+mkdir -p ~/.cache/hellwal
+mkdir -p ~/.cache/rice
 mkdir -p ~/.local/bin
 mkdir -p ~/.config
-mkdir -p ~/.cache
-mkdir -p ~/Pictures
 
-echo -e "${CYAN}==>${NC} ${GREEN}Copying configs...${NC}"
+log "Copying configs..."
 cp -r ./config/* ~/.config
 
-echo -e "${CYAN}==>${NC} ${GREEN}Copying wallpapers...${NC}"
-cp -r ./assets/walls ~/Pictures
-
-echo -e "${CYAN}==>${NC} ${GREEN}Copying scripts...${NC}"
+log "Copying scripts..."
 cp ./bin/* ~/.local/bin
 
-echo -e "${CYAN}==>${NC} ${GREEN}Copying assets...${NC}"
-cp ./assets/emojis.txt ~/.cache/
+log "Copying wallpapers..."
+cp -r ./assets/walls ~/.cache/rice
 
-echo -e "${CYAN}==>${NC} ${GREEN}Done.${NC}"
+log "Copying assets..."
+cp ./assets/emoji ~/.cache/rice
+
+log "Configs installed"
