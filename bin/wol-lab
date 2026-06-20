@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-RPI=<rpi>
-BIN=git/etherwake/ether-wake
-MAC=<mac>
-INT=eth0
+log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
-# sudo setcap cap_net_raw,cap_net_admin+ep $BIN
+PROXY=<proxy-host>
+MAC=<remote-mac>
 
-echo "Sending magic packet to $MAC on $INT"
-ssh $RPI $BIN -i $INT $MAC
+log "Sending magic packet to $MAC"
+ssh $PROXY etherwake -i eth0 $MAC

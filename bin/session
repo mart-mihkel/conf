@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
+log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+
 PROJECT=$(
     fdfind -d 1 -t d . ~/git | \
     fzf --gutter " " --pointer " " --delimiter / --with-nth "{5}"
 )
 
-[[ -z $PROJECT ]] && exit 1
+if [[ -z $PROJECT ]]; then
+    log "No project selected"
+    exit 1
+fi
 
 SESSION=$(basename $PROJECT | tr . _)
+
 if ! tmux has-session -t $SESSION 2>/dev/null; then
+    log "Starting tmux session for $PROJECT"
     tmux new-session -d -s $SESSION -c $PROJECT
 fi
 
 if [[ -n $TMUX ]]; then
+    log "Attaching current client to session"
     CLIENT=$(tmux display-message -p "#{client_name}")
     tmux switch-client -c $CLIENT -t $SESSION
 else
+    log "Attaching to session"
     tmux attach-session -t $SESSION
 fi
