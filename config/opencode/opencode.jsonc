@@ -14,7 +14,7 @@
         }
       },
       "options": {
-        "baseURL": "{env:LLAMA_API_URL}"
+        "baseURL": "{env:KARUTEENE_LLAMA_URL}"
       }
     }
   }

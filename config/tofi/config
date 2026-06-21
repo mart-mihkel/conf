@@ -9,11 +9,11 @@ font-size      = 14
 height         = 100%
 width          = 100%
 
-padding-left   = 35%
-padding-top    = 35%
+padding-left   = 40%
+padding-top    = 30%
 
 result-spacing = 10
 num-results    = 10
 
-border-width   = 0
 outline-width  = 0
+border-width   = 0

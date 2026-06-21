@@ -1,3 +1,5 @@
+local colors = require("colors")
+
 hl.config({
 	input = {
 		kb_layout = "ee",
@@ -8,7 +10,11 @@ hl.config({
 	general = {
 		gaps_in = 8,
 		gaps_out = 24,
-		border_size = 0,
+		border_size = 1,
+		col = {
+			active_border = colors.foreground,
+			inactive_border = colors.foreground,
+		},
 	},
 	decoration = {
 		blur = {
@@ -16,12 +22,16 @@ hl.config({
 			passes = 2,
 			size = 4,
 		},
+		shadow = {
+			enabled = false,
+		},
 	},
 	cursor = { inactive_timeout = 1 },
 	animations = { enabled = false },
 })
 
 hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
+-- hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
 hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })

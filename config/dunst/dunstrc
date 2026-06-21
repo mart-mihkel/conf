@@ -2,8 +2,8 @@
 font = JetBrainsMono 12
 format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
 
+offset = (12, 12)
 frame_width = 1
-offset = (4, 4)
 gap_size = 4
 
 height = 100
