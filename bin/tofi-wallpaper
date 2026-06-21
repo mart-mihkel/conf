@@ -2,15 +2,9 @@
 
 log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 
-if [[ "${1:-}" == "--hellwal" ]]; then
-    HELLWAL=true
-else
-    HELLWAL=false
-fi
-
-WALLPAPERS=~/.cache/rice/walls
-PICK=$(ls "$WALLPAPERS" | tofi --prompt-text img:)
-IMG=$WALLPAPERS/$PICK
+WALLS=~/.cache/rice/walls
+PICK=$(ls $WALLS | tofi --prompt-text img:)
+IMG=$WALLS/$PICK
 
 if [[ -z $PICK ]]; then
     log "Pick cancelled"
@@ -18,27 +12,28 @@ if [[ -z $PICK ]]; then
 fi
 
 log "Setting wallpaper"
-awww img "$IMG" \
-    --transition-type random \
-    --transition-duration 2 \
-    --transition-fps 60 &
+awww img $IMG --transition-type grow --transition-fps 60
 
-if ! $HELLWAL; then
+if [[ "${1:-}" != "--hellwal" ]]; then
     log "Skipping color generation"
     exit 0
 fi
 
 log "Generating colors"
 
+HWAL=~/.cache/hellwal
+CFG=~/.config
+
 case $PICK in
-    light-*) MODE=--light ;;
-    dark-*) MODE=--dark ;;
-    *) MODE= ;;
+    light-*) HWAL_MODE=--light ;;
+    dark-*) HWAL_MODE=--dark ;;
+    *) HWAL_MODE= ;;
 esac
 
-hellwal --quiet --skip-term-colors $MODE --image "$IMG"
+hellwal --quiet --skip-term-colors $HWAL_MODE --image $IMG
 
-cp ~/.cache/hellwal/colors-dunst.conf ~/.config/dunst/dunstrc.d/colors.conf
-cp ~/.cache/hellwal/colors-waybar.css ~/.config/waybar/colors.css
-cp ~/.cache/hellwal/colors.conf ~/.config/hypr/colors.conf
-cp ~/.cache/hellwal/colors-tofi ~/.config/tofi/colors
+cp $HWAL/colors-dunst.conf $CFG/dunst/dunstrc.d/colors.conf
+cp $HWAL/colors-waybar.css $CFG/waybar/colors.css
+cp $HWAL/colors.conf $CFG/hypr/colors.conf
+cp $HWAL/colors.lua $CFG/hypr/colors.lua
+cp $HWAL/colors-tofi $CFG/tofi/colors

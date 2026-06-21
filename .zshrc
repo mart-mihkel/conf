@@ -17,6 +17,8 @@ precmd_functions+=(_prompt)
 
 autoload -Uz compinit && compinit
 
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 zstyle ":completion:*" menu yes select
 zstyle ":completion:*" special-dirs yes
 zstyle ":completion::complete:*" gain-privileges yes
@@ -28,7 +30,7 @@ alias cp="cp -v"
 alias mv="mv -v"
 alias vim="nvim"
 alias fd="fdfind"
-alias cal="ncal -C"
+alias cal="ncal -M -b"
 alias l="ls -lAh --color"
 alias ll="ls -lh --color"
 alias glow="glow --style light"
@@ -38,6 +40,4 @@ alias follow="tail --follow --lines +0"
 
 eval "$(direnv hook zsh)"
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.local/bin/env
-source ~/.cargo/env
+export PATH=~/.local/bin:$PATH

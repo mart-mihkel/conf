@@ -39,8 +39,12 @@ if ! command -v nvim &>/dev/null; then
     log "Installing Neovim stable..."
     wget -q "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -O "${TMPDIR}/nvim-linux-x86_64.tar.gz"
     tar -xzf "${TMPDIR}/nvim-linux-x86_64.tar.gz" -C "${TMPDIR}"
-    rm -rf ~/.nvim
-    mv "${TMPDIR}/nvim-linux-x86_64" ~/.nvim
+
+    rm -rf ~/.neovim
+    mv "${TMPDIR}/nvim-linux-x86_64" ~/.neovim
+
+    mkdir -p ~/.local/bin
+    ln -sf ~/.neovim/bin/nvim ~/.local/bin/nvim
 else
     log "Neovim already installed"
 fi

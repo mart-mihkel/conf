@@ -1,22 +1,23 @@
 # Dotfiles
 
-For debian unstable
+For Debian Sid
 
 ## Dependencies
 
-| Type         | Method                                          | Packages                                                                                  |
-| ------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| **Desktop**  | `apt`                                           | `dunst foot hypridle hyprland hyprlock tofi waybar`                                       |
-|              | build from source                               | [`awww`](https://codeberg.org/LGFae/awww) [`hellwal`](https://github.com/danihek/hellwal) |
-| **Tools**    | `apt`                                           | `bluez brightnessctl btop gammastep playerctl wireplumber`                                |
-|              | `cargo`                                         | `bluetui impala wayland-pipewire-idle-inhibit`                                            |
-| **Devtools** | `apt`                                           | `batcat direnv fdfind git glow ripgrep tmux vim zsh zsh-autosuggestions`                  |
-|              | [install script](./scripts/install-devtools.sh) | `cargo neovim opencode pnpm uv`                                                           |
+| Type         | Method                                          | Packages                                                                                          |
+| ------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Desktop**  | apt                                             | dunst foot hypridle hyprland hyprlock tofi waybar                                                 |
+|              | build from source                               | [awww](https://codeberg.org/LGFae/awww) [hellwal](https://github.com/danihek/hellwal)             |
+| **Tools**    | apt                                             | bluez brightnessctl btop gammastep grim hyprpicker playerctl slurp wireplumber wl-clipboard wtype |
+|              | cargo                                           | bluetui impala wayland-pipewire-idle-inhibit                                                      |
+|              | build from source                               | [grimblast](https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast)                      |
+| **Devtools** | apt                                             | batcat direnv fdfind git glow jq ripgrep tmux vim zsh zsh-autosuggestions                         |
+|              | [install script](./scripts/install-devtools.sh) | cargo neovim opencode pnpm uv                                                                     |
 
 ## Install
 
-Config files, fonts and some dependencies are installed with the script
+Configs, fonts and some dependencies are installed with the script
 
 ```bash
-./scripts/install.sh
+./install.sh
 ```

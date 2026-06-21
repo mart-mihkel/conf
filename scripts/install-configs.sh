@@ -66,7 +66,7 @@ mkdir -p ~/.cache/hellwal
 
 log "Copying configs..."
 install-dir ./config ~/.config
-install-file ./zshrc ~/.zshrc
+install-file ./.zshrc ~/.zshrc
 
 log "Copying scripts..."
 install-dir ./bin ~/.local/bin
