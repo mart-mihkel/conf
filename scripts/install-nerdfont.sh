@@ -9,9 +9,7 @@ TMPDIR="$(mktemp -d)"
 
 trap 'rm -rf "${TMPDIR}"' EXIT
 
-if ls "${FONTDIR}"/JetBrainsMono*.ttf &>/dev/null 2>&1; then
-    log "JetBrainsMono NerdFont already installed"
-else
+if ! ls "${FONTDIR}"/JetBrainsMono*.ttf &>/dev/null 2>&1; then
     log "Creating font directory..."
     mkdir -p "${FONTDIR}"
 
@@ -25,4 +23,6 @@ else
     fc-cache -f
 
     log "Nerdfont installed"
+else
+    log "Nerdfont already installed"
 fi

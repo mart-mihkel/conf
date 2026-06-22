@@ -30,7 +30,7 @@ fi
 
 if ! command -v opencode &>/dev/null; then
     log "Installing opencode..."
-    curl -fsSL https://opencode.ai/install.sh | sh
+    curl -fsSL https://opencode.ai/install | bash
 else
     log "Opencode already installed"
 fi
@@ -42,9 +42,6 @@ if ! command -v nvim &>/dev/null; then
 
     rm -rf ~/.neovim
     mv "${TMPDIR}/nvim-linux-x86_64" ~/.neovim
-
-    mkdir -p ~/.local/bin
-    ln -sf ~/.neovim/bin/nvim ~/.local/bin/nvim
 else
     log "Neovim already installed"
 fi
