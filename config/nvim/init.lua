@@ -8,7 +8,7 @@ vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.background = "light"
 vim.o.colorcolumn = "80"
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = "no"
 vim.o.ignorecase = true
 vim.o.cursorline = true
 vim.o.splitright = true
@@ -24,18 +24,17 @@ vim.o.number = true
 vim.o.wrap = true
 vim.o.list = true
 
----@param repo string
----@return string url
+--- @param repo string
+--- @return string url
 local function gh(repo)
 	return "https://github.com/" .. repo
 end
 
 vim.pack.add({
-	gh("rakr/vim-one.git"),
+	gh("rakr/vim-one"),
 	gh("folke/zen-mode.nvim"),
 	gh("lewis6991/gitsigns.nvim"),
 	gh("nmac427/guess-indent.nvim"),
-	gh("nvim-tree/nvim-web-devicons"),
 
 	gh("nvim-lua/plenary.nvim"),
 	gh("nvim-telescope/telescope.nvim"),
@@ -58,7 +57,14 @@ require("mason").setup({ ui = { backdrop = 100 } })
 require("mason-lspconfig").setup()
 
 -- make --directory ~/.local/share/nvim/site/pack/core/opt/telescope-fzf-native.nvim
-require("telescope").setup({ defaults = { layout_strategy = "vertical" } })
+require("telescope").setup({
+	defaults = {
+		layout_config = {
+			height = { padding = 0 },
+			width = { padding = 0 },
+		},
+	},
+})
 require("telescope").load_extension("fzf")
 
 -- make --directory ~/.local/share/nvim/site/pack/core/opt/LuaSnip install_jsregexp
@@ -73,6 +79,7 @@ require("blink.cmp").setup({
 })
 
 require("gitsigns").setup({
+	auto_attach = false,
 	signs_staged_enable = false,
 	signs = {
 		add = { text = "+" },
@@ -95,7 +102,6 @@ require("conform").setup({
 		json = { "biome" },
 		lua = { "stylua" },
 		tex = { "tex-fmt" },
-		nix = { "alejandra" },
 		typst = { "typstyle" },
 		javascript = { "biome" },
 		typescript = { "biome" },

@@ -9,5 +9,5 @@ gap_size = 4
 height = 100
 width = 350
 
-min_icon_size = 64
-max_icon_size = 64
+min_icon_size = 44
+max_icon_size = 44

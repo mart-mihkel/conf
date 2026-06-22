@@ -20,7 +20,7 @@ hl.config({
 		blur = {
 			enabled = true,
 			passes = 2,
-			size = 4,
+			size = 2,
 		},
 		shadow = {
 			enabled = false,
@@ -31,7 +31,7 @@ hl.config({
 })
 
 hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
--- hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
 hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
@@ -75,11 +75,11 @@ hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
 for i = 1, 10 do
 	local key = i % 10
 	hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic", follow = false }))
 
 hl.bind("CONTROL + Print", hl.dsp.exec_cmd("grimblast --notify copysave screen"), { locked = true })
 hl.bind("ALT + Print", hl.dsp.exec_cmd("grimblast --notify copysave active"), { locked = true })
@@ -94,8 +94,10 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"), xf_opts)
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), xf_opts)
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), xf_opts)
+
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 2%-"), xf_opts)
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 2%+"), xf_opts)
+
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), xf_opts)
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), xf_opts)
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), xf_opts)

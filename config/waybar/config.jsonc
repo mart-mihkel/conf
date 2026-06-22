@@ -1,5 +1,5 @@
 {
-  "width": 225,
+  "width": 300,
   "spacing": 8,
   "margin-bottom": -24,
   "reload_style_on_change": true,
@@ -11,14 +11,17 @@
   ],
   "modules-right": [
     "network",
-    // "bluetooth",
+    "bluetooth",
     "wireplumber",
     "battery"
   ],
   "hyprland/workspaces": {
     "persistent-workspaces": {
-      "*": 3
+      "*": 4
     }
+  },
+  "clock": {
+    "format": "󰃰 {:%H:%M}  "
   },
   "network": {
     "format-wifi": "{icon}",
@@ -42,18 +45,34 @@
   },
   "battery": {
     "format": "{icon}",
-    "format-icons": [
-      "󰁺 ",
-      "󰁻 ",
-      "󰁼 ",
-      "󰁽 ",
-      "󰁾 ",
-      "󰁿 ",
-      "󰂀 ",
-      "󰂁 ",
-      "󰂂 ",
-      "󰁹 "
-    ],
+    "format-icons": {
+      "default": [
+        "󰂎 ",
+        "󰁺 ",
+        "󰁻 ",
+        "󰁼 ",
+        "󰁽 ",
+        "󰁾 ",
+        "󰁿 ",
+        "󰂀 ",
+        "󰂁 ",
+        "󰂂 ",
+        "󰁹 "
+      ],
+      "charging": [
+        "󰢟 ",
+        "󰢜 ",
+        "󰂆 ",
+        "󰂇 ",
+        "󰂈 ",
+        "󰢝 ",
+        "󰂉 ",
+        "󰢞 ",
+        "󰂊 ",
+        "󰂋 ",
+        "󰂅 "
+      ]
+    },
     "states": {
       "warning": 20,
       "critical": 10
@@ -62,8 +81,5 @@
       "on-discharging-warning": "notify-send -u normal 'Power' 'Battery at 20%'",
       "on-discharging-critical": "notify-send -u critical 'Power' 'Battery at 10%'"
     }
-  },
-  "clock": {
-    "format": "󰃰 {:%H:%M}  "
   }
 }
