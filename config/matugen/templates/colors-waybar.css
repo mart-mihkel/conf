@@ -5,5 +5,5 @@
 #workspaces,
 #wireplumber,
 #workspaces button {
-  color: #%% foreground %%;
+  color: {{ colors.on_background.default.hex }};
 }

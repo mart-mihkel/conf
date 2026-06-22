@@ -1,0 +1,4 @@
+text-color       = {{ colors.on_background.default.hex_alpha | set_alpha: 0.5 }}
+border-color     = {{ colors.on_background.default.hex }}
+selection-color  = {{ colors.on_background.default.hex }}
+background-color = {{ colors.background.default.hex_alpha | set_alpha: 0.5 }}

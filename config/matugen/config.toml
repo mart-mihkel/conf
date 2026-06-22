@@ -1,0 +1,22 @@
+[config]
+version_check = false
+
+[templates.dunst]
+input_path = "~/.config/matugen/templates/colors-dunst.conf"
+output_path = "~/.config/dunst/dunstrc.d/colors.conf"
+
+[templates.waybar]
+input_path = "~/.config/matugen/templates/colors-waybar.css"
+output_path = "~/.config/waybar/colors.css"
+
+[templates.hypr]
+input_path = "~/.config/matugen/templates/colors.conf"
+output_path = "~/.config/hypr/colors.conf"
+
+[templates.hypr_lua]
+input_path = "~/.config/matugen/templates/colors.lua"
+output_path = "~/.config/hypr/colors.lua"
+
+[templates.tofi]
+input_path = "~/.config/matugen/templates/colors-tofi"
+output_path = "~/.config/tofi/colors"

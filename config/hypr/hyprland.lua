@@ -8,7 +8,7 @@ hl.config({
 		repeat_rate = 30,
 	},
 	general = {
-		gaps_in = 8,
+		gaps_in = 4,
 		gaps_out = 24,
 		border_size = 1,
 		col = {
