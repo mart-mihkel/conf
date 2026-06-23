@@ -61,9 +61,6 @@ install-dir() {
     done < <(find "$src" -type f -print0)
 }
 
-log "Creating directories..."
-mkdir -p ~/.cache/hellwal
-
 log "Copying configs..."
 install-dir ./config ~/.config
 install-file ./.zshrc ~/.zshrc
