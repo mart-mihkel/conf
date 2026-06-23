@@ -4,6 +4,7 @@ vim.g.netrw_preview = 1
 
 vim.o.clipboard = "unnamedplus"
 vim.o.winborder = "rounded"
+vim.o.guicursor = "a:block"
 vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.background = "light"
@@ -31,7 +32,7 @@ local function gh(repo)
 end
 
 vim.pack.add({
-	gh("rakr/vim-one"),
+	gh("oskarnurm/koda.nvim"),
 	gh("folke/zen-mode.nvim"),
 	gh("lewis6991/gitsigns.nvim"),
 	gh("nmac427/guess-indent.nvim"),
@@ -112,9 +113,7 @@ require("conform").setup({
 	},
 })
 
-vim.cmd.colorscheme("one")
-vim.api.nvim_set_hl(0, "Pmenu", {})
-vim.api.nvim_set_hl(0, "NormalFloat", {})
+vim.cmd.colorscheme("koda")
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
