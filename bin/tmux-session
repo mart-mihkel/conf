@@ -8,22 +8,22 @@ PROJECT=$(
 )
 
 if [[ -z $PROJECT ]]; then
-    log "No project selected"
+    log "no project selected"
     exit 1
 fi
 
 SESSION=$(basename $PROJECT | tr . _)
 
 if ! tmux has-session -t $SESSION 2>/dev/null; then
-    log "Starting tmux session for $PROJECT"
+    log "starting tmux session for $PROJECT"
     tmux new-session -d -s $SESSION -c $PROJECT
 fi
 
 if [[ -n $TMUX ]]; then
-    log "Attaching current client to session"
+    log "attaching current client to session"
     CLIENT=$(tmux display-message -p "#{client_name}")
     tmux switch-client -c $CLIENT -t $SESSION
 else
-    log "Attaching to session"
+    log "attaching to session"
     tmux attach-session -t $SESSION
 fi

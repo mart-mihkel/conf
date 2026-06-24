@@ -8,10 +8,10 @@ warn() { printf "\033[1;33m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
 WALLPAPER=~/.cache/rice/walls/01-dude-light.jpg
 
 if command -v matugen &>/dev/null; then
-    log "Generating colors"
+    log "generating colors"
     matugen image $WALLPAPER -m light --prefer saturation
 else
-    warn "Skipping color generation, matugen not found"
+    warn "skipping color generation, matugen not found"
 fi
 
-log "Post-install done"
+log "post-install done"

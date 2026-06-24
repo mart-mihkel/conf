@@ -43,7 +43,7 @@ install-file() {
 
     if confirm-overwrite "$src" "$dest"; then
         cp "$src" "$dest"
-        log "Installed $dest"
+        log "installed $dest"
     fi
 }
 
@@ -61,17 +61,10 @@ install-dir() {
     done < <(find "$src" -type f -print0)
 }
 
-log "Copying configs..."
+log "copying configs..."
 install-dir ./config ~/.config
 install-file ./.zshrc ~/.zshrc
-
-log "Copying scripts..."
 install-dir ./bin ~/.local/bin
+install-dir ./assets ~/.cache/rice
 
-log "Copying wallpapers..."
-install-dir ./assets/walls ~/.cache/rice/walls
-
-log "Copying assets..."
-install-file ./assets/emoji ~/.cache/rice/emoji
-
-log "Configs installed"
+log "configs installed"

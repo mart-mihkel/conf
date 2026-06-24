@@ -11,13 +11,13 @@ TMPDIR="$(mktemp -d)"
 
 trap 'rm -rf "${TMPDIR}"' EXIT
 
-log "Compressing ${TARGETS[@]}"
+log "compressing ${TARGETS[@]}"
 tar -Pczf "${TMPDIR}/${TARBALL}" \
         --exclude 'node_modules' \
         --exclude '.venv' \
         ${TARGETS[@]}
 
-log "Uploading tarball to $REMOTE"
+log "uploading tarball to $REMOTE"
 scp "${TMPDIR}/${TARBALL}" "${REMOTE}"
 
-log "Deleting tarball"
+log "deleting tarball"

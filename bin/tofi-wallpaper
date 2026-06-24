@@ -7,18 +7,18 @@ PICK=$(ls $WALLS | tofi --prompt-text "img: ")
 IMG=$WALLS/$PICK
 
 if [[ -z $PICK ]]; then
-    log "Pick cancelled"
+    log "pick cancelled"
     exit 1
 fi
 
-log "Setting wallpaper"
+log "setting wallpaper"
 awww img $IMG --transition-type grow --transition-fps 60
 
 case $PICK in
-    light-*) MODE=-m\ light ;;
-    dark-*) MODE=-m\ dark ;;
+    *-light*) MODE=-m\ light ;;
+    *-dark*) MODE=-m\ dark ;;
     *) MODE= ;;
 esac
 
-log "Generating colors"
+log "generating colors"
 matugen image $IMG $MODE --prefer saturation
