@@ -22,3 +22,4 @@ esac
 
 log "generating colors"
 matugen image $IMG $MODE --prefer saturation
+dunstctl reload
