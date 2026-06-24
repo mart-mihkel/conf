@@ -1,0 +1,40 @@
+configuration {
+    show-icons: true;
+}
+
+@import "colors.rasi"
+
+window {
+    fullscreen: true;
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    border: 0;
+    columns: 5;
+    padding: 30% 15%;
+    scrollbar: false;
+}
+
+element {
+    children: [element-icon];
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    border: 1px;
+    border-color: @selection;
+    background-color: @background;
+}
+
+element-icon {
+    size: 35%;
+    expand: true;
+}

@@ -32,6 +32,7 @@ hl.config({
 
 hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+hl.layer_rule({ match = { namespace = "rofi" }, blur = true })
 
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
 hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
@@ -55,7 +56,7 @@ hl.on("hyprland.start", function()
 end)
 
 hl.bind("SUPER + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
-hl.bind("SUPER + B", hl.dsp.exec_cmd("tofi-wallpaper"))
+hl.bind("SUPER + B", hl.dsp.exec_cmd("rofi-wallpaper"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))

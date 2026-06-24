@@ -1,0 +1,60 @@
+configuration {
+    modes: [drun];
+    show-icons: true;
+    drun-display-format: "{name}";
+}
+
+* {
+    font: "JetBrainsMono 12";
+}
+
+@import "colors.rasi"
+
+window {
+    border: 0;
+    fullscreen: true;
+    background-color: @background;
+}
+
+mainbox {
+    padding: 25% 40%;
+    background-color: transparent;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    children: [entry];
+    padding: 16px 64px;
+    text-color: @selection;
+}
+
+entry {
+    placeholder: "drun";
+    text-color: inherit;
+    background-color: transparent;
+}
+
+listview {
+    border: 0;
+    spacing: 8px;
+    padding: 16px;
+    scrollbar: false;
+    text-color: @selection;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px;
+    spacing: 16px;
+}
+
+element normal.normal,
+element alternate.normal {
+    text-color: @text;
+    background-color: transparent;
+}
+
+element selected.normal {
+    text-color: @selection;
+    background-color: transparent;
+}
