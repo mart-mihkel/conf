@@ -56,9 +56,9 @@ hl.on("hyprland.start", function()
 end)
 
 hl.bind("SUPER + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
+hl.bind("SUPER + R", hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("rofi-wallpaper"))
-hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
-hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
+hl.bind("SUPER + E", hl.dsp.exec_cmd("rofi-emoji"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("SUPER + Q", hl.dsp.exec_cmd("foot"))
 
