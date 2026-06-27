@@ -25,12 +25,14 @@ zstyle ":completion::complete:*" gain-privileges yes
 
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
+alias ..="cd .."
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
 alias vim="nvim"
 alias fd="fdfind"
 alias cal="ncal -Mb"
+alias vimdiff="nvim -d"
 alias l="ls -lAh --color"
 alias ll="ls -lh --color"
 alias diff="diff --color"

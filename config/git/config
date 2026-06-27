@@ -11,3 +11,7 @@
 	autoStash = true
 [push]
 	autoSetupRemote = true
+[merge]
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED

@@ -32,8 +32,9 @@ local function gh(repo)
 end
 
 vim.pack.add({
-	gh("oskarnurm/koda.nvim"),
 	gh("folke/zen-mode.nvim"),
+	gh("oskarnurm/koda.nvim"),
+
 	gh("lewis6991/gitsigns.nvim"),
 	gh("nmac427/guess-indent.nvim"),
 
@@ -50,9 +51,10 @@ vim.pack.add({
 	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
 })
 
-require("guess-indent").setup()
-
 require("zen-mode").setup({ window = { backdrop = 1 } })
+
+require("gitsigns").setup()
+require("guess-indent").setup()
 
 require("mason").setup({ ui = { backdrop = 100 } })
 require("mason-lspconfig").setup()
@@ -76,18 +78,6 @@ require("blink.cmp").setup({
 	completion = {
 		menu = { scrollbar = false },
 		accept = { auto_brackets = { enabled = false } },
-	},
-})
-
-require("gitsigns").setup({
-	auto_attach = false,
-	signs_staged_enable = false,
-	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
-		delete = { text = "_" },
-		topdelete = { text = "‾" },
-		changedelete = { text = "~" },
 	},
 })
 
