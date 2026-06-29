@@ -6,8 +6,8 @@ offset = (12, 12)
 frame_width = 1
 gap_size = 4
 
-height = 100
-width = 350
+height = 300
+width = 400
 
 min_icon_size = 44
 max_icon_size = 44
