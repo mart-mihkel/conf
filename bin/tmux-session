@@ -15,7 +15,7 @@ fi
 SESSION=$(basename $PROJECT | tr . _)
 
 if ! tmux has-session -t $SESSION 2>/dev/null; then
-    log "starting tmux session for $PROJECT"
+    log "starting tmux session for $SESSION"
     tmux new-session -d -s $SESSION -c $PROJECT
 fi
 
