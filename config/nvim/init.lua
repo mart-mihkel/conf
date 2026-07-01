@@ -51,7 +51,12 @@ vim.pack.add({
 	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
 })
 
-require("zen-mode").setup({ window = { backdrop = 1 } })
+require("zen-mode").setup({
+	window = {
+		width = 84,
+		backdrop = 1,
+	},
+})
 
 require("gitsigns").setup()
 require("guess-indent").setup()
