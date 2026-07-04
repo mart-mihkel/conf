@@ -16,11 +16,6 @@
     "wireplumber",
     "battery"
   ],
-  "hyprland/workspaces": {
-    "persistent-workspaces": {
-      "*": 4
-    }
-  },
   "clock": {
     "format": "󰃰 {:%H:%M}  "
   },

@@ -46,11 +46,12 @@ PKGS_APT=(
     zsh-autosuggestions
 )
 
+# TODO: these require some dev libraries to build
 PKGS_CARGO=(
     bluetui
-    impala
     matugen
     typst-cli
+    wlctl
     wayland-pipewire-idle-inhibit
 )
 

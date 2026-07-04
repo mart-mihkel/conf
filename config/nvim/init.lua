@@ -22,6 +22,7 @@ vim.o.undofile = true
 vim.o.laststatus = 3
 vim.o.scrolloff = 4
 vim.o.number = true
+vim.o.tabstop = 4
 vim.o.wrap = true
 vim.o.list = true
 

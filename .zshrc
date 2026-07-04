@@ -25,11 +25,12 @@ zstyle ":completion::complete:*" gain-privileges yes
 
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
+eval "$(direnv hook zsh)"
+
 alias ..="cd .."
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
-alias vim="nvim"
 alias fd="fdfind"
 alias cal="ncal -Mb"
 alias vimdiff="nvim -d"
@@ -41,6 +42,12 @@ alias bat="batcat --theme light"
 alias venv="source .venv/bin/activate"
 alias follow="tail --follow --lines +0"
 
-eval "$(direnv hook zsh)"
+vim() {
+    if [[ $# -eq 0 ]]; then
+        nvim .
+    else
+        nvim "$@"
+    fi
+}
 
 export PATH=~/.local/bin:$PATH
