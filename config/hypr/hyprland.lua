@@ -10,10 +10,10 @@ hl.config({
 	general = {
 		gaps_in = 4,
 		gaps_out = 8,
-		border_size = 0,
+		border_size = 1,
 		col = {
 			active_border = colors.foreground,
-			inactive_border = colors.foreground,
+			inactive_border = colors.color8,
 		},
 	},
 	decoration = {
@@ -61,7 +61,7 @@ hl.bind("SUPER + R", hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("rofi-wallpaper"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("rofi-emoji"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))
-hl.bind("SUPER + Q", hl.dsp.exec_cmd("foot"))
+hl.bind("SUPER + Q", hl.dsp.exec_cmd("ghostty"))
 
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen())

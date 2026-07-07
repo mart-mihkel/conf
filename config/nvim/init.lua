@@ -9,7 +9,7 @@ vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.background = "light"
 vim.o.colorcolumn = "80"
-vim.o.signcolumn = "no"
+vim.o.signcolumn = "yes"
 vim.o.ignorecase = true
 vim.o.cursorline = true
 vim.o.splitright = true
@@ -33,15 +33,14 @@ local function gh(repo)
 end
 
 vim.pack.add({
+	gh("folke/snacks.nvim"),
 	gh("folke/zen-mode.nvim"),
-	gh("oskarnurm/koda.nvim"),
+	gh("folke/todo-comments.nvim"),
+	gh("nvim-tree/nvim-web-devicons"),
+	gh("projekt0n/github-nvim-theme"),
 
 	gh("lewis6991/gitsigns.nvim"),
 	gh("nmac427/guess-indent.nvim"),
-
-	gh("nvim-lua/plenary.nvim"),
-	gh("nvim-telescope/telescope.nvim"),
-	gh("nvim-telescope/telescope-fzf-native.nvim"),
 
 	gh("neovim/nvim-lspconfig"),
 	gh("stevearc/conform.nvim"),
@@ -52,11 +51,14 @@ vim.pack.add({
 	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
 })
 
+require("todo-comments").setup()
 require("zen-mode").setup({
-	window = {
-		width = 84,
-		backdrop = 1,
-	},
+	window = { width = 86, backdrop = 1 },
+})
+
+require("snacks").setup({
+	image = { enabled = true },
+	picker = { enabled = true },
 })
 
 require("gitsigns").setup()
@@ -64,17 +66,6 @@ require("guess-indent").setup()
 
 require("mason").setup({ ui = { backdrop = 100 } })
 require("mason-lspconfig").setup()
-
--- make --directory ~/.local/share/nvim/site/pack/core/opt/telescope-fzf-native.nvim
-require("telescope").setup({
-	defaults = {
-		layout_config = {
-			height = { padding = 0 },
-			width = { padding = 0 },
-		},
-	},
-})
-require("telescope").load_extension("fzf")
 
 -- make --directory ~/.local/share/nvim/site/pack/core/opt/LuaSnip install_jsregexp
 require("luasnip").setup()
@@ -109,7 +100,19 @@ require("conform").setup({
 	},
 })
 
-vim.cmd.colorscheme("koda")
+-- TODO: delete
+vim.lsp.enable("qmlls")
+vim.lsp.config("qmlls", {
+	cmd = { "qmlls6" },
+	filetypes = { "qml", "qmljs" },
+})
+
+vim.cmd.colorscheme("github_light")
+vim.api.nvim_set_hl(0, "Normal", {})
+vim.api.nvim_set_hl(0, "StatusLine", {})
+vim.api.nvim_set_hl(0, "NormalFloat", {})
+
+vim.diagnostic.config({ virtual_lines = { current_line = true } })
 
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
@@ -131,11 +134,11 @@ vim.keymap.set("n", "<leader>gr", gs.reset_hunk)
 vim.keymap.set("n", "<leader>gs", gs.stage_hunk)
 vim.keymap.set("n", "<leader>gp", gs.preview_hunk)
 
-local builtin = require("telescope.builtin")
+local snacks = require("snacks")
 
-vim.keymap.set("n", "<leader>fr", builtin.resume)
-vim.keymap.set("n", "<leader>fo", builtin.oldfiles)
-vim.keymap.set("n", "<leader>fg", builtin.live_grep)
-vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-vim.keymap.set("n", "<leader>fs", builtin.git_status)
-vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fh", snacks.picker.help)
+vim.keymap.set("n", "<leader>fg", snacks.picker.grep)
+vim.keymap.set("n", "<leader>ff", snacks.picker.files)
+vim.keymap.set("n", "<leader>fr", snacks.picker.resume)
+vim.keymap.set("n", "<leader>fo", snacks.picker.recent)
+vim.keymap.set("n", "<leader>fs", snacks.picker.git_status)
