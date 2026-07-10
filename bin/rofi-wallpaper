@@ -37,7 +37,7 @@ if [[ -z $IMG ]]; then
 fi
 
 log "setting wallpaper"
-awww img $IMG --transition-type grow --transition-fps 60
+awww img $IMG -t none
 
 case $IMG in
     *-light*) MODE=-m\ light ;;

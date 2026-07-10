@@ -31,6 +31,7 @@ alias ..="cd .."
 alias rm="rm -v"
 alias cp="cp -v"
 alias mv="mv -v"
+alias vim="nvim"
 alias fd="fdfind"
 alias cal="ncal -Mb"
 alias vimdiff="nvim -d"
@@ -41,13 +42,5 @@ alias glow="glow --style light"
 alias bat="batcat --theme light"
 alias venv="source .venv/bin/activate"
 alias follow="tail --follow --lines +0"
-
-vim() {
-    if [[ $# -eq 0 ]]; then
-        nvim .
-    else
-        nvim "$@"
-    fi
-}
 
 export PATH=~/.local/bin:$PATH

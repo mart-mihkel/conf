@@ -16,8 +16,8 @@
 - Use `uv add` instead of `uv pip install`.
 - Always add type annotations to every function.
 - Do not use `Any` or `object` as type annotations unless absolutely necessary.
-- Do not ignore type or linter erros (`# type: ignore`, `# ty: ignore`, `# noqa`) unless explicitly told to.
-- Do not use `getattr`, `setattr` or other metaprogramming shortcuts that hinder typecheckers.
+- Do not ignore type or linter erros (`# type: ignore`, `# ty: ignore`, `# noqa`) unless explicitly told to; if you must then also add an explanation.
+- Do not use `getattr`, `setattr`, `__import__`.
 - Use type casting if you know the correct type (`eval_dataset = cast(Dataset, data.get("eval"))`).
 - Use exhaustive types, use `NamedTuple` when returning multiple values, write out dictionaries as `TypedDict`.
 - Add type aliases for magic structures (`type Vec3 = tuple[float, float, float]`).

@@ -33,32 +33,64 @@ local function gh(repo)
 end
 
 vim.pack.add({
+	-- rice
+	gh("folke/noice.nvim"),
 	gh("folke/snacks.nvim"),
-	gh("folke/zen-mode.nvim"),
 	gh("folke/todo-comments.nvim"),
+	gh("nvim-lualine/lualine.nvim"),
 	gh("nvim-tree/nvim-web-devicons"),
 	gh("projekt0n/github-nvim-theme"),
+	gh("MunifTanjim/nui.nvim"), -- noice dependency
 
+	-- util
+	gh("stevearc/conform.nvim"),
 	gh("lewis6991/gitsigns.nvim"),
 	gh("nmac427/guess-indent.nvim"),
 
+	-- lsp
 	gh("neovim/nvim-lspconfig"),
-	gh("stevearc/conform.nvim"),
 	gh("williamboman/mason.nvim"),
 	gh("williamboman/mason-lspconfig.nvim"),
 
-	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
+	-- completion
 	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
+	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
 })
 
+require("snacks").setup()
 require("todo-comments").setup()
-require("zen-mode").setup({
-	window = { width = 86, backdrop = 1 },
+require("noice").setup({
+	lsp = {
+		override = {
+			["vim.lsp.util.stylize_markdown"] = true,
+			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+		},
+	},
+	presets = {
+		bottom_search = true,
+		lsp_doc_border = true,
+		long_message_to_split = true,
+	},
+	-- cmdline = { view = "cmdline" },
 })
 
-require("snacks").setup({
-	image = { enabled = true },
-	picker = { enabled = true },
+require("lualine").setup({
+	options = { section_separators = "", component_separators = "" },
+	sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = { { "branch", icon = "" }, "filename" },
+		lualine_x = {
+			{
+				require("noice").api.statusline.mode.get,
+				cond = require("noice").api.statusline.mode.has,
+			},
+			"progress",
+			"location",
+		},
+		lualine_y = {},
+		lualine_z = {},
+	},
 })
 
 require("gitsigns").setup()
@@ -117,9 +149,8 @@ vim.diagnostic.config({ virtual_lines = { current_line = true } })
 vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 
-vim.keymap.set("n", "<c-n>", ":cnext<cr>")
-vim.keymap.set("n", "<c-p>", ":cprevious<cr>")
-vim.keymap.set("n", "<leader>e", ":Explore<cr>")
+vim.keymap.set("n", "<c-n>", "<cmd>cnext<cr>")
+vim.keymap.set("n", "<c-p>", "<cmd>cprevious<cr>")
 
 vim.keymap.set("n", "grn", vim.lsp.buf.rename)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
@@ -135,6 +166,9 @@ vim.keymap.set("n", "<leader>gs", gs.stage_hunk)
 vim.keymap.set("n", "<leader>gp", gs.preview_hunk)
 
 local snacks = require("snacks")
+
+vim.keymap.set("n", "<leader>t", snacks.terminal.open)
+vim.keymap.set("n", "<leader>e", snacks.explorer.open)
 
 vim.keymap.set("n", "<leader>fh", snacks.picker.help)
 vim.keymap.set("n", "<leader>fg", snacks.picker.grep)

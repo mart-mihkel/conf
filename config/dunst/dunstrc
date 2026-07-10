@@ -1,5 +1,5 @@
 [global]
-font = JetBrainsMono 12
+font = JetBrainsMono NerdFont 12
 format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
 
 offset = (12, 12)
