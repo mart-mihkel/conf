@@ -17,14 +17,17 @@ PKGS_APT=(
     # windowmanager
     dunst
     foot
+    fonts-noto
     hypridle
     hyprland
     hyprlock
+    hyprpicker
+    hyprland-guiutils
     tofi
+    rofi
     waybar
     gammastep
     grim
-    hyprpicker
     playerctl
     slurp
     wl-clipboard
@@ -33,20 +36,31 @@ PKGS_APT=(
     bat
     btop
     curl
+    fzf
+    gcc
     direnv
     fd-find
     git
     glow
     jq
+    make
+    openssl
     ripgrep
     tmux
     vim
     wget
     zsh
     zsh-autosuggestions
+    # libs
+    pkg-config
+    liblz4-dev
+    libssl-dev
+    libclang-dev
+    libdbus-1-dev
+    libwayland-dev
+    libpipewire-0.3-dev
 )
 
-# TODO: these require some dev libraries to build
 PKGS_CARGO=(
     bluetui
     matugen
@@ -63,6 +77,11 @@ AWWW_REPO="https://codeberg.org/LGFae/awww.git"
 log "installing apt packages..."
 sudo apt update
 sudo apt install -y "${PKGS_APT[@]}"
+
+log "enabling audio services"
+systemctl --user enable --now pipewire
+systemctl --user enable --now wireplumber
+systemctl --user enable --now pipewire-pulse
 
 if ! command -v uv &>/dev/null; then
     log "installing uv..."
