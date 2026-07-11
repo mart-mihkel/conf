@@ -2,16 +2,18 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
-warn() { printf "\033[1;33m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+warn() { printf "\033[1;33mwarn\033[0m %s\n" "$*"; }
 
 WALLPAPER=~/.cache/rice/walls/01-dude-light.jpg
 
 if command -v matugen &>/dev/null; then
     log "generating colors"
     matugen image $WALLPAPER -m light --prefer saturation
+    ok "colors generated"
 else
     warn "skipping color generation, matugen not found"
 fi
 
-log "post-install done"
+ok "post-install done"

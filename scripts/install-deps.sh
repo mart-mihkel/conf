@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
-warn() { printf "\033[1;33m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+warn() { printf "\033[1;33mwarn\033[0m %s\n" "$*"; }
 
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "${TMPDIR}"' EXIT
@@ -49,6 +50,7 @@ PKGS_APT=(
     imagemagick
     jq
     make
+    shellcheck
     openssl
     pkg-config
     ripgrep
@@ -92,22 +94,25 @@ systemctl --user enable --now pipewire-pulse
 if ! command -v uv &>/dev/null; then
     log "installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
+    ok "uv installed"
 else
-    log "uv already installed"
+    ok "uv already installed"
 fi
 
 if ! command -v pnpm &>/dev/null; then
     log "installing pnpm..."
     curl -fsSL https://get.pnpm.io/install.sh | sh -
+    ok "pnpm installed"
 else
-    log "pnpm already installed"
+    ok "pnpm already installed"
 fi
 
 if ! command -v opencode &>/dev/null; then
     log "installing opencode..."
     curl -fsSL https://opencode.ai/install | bash
+    ok "opencode installed"
 else
-    log "opencode already installed"
+    ok "opencode already installed"
 fi
 
 if ! command -v nvim &>/dev/null; then
@@ -118,8 +123,10 @@ if ! command -v nvim &>/dev/null; then
 
     rm -rf ~/.neovim
     mv "${TMPDIR}/nvim-linux-x86_64" ~/.neovim
+
+    ok "neovim installed"
 else
-    log "neovim already installed"
+    ok "neovim already installed"
 fi
 
 if ! command -v grimblast &>/dev/null; then
@@ -128,16 +135,18 @@ if ! command -v grimblast &>/dev/null; then
     wget -q $GRIMBLAST_PERMALINK -O ~/.local/bin/grimblast
 
     chmod +x ~/.local/bin/grimblast
+    ok "grimblast installed"
 else
-    log "grimblast already installed"
+    ok "grimblast already installed"
 fi
 
 if ! command -v ghostty &>/dev/null; then
     log "installing ghostty..."
     wget -q "$GHOSTTY_DEB" -O "${TMPDIR}/ghostty.deb"
     sudo dpkg -i "${TMPDIR}/ghostty.deb"
+    ok "ghostty installed"
 else
-    log "ghostty already installed"
+    ok "ghostty already installed"
 fi
 
 if ! command -v cargo &>/dev/null; then
@@ -146,8 +155,10 @@ if ! command -v cargo &>/dev/null; then
 
     # shellcheck disable=1090
     source ~/.cargo/env
+
+    ok "cargo installed"
 else
-    log "cargo already installed"
+    ok "cargo already installed"
 fi
 
 log "installing cargo packages..."
@@ -162,8 +173,10 @@ if ! command -v awww &>/dev/null || ! command -v awww-daemon &>/dev/null; then
     mkdir -p ~/.local/bin
     cp "${TMPDIR}/awww/target/release/awww" ~/.local/bin/
     cp "${TMPDIR}/awww/target/release/awww-daemon" ~/.local/bin/
+
+    ok "awww installed"
 else
-    log "awww already installed"
+    ok "awww already installed"
 fi
 
-log "dependencies installed"
+ok "dependencies installed"

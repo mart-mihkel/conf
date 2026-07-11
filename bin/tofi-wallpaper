@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()    { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()   { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+error() { printf "\033[1;31m err\033[0m %s\n" "$*"; }
 
 WALLS=~/.cache/rice/walls
 PICK=$(fd . "$WALLS" --type f --exec basename {} | tofi --prompt-text "img: ")
 IMG=$WALLS/$PICK
 
 if [[ -z $PICK ]]; then
-    log "pick cancelled"
+    error "pick cancelled"
     exit 1
 fi
 
@@ -15,11 +17,13 @@ log "setting wallpaper"
 awww img "$IMG" --transition-type grow --transition-fps 60
 
 case $PICK in
-    *-light*) MODE=-m\ light ;;
-    *-dark*) MODE=-m\ dark ;;
+    *-light*) MODE="--mode=light" ;;
+    *-dark*) MODE="--mode=dark" ;;
     *) MODE= ;;
 esac
 
 log "generating colors"
 matugen image "$IMG" "$MODE" --prefer saturation
 dunstctl reload
+
+ok "colors generated"

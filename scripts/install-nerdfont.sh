@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 FONTDIR="${HOME}/.local/share/fonts"
 TMPDIR="$(mktemp -d)"
@@ -23,7 +24,7 @@ if ! ls "${FONTDIR}"/JetBrainsMono*.ttf &>/dev/null 2>&1; then
     log "updating font cache..."
     fc-cache -f
 
-    log "nerdfont installed"
+    ok "nerdfont installed"
 else
-    log "nerdfont already installed"
+    ok "nerdfont already installed"
 fi

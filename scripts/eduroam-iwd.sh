@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-log() { printf "\033[1;34m[%s]\033[0m %s" "$(date '+%H:%M:%S')" "$*"; }
+ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 log "login: "
 read -r LOGIN
@@ -21,3 +22,5 @@ EAP-PEAP-Phase2-Password=${PASSWORD}
 [Settings]
 AutoConnect=true
 EOF
+
+ok "connection added"

@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
-log()   { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
-error() { printf "\033[1;31m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()    { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()   { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+error() { printf "\033[1;31m err\033[0m %s\n" "$*"; }
 
 REMOTE=
 
@@ -27,5 +28,7 @@ tar -Pczf "${TMPDIR}/${TARBALL}" \
 
 log "uploading tarball to $REMOTE"
 scp "${TMPDIR}/${TARBALL}" "${REMOTE}"
+
+ok "tarball uploaded"
 
 log "deleting tarball"

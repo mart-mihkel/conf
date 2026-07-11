@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-log() { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+log() { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 log "running install-deps"
 bash ./scripts/install-deps.sh

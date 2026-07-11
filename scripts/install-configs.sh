@@ -2,13 +2,14 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"; }
+ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 warn() {
     if [[ "$1" == "-n" ]]; then
         shift
-        printf "\033[1;33m[%s]\033[0m %s" "$(date '+%H:%M:%S')" "$*"
+        printf "\033[1;33mwarn\033[0m %s" "$*"
     else
-        printf "\033[1;33m[%s]\033[0m %s\n" "$(date '+%H:%M:%S')" "$*"
+        printf "\033[1;33mwarn\033[0m %s\n" "$*"
     fi
 }
 
@@ -21,6 +22,10 @@ confirm-overwrite() {
     fi
 
     if diff -q "$src" "$dest" &>/dev/null; then
+        return 1
+    fi
+
+    if [[ $(basename "$dest") == colors* ]]; then
         return 1
     fi
 
@@ -69,4 +74,4 @@ install-file ./.zshrc ~/.zshrc
 install-dir ./bin ~/.local/bin
 install-dir ./assets ~/.cache/rice
 
-log "configs installed"
+ok "configs installed"
