@@ -3,6 +3,7 @@ font = JetBrainsMono NerdFont 12
 format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
 
 offset = (12, 12)
+corner_radius = 8
 frame_width = 1
 gap_size = 4
 

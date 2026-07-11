@@ -4,8 +4,11 @@ font-size = 12
 shell-integration-features = no-cursor
 cursor-style = block
 
+window-inherit-working-directory = false
+window-padding-balance = true
+
 confirm-close-surface = false
-window-padding-balance
+app-notifications = false
 
 term = xterm-256color
 theme = Tomorrow
