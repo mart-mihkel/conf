@@ -12,8 +12,10 @@ PKGS_APT=(
     # hardware
     bluez
     brightnessctl
+    network-manager
     pipewire
     wireplumber
+
     # windowmanager
     dunst
     foot
@@ -32,27 +34,31 @@ PKGS_APT=(
     slurp
     wl-clipboard
     wtype
+
     # devtools
     bat
     btop
     curl
-    fzf
-    gcc
     direnv
     fd-find
+    ffmpeg
+    fzf
+    gcc
     git
     glow
+    imagemagick
     jq
     make
     openssl
+    pkg-config
     ripgrep
     tmux
     vim
     wget
     zsh
     zsh-autosuggestions
+
     # libs
-    pkg-config
     liblz4-dev
     libssl-dev
     libclang-dev
@@ -105,7 +111,7 @@ else
 fi
 
 if ! command -v nvim &>/dev/null; then
-    log "installing Neovim stable..."
+    log "installing neovim stable..."
 
     wget -q $NVIM_STABLE -O "${TMPDIR}/nvim-linux-x86_64.tar.gz"
     tar -xzf "${TMPDIR}/nvim-linux-x86_64.tar.gz" -C "${TMPDIR}"
@@ -138,6 +144,7 @@ if ! command -v cargo &>/dev/null; then
     log "installing cargo via rustup..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+    # shellcheck disable=1090
     source ~/.cargo/env
 else
     log "cargo already installed"

@@ -12,18 +12,18 @@ if [[ -z $PROJECT ]]; then
     exit 1
 fi
 
-SESSION=$(basename $PROJECT | tr . _)
+SESSION=$(basename "$PROJECT" | tr . _)
 
-if ! tmux has-session -t $SESSION 2>/dev/null; then
+if ! tmux has-session -t "$SESSION" 2>/dev/null; then
     log "starting tmux session for $SESSION"
-    tmux new-session -d -s $SESSION -c $PROJECT
+    tmux new-session -d -s "$SESSION" -c "$PROJECT"
 fi
 
 if [[ -n $TMUX ]]; then
     log "attaching current client to session"
     CLIENT=$(tmux display-message -p "#{client_name}")
-    tmux switch-client -c $CLIENT -t $SESSION
+    tmux switch-client -c "$CLIENT" -t "$SESSION"
 else
     log "attaching to session"
-    tmux attach-session -t $SESSION
+    tmux attach-session -t "$SESSION"
 fi

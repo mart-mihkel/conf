@@ -9,25 +9,25 @@ mkdir -p $WALLS
 mkdir -p $ICONS
 
 log "creating thumbnails..."
-for WP in $WALLS/*; do
-    ICO=$ICONS/$(basename $WP)
+for WP in "$WALLS"/*; do
+    ICO=$ICONS/$(basename "$WP")
     if [[ -f $ICO ]]; then
         continue
     fi
 
-    log "cropping $(basename $WP)..."
+    log "cropping $(basename "$WP")..."
     magick convert \
         -quiet \
-        -strip $WP \
+        -strip "$WP" \
         -thumbnail x500^ \
         -gravity center \
         -extent 500x500 \
-        $ICO 2>/dev/null
+        "$ICO" 2>/dev/null
 done
 
 IMG=$(
-    for WP in $WALLS/*; do
-        printf "$WP\0icon\x1f$ICONS/$(basename $WP)\n"
+    for WP in "$WALLS"/*; do
+        printf "%s\0icon\x1f$ICONS/$(basename "$WP")\n" "$WP"
     done | rofi -dmenu -config ~/.config/rofi/walls.rasi
 )
 
@@ -37,7 +37,7 @@ if [[ -z $IMG ]]; then
 fi
 
 log "setting wallpaper"
-awww img $IMG -t none
+awww img "$IMG" -t none
 
 case $IMG in
     *-light*) MODE=-m\ light ;;
@@ -46,5 +46,5 @@ case $IMG in
 esac
 
 log "generating colors"
-matugen image $IMG $MODE --prefer saturation
+matugen image "$IMG" "$MODE" --prefer saturation
 dunstctl reload

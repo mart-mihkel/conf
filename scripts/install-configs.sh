@@ -37,7 +37,9 @@ confirm-overwrite() {
 install-file() {
     local src="$1"
     local dest="$2"
-    local parent="$(dirname "$dest")"
+
+    local parent
+    parent="$(dirname "$dest")"
 
     mkdir -p "$parent"
 
@@ -56,7 +58,7 @@ install-dir() {
     mkdir -p "$dest"
 
     while IFS= read -r -d '' file; do
-        path="${file#$src/}"
+        path="${file#"$src"/}"
         install-file "$file" "$dest/$path"
     done < <(find "$src" -type f -print0)
 }
