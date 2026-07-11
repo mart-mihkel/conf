@@ -9,6 +9,10 @@ output_path = "~/.config/dunst/dunstrc.d/colors.conf"
 input_path = "~/.config/matugen/templates/colors-waybar.css"
 output_path = "~/.config/waybar/colors.css"
 
+[templates.alacritty]
+input_path = "~/.config/matugen/templates/colors.toml"
+output_path = "~/.config/alacritty/colors.toml"
+
 [templates.hypr]
 input_path = "~/.config/matugen/templates/colors.conf"
 output_path = "~/.config/hypr/colors.conf"
