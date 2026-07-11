@@ -1,6 +1,6 @@
 # Dotfiles
 
-For Debian Sid
+For Debian Forky
 
 ```bash
 ./install.sh

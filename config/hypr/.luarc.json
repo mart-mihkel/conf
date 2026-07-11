@@ -1,6 +1,10 @@
 {
-  "runtime": { "version": "LuaJIT" },
-  "diagnostics": { "globals": ["hl"] },
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "diagnostics": {
+    "globals": ["hl"]
+  },
   "workspace": {
     "library": ["/usr/share/hypr/stubs"]
   }

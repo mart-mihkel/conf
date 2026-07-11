@@ -57,8 +57,18 @@ vim.pack.add({
 	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
 })
 
-require("snacks").setup()
 require("todo-comments").setup()
+
+require("snacks").setup({
+	picker = {
+		sources = {
+			grep = { hidden = true },
+			files = { hidden = true },
+			explorer = { hidden = true },
+		},
+	},
+})
+
 require("noice").setup({
 	lsp = {
 		override = {
@@ -71,7 +81,6 @@ require("noice").setup({
 		lsp_doc_border = true,
 		long_message_to_split = true,
 	},
-	-- cmdline = { view = "cmdline" },
 })
 
 require("lualine").setup({
@@ -130,13 +139,6 @@ require("conform").setup({
 		javascriptreact = { "biome" },
 		typescriptreact = { "biome" },
 	},
-})
-
--- TODO: delete
-vim.lsp.enable("qmlls")
-vim.lsp.config("qmlls", {
-	cmd = { "qmlls6" },
-	filetypes = { "qml", "qmljs" },
 })
 
 vim.cmd.colorscheme("github_light")
