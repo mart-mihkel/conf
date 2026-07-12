@@ -48,6 +48,7 @@ esac
 
 log "generating colors"
 matugen image "$IMG" "$MODE" --prefer saturation
+cp "$IMG" $WALLS/current
 dunstctl reload
 
 log "colors generated"

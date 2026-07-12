@@ -25,10 +25,6 @@ confirm-overwrite() {
         return 1
     fi
 
-    if [[ $(basename "$dest") == colors* ]]; then
-        return 1
-    fi
-
     warn -n "$(basename "$dest") differs from $src, overwrite? [y/N] "
     read -r </dev/tty
 

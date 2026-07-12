@@ -14,3 +14,4 @@ fi
 
 log "setting wallpaper"
 awww img "$IMG" -t none
+cp "$IMG" $WALLS/current
