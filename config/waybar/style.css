@@ -1,15 +1,14 @@
 * {
   all: unset;
 
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: 500;
   font-family: JetBrainsMono NerdFont;
 }
 
 #workspaces button {
   opacity: 0.5;
-  padding: 0 4px;
-  border-radius: 4px;
+  padding: 0 10px 0 0;
 }
 
 #workspaces button.active {

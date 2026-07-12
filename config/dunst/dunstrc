@@ -1,14 +1,14 @@
 [global]
 font = JetBrainsMono NerdFont 12
-format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
+format = "<b>%a</b>\n%s\n<i>%b</i>"
 
-offset = (12, 12)
-corner_radius = 8
-frame_width = 1
-gap_size = 4
-
-height = 300
+offset = (30, 30)
+height = (0, 300)
 width = 400
+
+corner_radius = 5
+frame_width = 1
+gap_size = 5
 
 min_icon_size = 44
 max_icon_size = 44

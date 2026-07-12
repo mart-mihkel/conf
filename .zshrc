@@ -10,12 +10,17 @@ function _prompt() {
 
     local ref
     ref=$(git symbolic-ref --short HEAD 2> /dev/null)
-    ref=${ref:+:%F{5}$ref%f}
+    ref=${ref:+ %F{5} $ref%f}
 
-    PROMPT="%F{4}%1~%f${ref} %% "
+    local venv
+    venv=${VIRTUAL_ENV:+ %F{3} venv%f}
+
+    PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
 }
 
 precmd_functions+=(_prompt)
+
+export PATH=~/.local/bin:$PATH
 
 autoload -Uz compinit && compinit
 
@@ -46,10 +51,9 @@ alias vim="nvim"
 alias vimdiff="nvim -d"
 
 alias cal="ncal -Mb"
+alias fetch="fastfetch"
 alias diff="diff --color"
 alias glow="glow --style light"
 
 alias venv="source .venv/bin/activate"
 alias follow="tail --follow --lines +0"
-
-export PATH=~/.local/bin:$PATH

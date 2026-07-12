@@ -8,8 +8,8 @@ hl.config({
 		repeat_rate = 30,
 	},
 	general = {
-		gaps_in = 4,
-		gaps_out = 8,
+		gaps_in = 5,
+		gaps_out = 20,
 		border_size = 1,
 		col = {
 			active_border = colors.foreground,
@@ -17,7 +17,7 @@ hl.config({
 		},
 	},
 	decoration = {
-		rounding = 8,
+		rounding = 5,
 		blur = {
 			enabled = true,
 			passes = 2,
@@ -27,24 +27,23 @@ hl.config({
 			enabled = false,
 		},
 	},
-	cursor = { inactive_timeout = 1 },
-	animations = { enabled = false },
+	cursor = {
+		inactive_timeout = 1,
+	},
 })
 
-hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
+hl.layer_rule({ match = { namespace = "launcher" }, animation = "slide" })
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
-hl.layer_rule({ match = { namespace = "rofi" }, blur = true })
+
+hl.animation({ leaf = "global", enabled = true, speed = 2, bezier = "default" })
 
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
 hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
 hl.monitor({ output = "DP-1", mode = "preferred", position = "0x0", scale = 1 })
 
 for i = 1, 5 do
-	hl.workspace_rule({
-		workspace = tostring(i),
-		default = (i == 1),
-		monitor = "DP-1",
-	})
+	local ws = tostring(i)
+	hl.workspace_rule({ workspace = ws, default = (i == 1), monitor = "DP-1" })
 end
 
 hl.on("hyprland.start", function()
@@ -56,10 +55,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("dunst")
 end)
 
-hl.bind("SUPER + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
-hl.bind("SUPER + R", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind("SUPER + B", hl.dsp.exec_cmd("rofi-wallpaper"))
-hl.bind("SUPER + E", hl.dsp.exec_cmd("rofi-emoji"))
+hl.bind("SUPER + W", hl.dsp.exec_cmd("tofi-wallpaper"))
+hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
+hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("SUPER + Q", hl.dsp.exec_cmd("ghostty"))
 

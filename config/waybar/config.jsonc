@@ -1,28 +1,42 @@
 {
-  "width": 300,
-  "spacing": 8,
-  "margin-top": 4,
-  "margin-bottom": -4,
+  "spacing": 20,
+  "margin-left": 5,
+  "margin-right": 5,
+  "margin-bottom": -50,
   "reload_style_on_change": true,
   "modules-left": [
     "hyprland/workspaces"
-  ],
-  "modules-center": [
-    "clock"
   ],
   "modules-right": [
     "network",
     "bluetooth",
     "wireplumber",
-    "battery"
+    "battery",
+    "clock"
   ],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "one",
+      "2": "two",
+      "3": "three",
+      "4": "four",
+      "5": "five",
+      "6": "six",
+      "7": "seven",
+      "8": "eight",
+      "9": "nine",
+      "10": "ten"
+    }
+  },
   "clock": {
-    "format": "󰃰 {:%H:%M}  "
+    "format": "󰃰 {:%H:%M}"
   },
   "network": {
-    "format-wifi": "{icon}",
-    "format-ethernet": "󰌗 ",
-    "format-disconnected": "󰤮 ",
+    "on-click": "ghostty -e wlctl",
+    "format-wifi": "{icon}{signalStrength}%",
+    "format-ethernet": "󰌗 eth",
+    "format-disconnected": "󰤮 off",
     "format-icons": [
       "󰤯 ",
       "󰤟 ",
@@ -32,15 +46,19 @@
     ]
   },
   "bluetooth": {
-    "format-on": "󰂯 ",
-    "format-connected": "󰂱 "
+    "on-click": "ghostty -e bluetui",
+    "format-on": "󰂯 on",
+    "format-connected": "󰂱 con",
+    "format-connected-battery": "󰂱 {device_battery_percentage}%"
   },
   "wireplumber": {
-    "format": "󰕾 ",
-    "format-muted": "󰖁 "
+    "on-click": "ghostty -e pulsemixer",
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰖁 off"
   },
   "battery": {
-    "format": "{icon}",
+    "on-click": "ghostty -e btop",
+    "format": "{icon}{capacity}%",
     "format-icons": {
       "default": [
         "󰂎 ",

@@ -15,11 +15,13 @@ inputbar {
 listview {
     border: 0;
     columns: 5;
+    spacing: 20;
     padding: 30% 15%;
     scrollbar: false;
 }
 
 element {
+    border-radius: 5px;
     children: [element-icon];
 }
 
@@ -37,4 +39,5 @@ element selected.normal {
 element-icon {
     size: 35%;
     expand: true;
+    border-radius: 5px;
 }

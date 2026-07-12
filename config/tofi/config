@@ -3,17 +3,22 @@ include        = ./colors
 fuzzy-match    = true
 drun-launch    = true
 
-font           = JetBrainsMono
-font-size      = 14
+font           = JetBrainsMono NerdFont
+font-size      = 10
 
-height         = 100%
-width          = 100%
+horizontal     = true
+anchor         = top
 
-padding-left   = 40%
-padding-top    = 30%
+width          = 50%
+height         = 20
 
-result-spacing = 10
-num-results    = 10
+prompt-text    = ""
+result-spacing = 25
 
 outline-width  = 0
 border-width   = 0
+
+padding-top    = 0
+padding-left   = 0
+padding-right  = 0
+padding-bottom = 0
