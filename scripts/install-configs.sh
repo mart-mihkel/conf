@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
 log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 warn() {
     if [[ "$1" == "-n" ]]; then
@@ -22,6 +21,7 @@ confirm-overwrite() {
     fi
 
     if diff -q "$src" "$dest" &>/dev/null; then
+        log "$src already installed"
         return 1
     fi
 
@@ -74,4 +74,4 @@ install-file ./.zshrc ~/.zshrc
 install-dir ./bin ~/.local/bin
 install-dir ./assets ~/.cache/rice
 
-ok "configs installed"
+log "configs installed"

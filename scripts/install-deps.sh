@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
 log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 warn() { printf "\033[1;33mwarn\033[0m %s\n" "$*"; }
 
@@ -19,7 +18,6 @@ PKGS_APT=(
 
     # windowmanager
     dunst
-    foot
     fonts-noto
     hypridle
     hyprland
@@ -36,9 +34,17 @@ PKGS_APT=(
     wl-clipboard
     wtype
 
+    # apps
+    btop
+    feh
+    gimp
+    glow
+    imagemagick
+    ncal
+    pulsemixer
+
     # devtools
     bat
-    btop
     curl
     direnv
     fd-find
@@ -46,14 +52,13 @@ PKGS_APT=(
     fzf
     gcc
     git
-    glow
-    imagemagick
     jq
     make
     shellcheck
     openssl
     pkg-config
     ripgrep
+    rsync
     tmux
     vim
     wget
@@ -73,8 +78,8 @@ PKGS_CARGO=(
     bluetui
     matugen
     typst-cli
-    wlctl
     wayland-pipewire-idle-inhibit
+    wlctl
 )
 
 NVIM_STABLE="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" 
@@ -94,25 +99,25 @@ systemctl --user enable --now pipewire-pulse
 if ! command -v uv &>/dev/null; then
     log "installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
-    ok "uv installed"
+    log "uv installed"
 else
-    ok "uv already installed"
+    log "uv already installed"
 fi
 
 if ! command -v pnpm &>/dev/null; then
     log "installing pnpm..."
     curl -fsSL https://get.pnpm.io/install.sh | sh -
-    ok "pnpm installed"
+    log "pnpm installed"
 else
-    ok "pnpm already installed"
+    log "pnpm already installed"
 fi
 
 if ! command -v opencode &>/dev/null; then
     log "installing opencode..."
     curl -fsSL https://opencode.ai/install | bash
-    ok "opencode installed"
+    log "opencode installed"
 else
-    ok "opencode already installed"
+    log "opencode already installed"
 fi
 
 if ! command -v nvim &>/dev/null; then
@@ -124,9 +129,9 @@ if ! command -v nvim &>/dev/null; then
     rm -rf ~/.neovim
     mv "${TMPDIR}/nvim-linux-x86_64" ~/.neovim
 
-    ok "neovim installed"
+    log "neovim installed"
 else
-    ok "neovim already installed"
+    log "neovim already installed"
 fi
 
 if ! command -v grimblast &>/dev/null; then
@@ -135,18 +140,18 @@ if ! command -v grimblast &>/dev/null; then
     wget -q $GRIMBLAST_PERMALINK -O ~/.local/bin/grimblast
 
     chmod +x ~/.local/bin/grimblast
-    ok "grimblast installed"
+    log "grimblast installed"
 else
-    ok "grimblast already installed"
+    log "grimblast already installed"
 fi
 
 if ! command -v ghostty &>/dev/null; then
     log "installing ghostty..."
     wget -q "$GHOSTTY_DEB" -O "${TMPDIR}/ghostty.deb"
     sudo dpkg -i "${TMPDIR}/ghostty.deb"
-    ok "ghostty installed"
+    log "ghostty installed"
 else
-    ok "ghostty already installed"
+    log "ghostty already installed"
 fi
 
 if ! command -v cargo &>/dev/null; then
@@ -156,9 +161,9 @@ if ! command -v cargo &>/dev/null; then
     # shellcheck disable=1090
     source ~/.cargo/env
 
-    ok "cargo installed"
+    log "cargo installed"
 else
-    ok "cargo already installed"
+    log "cargo already installed"
 fi
 
 log "installing cargo packages..."
@@ -174,9 +179,9 @@ if ! command -v awww &>/dev/null || ! command -v awww-daemon &>/dev/null; then
     cp "${TMPDIR}/awww/target/release/awww" ~/.local/bin/
     cp "${TMPDIR}/awww/target/release/awww-daemon" ~/.local/bin/
 
-    ok "awww installed"
+    log "awww installed"
 else
-    ok "awww already installed"
+    log "awww already installed"
 fi
 
-ok "dependencies installed"
+log "dependencies installed"

@@ -2,7 +2,7 @@
 
 EMOJI=$(
     cat ~/.cache/rice/emoji | \
-    tofi --prompt-text "emoji: " | \
+    tofi --prompt-text "" | \
     awk '{print $1}'
 )
 

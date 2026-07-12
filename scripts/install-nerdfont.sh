@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
 log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 FONTDIR="${HOME}/.local/share/fonts"
@@ -24,7 +23,7 @@ if ! ls "${FONTDIR}"/JetBrainsMono*.ttf &>/dev/null 2>&1; then
     log "updating font cache..."
     fc-cache -f
 
-    ok "nerdfont installed"
+    log "nerdfont installed"
 else
-    ok "nerdfont already installed"
+    log "nerdfont already installed"
 fi

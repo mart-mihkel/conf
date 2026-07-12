@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-ok()  { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
 log() { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 TMPDIR="$(mktemp -d)"
@@ -20,4 +19,4 @@ log "installing..."
 rm -rf ~/.neovim
 mv "${TMPDIR}/nvim-linux-x86_64" ~/.neovim
 
-ok "neovim iupdated"
+log "neovim updated"

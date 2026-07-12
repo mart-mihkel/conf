@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-ok()   { printf "\033[1;32minfo\033[0m %s\n" "$*"; }
 log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
 
 log "login: "
@@ -23,4 +22,4 @@ nmcli con add \
     802-1x.password "$PASSWORD" \
     wifi-sec.key-mgmt wpa-eap
 
-ok "connection added"
+log "connection added"
