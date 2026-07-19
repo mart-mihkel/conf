@@ -22,9 +22,9 @@ vim.o.undofile = true
 vim.o.laststatus = 3
 vim.o.scrolloff = 4
 vim.o.number = true
-vim.o.tabstop = 4
-vim.o.wrap = true
+vim.o.wrap = false
 vim.o.list = true
+vim.o.tabstop = 4
 
 --- @param repo string
 --- @return string url
@@ -124,6 +124,7 @@ require("conform").setup({
 	formatters = {
 		typstyle = { prepend_args = { "--wrap-text" } },
 		["tex-fmt"] = { prepend_args = { "--format-tables" } },
+		prettier = { prepend_args = { "--prose-wrap", "always", "--print-width", "80" } },
 	},
 	formatters_by_ft = {
 		css = { "biome" },
@@ -134,8 +135,8 @@ require("conform").setup({
 		typst = { "typstyle" },
 		javascript = { "biome" },
 		typescript = { "biome" },
+		markdown = { "prettier" },
 		python = { "ruff_format" },
-		markdown = { "prettierd" },
 		javascriptreact = { "biome" },
 		typescriptreact = { "biome" },
 	},

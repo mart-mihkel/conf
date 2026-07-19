@@ -34,6 +34,7 @@ set undofile
 set path+=**
 set number
 set hidden
+set nowrap
 
 syntax on
 filetype plugin on
