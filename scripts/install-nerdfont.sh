@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
 
 FONTDIR="${HOME}/.local/share/fonts"
 TMPDIR="$(mktemp -d)"

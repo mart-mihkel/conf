@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-log()   { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
-error() { printf "\033[1;31m err\033[0m %s\n" "$*"; }
+log()   { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
+error() { printf "\033[1;31merror   \033[0m %s\n" "$*"; }
 
 PROXY=
 MAC=

@@ -2,13 +2,13 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
 warn() {
     if [[ "$1" == "-n" ]]; then
         shift
-        printf "\033[1;33mwarn\033[0m %s" "$*"
+        printf "\033[1;33mwarning \033[0m %s" "$*"
     else
-        printf "\033[1;33mwarn\033[0m %s\n" "$*"
+        printf "\033[1;33mwarning \033[0m %s\n" "$*"
     fi
 }
 

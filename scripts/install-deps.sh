@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34minfo\033[0m %s\n" "$*"; }
-warn() { printf "\033[1;33mwarn\033[0m %s\n" "$*"; }
+log()  { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
+warn() { printf "\033[1;33mwarning \033[0m %s\n" "$*"; }
 
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "${TMPDIR}"' EXIT
