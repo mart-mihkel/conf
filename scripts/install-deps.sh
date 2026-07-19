@@ -13,7 +13,9 @@ PKGS_APT=(
     bluez
     brightnessctl
     network-manager
+    libspa-0.2-bluetooth
     pipewire
+    pulseaudio-utils
     wireplumber
 
     # windowmanager
@@ -42,6 +44,7 @@ PKGS_APT=(
     imagemagick
     ncal
     pulsemixer
+    zathura
 
     # devtools
     bat
