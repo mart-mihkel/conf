@@ -11,6 +11,7 @@
     "network",
     "bluetooth",
     "wireplumber",
+    "backlight",
     "battery",
     "clock"
   ],
@@ -55,6 +56,14 @@
     "on-click": "ghostty -e pulsemixer",
     "format": "󰕾 {volume}%",
     "format-muted": "󰖁 off"
+  },
+  "backlight": {
+    "format": "{icon}{percent}%",
+    "format-icons": [
+      "󰃞 ",
+      "󰃟 ",
+      "󰃠 "
+    ]
   },
   "battery": {
     "on-click": "ghostty -e btop",

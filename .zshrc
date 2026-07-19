@@ -15,7 +15,7 @@ function _prompt() {
     local venv
     venv=${VIRTUAL_ENV:+ %F{3} venv%f}
 
-    PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
+    PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
 }
 
 precmd_functions+=(_prompt)
