@@ -14,6 +14,7 @@ PKGS_APT=(
     brightnessctl
     network-manager
     libspa-0.2-bluetooth
+    pcscd
     pipewire
     pulseaudio-utils
     wireplumber
@@ -50,12 +51,14 @@ PKGS_APT=(
     bat
     curl
     direnv
+    fastfetch
     fd-find
     ffmpeg
     fzf
     gcc
     git
     jq
+    libnotify-bin
     make
     shellcheck
     openssl
@@ -80,6 +83,7 @@ PKGS_APT=(
 PKGS_CARGO=(
     bluetui
     matugen
+    tree-sitter-cli
     typst-cli
     wayland-pipewire-idle-inhibit
     wlctl
@@ -94,10 +98,12 @@ log "installing apt packages..."
 sudo apt update
 sudo apt install -y "${PKGS_APT[@]}"
 
-log "enabling audio services"
+log "enabling services"
 systemctl --user enable --now pipewire
 systemctl --user enable --now wireplumber
 systemctl --user enable --now pipewire-pulse
+
+sudo systemctl enable --now pcscd
 
 if ! command -v uv &>/dev/null; then
     log "installing uv..."
@@ -121,6 +127,14 @@ if ! command -v opencode &>/dev/null; then
     log "opencode installed"
 else
     log "opencode already installed"
+fi
+
+if ! command -v pi &>/dev/null; then
+    log "installing pi..."
+    curl -fsSL https://pi.dev/install.sh | sh
+    log "pi installed"
+else
+    log "pi already installed"
 fi
 
 if ! command -v nvim &>/dev/null; then
