@@ -35,6 +35,7 @@
     {
       "key": "up",
       "type": "uptime"
-    }
+    },
+    "break"
   ]
 }
