@@ -15,12 +15,10 @@ function _prompt() {
     local venv
     venv=${VIRTUAL_ENV:+ %F{3} venv%f}
 
-    PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
+    PROMPT="%F{2} %m%f %F{4}󰉋 %1~%f${ref}${venv}  "
 }
 
 precmd_functions+=(_prompt)
-
-export PATH=~/.local/bin:$PATH
 
 autoload -Uz compinit && compinit
 
@@ -46,6 +44,7 @@ alias ll="ls -lh --color"
 
 alias fd="fdfind"
 alias bat="batcat --theme light"
+alias cat="batcat --theme light --plain"
 
 alias vim="nvim"
 alias vimdiff="nvim -d"

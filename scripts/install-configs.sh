@@ -65,8 +65,8 @@ install-dir() {
 }
 
 log "copying configs..."
+install-dir ./home ~/
 install-dir ./config ~/.config
-install-file ./.zshrc ~/.zshrc
 install-dir ./bin ~/.local/bin
 install-dir ./assets ~/.cache/rice
 
