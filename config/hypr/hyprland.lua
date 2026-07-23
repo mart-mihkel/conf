@@ -81,9 +81,7 @@ end
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic", follow = false }))
 
-hl.bind("CONTROL + Print", hl.dsp.exec_cmd("grimblast --notify copysave screen"), { locked = true })
-hl.bind("ALT + Print", hl.dsp.exec_cmd("grimblast --notify copysave active"), { locked = true })
-hl.bind("Print", hl.dsp.exec_cmd("grimblast --notify copysave area"), { locked = true })
+hl.bind("Print", hl.dsp.exec_cmd("grimblast --freeze --notify copysave area"), { locked = true })
 
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
