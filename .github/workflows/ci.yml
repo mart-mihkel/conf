@@ -17,3 +17,4 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: find . -name '*.sh' -exec shellcheck {} +
+      - run: find bin -type f -exec shellcheck {} +

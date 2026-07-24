@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 use_conda() {
-    PATH_add $HOME/miniconda3/bin
+    PATH_add "${HOME}/miniconda3/bin"
     eval "$(conda shell.zsh hook)"
-    conda activate $1
+    conda activate "$1"
 }
 
 layout_uv() {
     VIRTUAL_ENV=$(pwd)/.venv
-    source $VIRTUAL_ENV/bin/activate
+    # shellcheck disable=1091
+    source "${VIRTUAL_ENV}/bin/activate"
     export UV_ACTIVE=1
 }
