@@ -84,6 +84,10 @@ do
 
 				vim.cmd("TSUpdate")
 			end
+
+			if name == "molten-nvim" then
+				vim.cmd("UpdateRemotePlugins")
+			end
 		end,
 	})
 
@@ -284,6 +288,48 @@ do
 	})
 
 	vim.keymap.set("n", "<leader>gf", conform.format)
+end
+
+-- jupyter
+do
+	vim.pack.add({ gh("GCBallesteros/jupytext.nvim") })
+
+	require("jupytext").setup({
+		style = "markdown",
+		force_ft = "markdown",
+		output_extension = "md",
+	})
+
+	vim.pack.add({
+		gh("3rd/image.nvim"),
+		gh("jmbuhr/otter.nvim"),
+		{ src = gh("benlubas/molten-nvim"), version = vim.version.range("1.*") },
+	})
+
+	require("otter").setup()
+
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "markdown",
+		callback = function(e)
+			if vim.bo[e.buf].buftype ~= "" then
+				return
+			end
+
+			require("otter").activate()
+		end,
+	})
+
+	vim.g.molten_image_provider = "image.nvim"
+	vim.g.molten_output_win_max_height = 20
+	vim.g.molten_auto_open_output = false
+	vim.g.molten_virt_text_output = true
+
+	require("image").setup()
+
+	vim.keymap.set("n", "<leader>ji", "<cmd>MoltenInit<cr>")
+	vim.keymap.set("v", "<leader>je", ":<C-u>MoltenEvaluateVisual<cr>gv")
+	vim.keymap.set("n", "<leader>jr", "<cmd>MoltenReevaluateCell<cr>")
+	vim.keymap.set("n", "<leader>jd", "<cmd>MoltenDelete<cr>")
 end
 
 -- treesitter

@@ -64,6 +64,8 @@ PKGS_APT=(
     openssl
     pkg-config
     python3
+    python3-ipykernel
+    python3-jupytext
     python3-pip
     python3-pynvim
     ripgrep

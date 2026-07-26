@@ -12,3 +12,15 @@ layout_uv() {
     source "${VIRTUAL_ENV}/bin/activate"
     export UV_ACTIVE=1
 }
+
+layout_jupyter() {
+    layout_uv
+
+    local name
+    name=$(basename "$PWD")
+
+    if [[ ! -d "${HOME}/.local/share/jupyter/kernels/${name}" ]]; then
+        uv pip install --quiet ipykernel
+        python -m ipykernel install --user --name "$name" --display-name "$name"
+    fi
+}
