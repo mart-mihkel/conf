@@ -63,6 +63,9 @@ PKGS_APT=(
     shellcheck
     openssl
     pkg-config
+    python3
+    python3-pip
+    python3-pynvim
     ripgrep
     rsync
     tmux
