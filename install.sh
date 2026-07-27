@@ -10,5 +10,8 @@ bash ./scripts/install-deps.sh
 log "running install-configs"
 bash ./scripts/install-configs.sh
 
+log "running install-grub"
+bash ./scripts/install-grub.sh
+
 log "running install-nerdfont"
 bash ./scripts/install-nerdfont.sh
