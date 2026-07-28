@@ -224,13 +224,6 @@ end
 
 -- lsp
 do
-	vim.pack.add({ gh("j-hui/fidget.nvim") })
-
-	local fidget = require("fidget")
-	fidget.setup()
-
-	vim.notify = fidget.notify
-
 	vim.pack.add({
 		gh("neovim/nvim-lspconfig"),
 		gh("williamboman/mason.nvim"),
@@ -292,21 +285,21 @@ end
 
 -- jupyter
 do
-	vim.pack.add({ gh("GCBallesteros/jupytext.nvim") })
+	vim.pack.add({
+		gh("3rd/image.nvim"),
+		gh("jmbuhr/otter.nvim"),
+		gh("GCBallesteros/jupytext.nvim"),
+	})
 
+	require("image").setup()
 	require("jupytext").setup({
 		style = "markdown",
 		force_ft = "markdown",
 		output_extension = "md",
 	})
 
-	vim.pack.add({
-		gh("3rd/image.nvim"),
-		gh("jmbuhr/otter.nvim"),
-		{ src = gh("benlubas/molten-nvim"), version = vim.version.range("1.*") },
-	})
-
-	require("otter").setup()
+	local otter = require("otter")
+	otter.setup()
 
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "markdown",
@@ -315,21 +308,21 @@ do
 				return
 			end
 
-			require("otter").activate()
+			otter.activate()
 		end,
 	})
+
+	vim.pack.add({ { src = gh("benlubas/molten-nvim"), version = vim.version.range("1.*") } })
 
 	vim.g.molten_image_provider = "image.nvim"
 	vim.g.molten_output_win_max_height = 20
 	vim.g.molten_auto_open_output = false
 	vim.g.molten_virt_text_output = true
 
-	require("image").setup()
-
-	vim.keymap.set("n", "<leader>ji", "<cmd>MoltenInit<cr>")
+	vim.keymap.set("n", "<leader>ji", ":MoltenInit<cr>")
 	vim.keymap.set("v", "<leader>je", ":<C-u>MoltenEvaluateVisual<cr>gv")
-	vim.keymap.set("n", "<leader>jr", "<cmd>MoltenReevaluateCell<cr>")
-	vim.keymap.set("n", "<leader>jd", "<cmd>MoltenDelete<cr>")
+	vim.keymap.set("n", "<leader>jr", ":MoltenReevaluateCell<cr>")
+	vim.keymap.set("n", "<leader>jd", ":MoltenDelete<cr>")
 end
 
 -- treesitter

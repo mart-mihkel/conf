@@ -4,6 +4,10 @@
 #bluetooth,
 #workspaces,
 #wireplumber,
-#workspaces button {
+#workspaces button.active {
   color: #ffffff;
+}
+
+#workspaces button {
+  color: #d0d0d0;
 }

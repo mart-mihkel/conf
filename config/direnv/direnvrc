@@ -8,6 +8,7 @@ use_conda() {
 
 layout_uv() {
     VIRTUAL_ENV=$(pwd)/.venv
+
     # shellcheck disable=1091
     source "${VIRTUAL_ENV}/bin/activate"
     export UV_ACTIVE=1
@@ -15,12 +16,12 @@ layout_uv() {
 
 layout_jupyter() {
     layout_uv
+    uv pip install --quiet ipykernel
 
     local name
     name=$(basename "$PWD")
 
     if [[ ! -d "${HOME}/.local/share/jupyter/kernels/${name}" ]]; then
-        uv pip install --quiet ipykernel
         python -m ipykernel install --user --name "$name" --display-name "$name"
     fi
 }
