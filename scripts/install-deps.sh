@@ -94,6 +94,9 @@ PKGS_CARGO=(
     wlctl
 )
 
+FONTDIR="${HOME}/.local/share/fonts"
+
+NERDFONT="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz" 
 NVIM_STABLE="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" 
 GHOSTTY_DEB="https://github.com/dariogriffo/ghostty-debian/releases/download/1.3.1%2B3/ghostty_1.3.1-3%2Bsid_amd64.deb"
 GRIMBLAST_PERMALINK="https://raw.githubusercontent.com/hyprwm/contrib/bf1a7cdb086587e6bed6e8ecd285a81c01a11c54/grimblast/grimblast" 
@@ -204,6 +207,24 @@ if ! command -v awww &>/dev/null || ! command -v awww-daemon &>/dev/null; then
     log "awww installed"
 else
     log "awww already installed"
+fi
+
+if ! ls "${FONTDIR}"/JetBrainsMono*.ttf &>/dev/null 2>&1; then
+    log "creating font directory..."
+    mkdir -p "${FONTDIR}"
+
+    log "downloading JetBrainsMono NerdFont..."
+    wget -q $NERDFONT -O "${TMPDIR}/jetbrains-mono.tar.xz"
+
+    log "extracting fonts..."
+    tar -xf "${TMPDIR}/jetbrains-mono.tar.xz" -C "${FONTDIR}"
+
+    log "updating font cache..."
+    fc-cache -f
+
+    log "nerdfont installed"
+else
+    log "nerdfont already installed"
 fi
 
 log "dependencies installed"
