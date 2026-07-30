@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
-warn() {
+log()   { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
+warn()  {
     if [[ "$1" == "-n" ]]; then
         shift
         printf "\033[1;33mwarning \033[0m %s" "$*"
@@ -11,6 +11,7 @@ warn() {
         printf "\033[1;33mwarning \033[0m %s\n" "$*"
     fi
 }
+error() { printf "\033[1;31merror   \033[0m %s\n" "$*"; }
 
 confirm-overwrite() {
     local src="$1"
@@ -67,6 +68,23 @@ install-dir() {
 log "copying grub configs..."
 install-dir ./boot /boot
 
-# TODO: sudo tee GRUB_THEME="/boot/grub/themes/rice/theme.txt" > /etc/default/grub
+GRUB_DEFAULTS=/etc/default/grub
+GRUB_THEME=/boot/grub/themes/rice/theme.txt
+
+if ! sudo test -f "$GRUB_DEFAULTS"; then
+    error "$GRUB_DEFAULTS does not exist"
+    error "exiting with error"
+    exit 1
+fi
+
+log "setting grub theme..."
+if sudo grep -q '^GRUB_THEME=' "$GRUB_DEFAULTS"; then
+    sudo sed -i "s|^GRUB_THEME=.*|GRUB_THEME=\"$GRUB_THEME\"|" "$GRUB_DEFAULTS"
+else
+    printf 'GRUB_THEME="%s"\n' "$GRUB_THEME" | sudo tee -a "$GRUB_DEFAULTS" > /dev/null
+fi
+
+log "updating grub..."
+sudo update-grub
 
 log "grub configs installed"

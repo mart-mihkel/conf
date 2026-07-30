@@ -2,7 +2,16 @@
 
 set -euo pipefail
 
-log()  { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
+log()   { printf "\033[1;34minfo    \033[0m %s\n" "$*"; }
+error() { printf "\033[1;31merror   \033[0m %s\n" "$*"; }
+
+IFNAME=
+
+if [ -z "$IFNAME" ]; then
+    error "wireless interface is unset"
+    error "exiting with error"
+    exit 1
+fi
 
 log "login: "
 read -r LOGIN
@@ -12,7 +21,7 @@ read -rs PASSWORD
 
 nmcli con add \
     type wifi \
-    ifname wlp2s0 \
+    ifname "$IFNAME" \
     con-name eduroam \
     ssid eduroam \
     ipv4.method auto \
