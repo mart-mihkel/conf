@@ -1,7 +1,5 @@
 {
   "spacing": 20,
-  "margin-left": 5,
-  "margin-right": 5,
   "margin-bottom": -50,
   "reload_style_on_change": true,
   "modules-left": [
@@ -34,7 +32,7 @@
     "format": "󰃰 {:%H:%M}"
   },
   "network": {
-    "on-click": "ghostty -e wlctl",
+    "on-click": "foot -e wlctl",
     "format-wifi": "{icon}{signalStrength}%",
     "format-ethernet": "󰌗 eth",
     "format-disconnected": "󰤮 off",
@@ -47,13 +45,13 @@
     ]
   },
   "bluetooth": {
-    "on-click": "ghostty -e bluetui",
+    "on-click": "foot -e bluetui",
     "format-on": "󰂯 on",
     "format-connected": "󰂱 con",
     "format-connected-battery": "󰂱 {device_battery_percentage}%"
   },
   "wireplumber": {
-    "on-click": "ghostty -e pulsemixer",
+    "on-click": "foot -e pulsemixer",
     "format": "󰕾 {volume}%",
     "format-muted": "󰖁 off"
   },
@@ -66,7 +64,7 @@
     ]
   },
   "battery": {
-    "on-click": "ghostty -e btop",
+    "on-click": "foot -e btop",
     "format": "{icon}{capacity}%",
     "format-icons": {
       "default": [

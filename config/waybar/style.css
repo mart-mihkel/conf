@@ -5,7 +5,12 @@
 }
 
 #workspaces button {
-  padding: 0 10px 0 0;
+  padding: 0 5px;
+}
+
+.modules-left,
+.modules-right {
+  padding: 0 5px;
 }
 
 @import url("colors.css");

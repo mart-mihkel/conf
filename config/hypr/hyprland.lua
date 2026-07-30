@@ -7,6 +7,7 @@ hl.config({
 		repeat_delay = 250,
 		repeat_rate = 30,
 	},
+
 	general = {
 		gaps_in = 5,
 		gaps_out = 20,
@@ -16,35 +17,62 @@ hl.config({
 			inactive_border = colors.color8,
 		},
 	},
+
 	decoration = {
 		rounding = 5,
-		blur = {
-			enabled = true,
-			passes = 2,
-			size = 2,
-		},
-		shadow = {
-			enabled = false,
-		},
+		blur = { enabled = false },
+		shadow = { enabled = false },
 	},
+
 	cursor = {
 		inactive_timeout = 1,
 	},
 })
 
-hl.layer_rule({ match = { namespace = "launcher" }, animation = "slide" })
-hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+local laptop_output = "eDP-1"
+local external_output = "DP-1"
 
-hl.animation({ leaf = "global", enabled = true, speed = 2, bezier = "default" })
+-- hl.monitor({
+-- 	output = "",
+-- 	mode = "preferred",
+-- 	position = "auto",
+-- 	mirror = laptop_output,
+-- 	scale = 1,
+-- })
 
--- hl.monitor({ output = "", mode = "preferred", position = "auto", mirror = "eDP-1", scale = 1 })
-hl.monitor({ output = "eDP-1", mode = "preferred", position = "320x1440", scale = 1 })
-hl.monitor({ output = "DP-1", mode = "preferred", position = "0x0", scale = 1 })
+hl.monitor({
+	output = laptop_output,
+	mode = "preferred",
+	position = "320x1440",
+	scale = 1,
+})
+
+hl.monitor({
+	output = external_output,
+	mode = "preferred",
+	position = "0x0",
+	scale = 1,
+})
 
 for i = 1, 5 do
-	local ws = tostring(i)
-	hl.workspace_rule({ workspace = ws, default = (i == 1), monitor = "DP-1" })
+	hl.workspace_rule({
+		default = (i == 1),
+		workspace = tostring(i),
+		monitor = external_output,
+	})
 end
+
+hl.animation({
+	bezier = "default",
+	leaf = "global",
+	enabled = true,
+	speed = 2,
+})
+
+hl.layer_rule({
+	match = { namespace = "launcher" },
+	animation = "slide",
+})
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("wayland-pipewire-idle-inhibit")
@@ -59,7 +87,7 @@ hl.bind("SUPER + W", hl.dsp.exec_cmd("tofi-wallpaper"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))
-hl.bind("SUPER + Q", hl.dsp.exec_cmd("ghostty"))
+hl.bind("SUPER + Q", hl.dsp.exec_cmd("foot"))
 
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen())
@@ -86,7 +114,10 @@ hl.bind("Print", hl.dsp.exec_cmd("grimblast --freeze --notify copysave area"), {
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 
-local xf_opts = { locked = true, repeating = true }
+local xf_opts = {
+	locked = true,
+	repeating = true,
+}
 
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), xf_opts)
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), xf_opts)
