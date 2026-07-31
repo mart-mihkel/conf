@@ -15,8 +15,11 @@ function _prompt() {
     local venv
     venv=${VIRTUAL_ENV:+ %F{3} venv%f}
 
-    PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
-    # PROMPT="%F{2} %m%f %F{4}󰉋 %1~%f${ref}${venv}  "
+    if [ -z "$SSH_TTY" ]; then
+        PROMPT="%F{4}󰉋 %1~%f${ref}${venv}  "
+    else
+        PROMPT="%F{2} %m%f %F{4}󰉋 %1~%f${ref}${venv}  "
+    fi
 }
 
 precmd_functions+=(_prompt)
