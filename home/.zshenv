@@ -4,12 +4,6 @@ export EDITOR=nvim
 export DEFAULT_TARGET_DIR=$HOME/pictures
 export DATE_FORMAT=%Y-%b-%d-%H%M%S
 
-# xdg
-export XDG_DESKTOP_DIR=$HOME/desktop
-export XDG_PICTURES_DIR=$HOME/pictures
-export XDG_DOWNLOAD_DIR=$HOME/downloads
-export XDG_DOCUMENTS_DIR=$HOME/documents
-
 # local executables
 export PATH=~/.local/bin:$PATH
 
