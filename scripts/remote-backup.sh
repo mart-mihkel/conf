@@ -13,7 +13,7 @@ if [ -z "$REMOTE" ]; then
     exit 1
 fi
 
-TARGETS=(~/Documents ~/Pictures)
+TARGETS=("$XDG_DOCUMENTS_DIR" "$XDG_PICTURES_DIR")
 TARBALL="backup-$(date +"%Y-%m-%d").tar.gz"
 TMPDIR="$(mktemp -d)"
 
