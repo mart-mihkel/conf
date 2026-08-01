@@ -64,8 +64,6 @@ PKGS_APT=(
     openssl
     pkg-config
     python3
-    python3-ipykernel
-    python3-jupytext
     python3-pip
     python3-pynvim
     ripgrep
@@ -127,6 +125,14 @@ if ! command -v pnpm &>/dev/null; then
     log "pnpm installed"
 else
     log "pnpm already installed"
+fi
+
+if ! command -v fnm &>/dev/null; then
+    log "installing fnm..."
+    curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+    log "fnm installed"
+else
+    log "fnm already installed"
 fi
 
 if ! command -v opencode &>/dev/null; then

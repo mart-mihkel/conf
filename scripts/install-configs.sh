@@ -20,6 +20,10 @@ confirm-overwrite() {
         return 0
     fi
 
+    if [ "$(basename "$dest")" = "current" ]; then
+        return 1
+    fi
+
     if diff -q "$src" "$dest" &>/dev/null; then
         log "$src already installed"
         return 1

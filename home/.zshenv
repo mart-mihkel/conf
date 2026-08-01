@@ -15,3 +15,5 @@ export PATH=~/.zig:$PATH
 
 export PNPM_HOME=~/.local/share/pnpm
 export PATH=$PNPM_HOME/bin:$PATH
+
+export PATH=~/.local/share/fnm:$PATH
