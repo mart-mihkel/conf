@@ -69,8 +69,10 @@ PKGS_APT=(
     ripgrep
     rsync
     tmux
+    unzip
     vim
     wget
+    zip
     zsh
     zsh-autosuggestions
 
@@ -111,6 +113,7 @@ systemctl --user enable --now pipewire-pulse
 
 sudo systemctl enable --now pcscd
 
+export PATH=~/.local/bin:$PATH
 if ! command -v uv &>/dev/null; then
     log "installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -119,6 +122,8 @@ else
     log "uv already installed"
 fi
 
+export PNPM_HOME=~/.local/share/pnpm
+export PATH=$PNPM_HOME/bin:$PATH
 if ! command -v pnpm &>/dev/null; then
     log "installing pnpm..."
     curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -127,6 +132,7 @@ else
     log "pnpm already installed"
 fi
 
+export PATH=~/.local/share/fnm:$PATH
 if ! command -v fnm &>/dev/null; then
     log "installing fnm..."
     curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
@@ -135,12 +141,15 @@ else
     log "fnm already installed"
 fi
 
-if ! command -v opencode &>/dev/null; then
-    log "installing opencode..."
-    curl -fsSL https://opencode.ai/install | bash
-    log "opencode installed"
+eval "$(fnm env --shell bash)"
+if ! command -v node &>/dev/null; then
+    log "installing node lts..."
+    fnm install --lts
+    fnm default lts-latest
+    fnm use lts-latest
+    log "node lts installed"
 else
-    log "opencode already installed"
+    log "node lts already installed"
 fi
 
 if ! command -v pi &>/dev/null; then
@@ -151,6 +160,7 @@ else
     log "pi already installed"
 fi
 
+export PATH=~/.neovim/bin:$PATH
 if ! command -v nvim &>/dev/null; then
     log "installing neovim stable..."
 
@@ -185,13 +195,10 @@ else
     log "ghostty already installed"
 fi
 
+export PATH=~/.cargo/bin:$PATH
 if ! command -v cargo &>/dev/null; then
     log "installing cargo via rustup..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-    # shellcheck disable=1090
-    source ~/.cargo/env
-
     log "cargo installed"
 else
     log "cargo already installed"
