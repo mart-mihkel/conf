@@ -35,6 +35,9 @@ zstyle ":completion::complete:*" gain-privileges yes
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
 eval "$(direnv hook zsh)"
+
+eval "$(just --completions zsh)"
+
 eval "$(fnm env --shell zsh)"
 eval "$(fnm completions --shell zsh)"
 

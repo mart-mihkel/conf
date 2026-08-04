@@ -7,7 +7,6 @@ export DATE_FORMAT=%Y-%b-%d-%H%M%S
 # local executables
 export PATH=~/.local/bin:$PATH
 
-export PATH=~/.opencode/bin:$PATH
 export PATH=~/.neovim/bin:$PATH
 export PATH=~/.cargo/bin:$PATH
 export PATH=~/.go/bin:$PATH
