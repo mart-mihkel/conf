@@ -1,19 +1,18 @@
 # Development Rules
 
-- Write simple imperative code instead of object oriented solutions.
+- **NEVER** run `git` commands unless explicitly asked to.
+- If the user has modified the code after your changes, do not change it back.
+- Make code changes with the edit tools, not shell scripts. Reach for `sed -i` or a `python` heredoc only for bulk mechanical transforms.
 - Composition over inheritance.
 - Use early `return` or `continue` instead of deeply nesting if-statements.
 - If a method or function has more than three levels of indentation, consider refactoring it into smaller parts.
 - Do not dynamically loop over fields of an object.
 - Inline single-line helpers that have only one call site.
-- If the user has modified the code after your changes, do not change it back.
 
 ## Python Rules
 
-- Use `uv` for project management (`uv run python`, `uv sync`).
-- Read `pyproject.toml` and `Makefile` if they are present.
+- Use `uv` for python commands and project management (`uv run python`, `uv sync`).
 - If the project uses linters, formatters, typecheckers and other tools, use them to verify your changes (`uv run --no-sync ruff format --check`, `uv run --no-sync ruff check`, `uv run --no-sync ty check`).
-- Use `uv add` instead of `uv pip install`.
 - Always add type annotations to every function.
 - Do not use `Any` or `object` as type annotations unless absolutely necessary.
 - Do not ignore type or linter erros (`# type: ignore`, `# ty: ignore`, `# noqa`) unless explicitly told to; if you must then also add an explanation.
