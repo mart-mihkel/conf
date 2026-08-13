@@ -48,8 +48,9 @@ alias mv="mv -v"
 alias ..="cd .."
 alias ...="cd ../.."
 
-alias l="ls -lAh --color"
-alias ll="ls -lh --color"
+alias ls="eza --icons always"
+alias ll="eza --long --all --icons always "
+alias l="eza --long --all --no-permissions --no-user --icons always "
 
 alias fd="fdfind"
 alias bat="batcat --theme light"

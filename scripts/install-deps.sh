@@ -51,6 +51,7 @@ PKGS_APT=(
     bat
     curl
     direnv
+    eza
     fastfetch
     fd-find
     ffmpeg
@@ -65,6 +66,7 @@ PKGS_APT=(
     pkg-config
     python3
     python3-pip
+    python3-venv
     python3-pynvim
     ripgrep
     rsync
