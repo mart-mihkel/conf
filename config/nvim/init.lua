@@ -1,3 +1,4 @@
+--- Prepend github https url
 --- @param repo string
 --- @return string url
 local function gh(repo)
@@ -90,22 +91,6 @@ do
 			end
 		end,
 	})
-
-	local open_floating_preview = vim.lsp.util.open_floating_preview
-	---@diagnostic disable-next-line: duplicate-set-field
-	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-		local bufnr, winid = open_floating_preview(contents, syntax, opts, ...)
-		if winid and vim.api.nvim_win_is_valid(winid) then
-			vim.wo[winid].conceallevel = 0
-
-			local texth = vim.api.nvim_win_text_height(winid, {}).all
-			local maxh = (opts and opts.max_height) or (vim.o.lines - 4)
-
-			vim.api.nvim_win_set_height(winid, math.min(texth, maxh))
-		end
-
-		return bufnr, winid
-	end
 end
 
 -- ui
@@ -138,6 +123,8 @@ do
 
 	require("guess-indent").setup()
 	require("todo-comments").setup({ signs = false })
+
+	vim.pack.add({ gh("shortcuts/no-neck-pain.nvim") })
 end
 
 -- git
@@ -381,4 +368,18 @@ do
 			end
 		end,
 	})
+end
+
+-- experimental
+do
+	local open_floating_preview = vim.lsp.util.open_floating_preview
+	---@diagnostic disable-next-line: duplicate-set-field
+	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+		local bufnr, winid = open_floating_preview(contents, syntax, opts, ...)
+		if winid and vim.api.nvim_win_is_valid(winid) then
+			vim.wo[winid].concealcursor = "n"
+		end
+
+		return bufnr, winid
+	end
 end

@@ -9,8 +9,8 @@ terminal-border: "0"
 desktop-image: "background.png"
 
 + boot_menu {
-    top = 80%
-    left = 45%
+    top = 10%
+    left = 5%
     width = 50%
     height = 25%
 
