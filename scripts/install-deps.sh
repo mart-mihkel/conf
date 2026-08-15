@@ -89,7 +89,6 @@ PKGS_APT=(
 
 PKGS_CARGO=(
     bluetui
-    matugen
     tree-sitter-cli
     typst-cli
     wayland-pipewire-idle-inhibit
@@ -100,9 +99,11 @@ FONTDIR="${HOME}/.local/share/fonts"
 
 NERDFONT="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz" 
 NVIM_STABLE="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" 
-GHOSTTY_DEB="https://github.com/dariogriffo/ghostty-debian/releases/download/1.3.1%2B3/ghostty_1.3.1-3%2Bsid_amd64.deb"
 GRIMBLAST_PERMALINK="https://raw.githubusercontent.com/hyprwm/contrib/bf1a7cdb086587e6bed6e8ecd285a81c01a11c54/grimblast/grimblast" 
 AWWW_REPO="https://codeberg.org/LGFae/awww.git"
+
+# TODO: install ghostty from
+# https://deb.griffo.io/install-latest-ghostty-in-debian.html
 
 log "installing apt packages..."
 sudo apt update
@@ -186,15 +187,6 @@ if ! command -v grimblast &>/dev/null; then
     log "grimblast installed"
 else
     log "grimblast already installed"
-fi
-
-if ! command -v ghostty &>/dev/null; then
-    log "installing ghostty..."
-    wget -q "$GHOSTTY_DEB" -O "${TMPDIR}/ghostty.deb"
-    sudo dpkg -i "${TMPDIR}/ghostty.deb"
-    log "ghostty installed"
-else
-    log "ghostty already installed"
 fi
 
 export PATH=~/.cargo/bin:$PATH

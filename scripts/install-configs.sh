@@ -59,13 +59,15 @@ install-dir() {
     local dest="$2"
     local file
     local path
+    local root
+    root="${src#./}"
 
     mkdir -p "$dest"
 
     while IFS= read -r -d '' file; do
-        path="${file#"$src"/}"
+        path="${file#"$root"/}"
         install-file "$file" "$dest/$path"
-    done < <(find "$src" -type f -print0)
+    done < <(git ls-files --cached --others --exclude-standard -z -- "$root")
 }
 
 log "copying configs..."
@@ -75,3 +77,8 @@ install-dir ./bin ~/.local/bin
 install-dir ./cache ~/.cache
 
 log "configs installed"
+
+log "installing pi extension dependencies..."
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME/bin:$PATH"
+pnpm -C "$HOME/.pi/agent/extensions" install --frozen-lockfile
