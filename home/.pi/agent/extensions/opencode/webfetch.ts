@@ -18,6 +18,7 @@ const BROWSER_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36";
 
 const CLOUDFLARE_USER_AGENT = "opencode";
+const MAX_CODE_POINT = 0x10ffff;
 const SKIPPED_HTML_ELEMENTS = new Set([
   "script",
   "style",
@@ -26,6 +27,55 @@ const SKIPPED_HTML_ELEMENTS = new Set([
   "object",
   "embed",
 ]);
+
+const BLOCK_HTML_ELEMENTS = new Set([
+  "address",
+  "article",
+  "aside",
+  "blockquote",
+  "br",
+  "dd",
+  "div",
+  "dl",
+  "dt",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "hr",
+  "li",
+  "main",
+  "nav",
+  "ol",
+  "option",
+  "p",
+  "pre",
+  "section",
+  "table",
+  "tbody",
+  "td",
+  "tfoot",
+  "th",
+  "thead",
+  "tr",
+  "ul",
+]);
+
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  amp: "&",
+  apos: "'",
+  gt: ">",
+  lt: "<",
+  nbsp: " ",
+  quot: '"',
+};
 
 const TEXTUAL_MIME_TYPES = new Set([
   "application/json",
@@ -242,20 +292,24 @@ async function readBody(
   const chunks: Uint8Array[] = [];
   let size = 0;
 
-  while (true) {
-    signal.throwIfAborted();
-    const { done, value } = await reader.read();
-    if (done) break;
-    if (!value) continue;
-    size += value.byteLength;
-    if (size > MAX_RESPONSE_BYTES) {
-      await reader.cancel();
-      throw new Error(
-        `Response too large (exceeds ${formatSize(MAX_RESPONSE_BYTES)} limit)`,
-      );
-    }
+  try {
+    while (true) {
+      signal.throwIfAborted();
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (!value) continue;
+      size += value.byteLength;
+      if (size > MAX_RESPONSE_BYTES) {
+        throw new Error(
+          `Response too large (exceeds ${formatSize(MAX_RESPONSE_BYTES)} limit)`,
+        );
+      }
 
-    chunks.push(value);
+      chunks.push(value);
+    }
+  } catch (error) {
+    await reader.cancel().catch(() => {});
+    throw error;
   }
 
   const body = new Uint8Array(size);
@@ -328,7 +382,8 @@ function convert(
   contentType: string,
   format: FetchFormat,
 ): string {
-  if (!contentType.toLowerCase().includes("text/html")) return content;
+  const mime = mimeFrom(contentType);
+  if (mime !== "text/html" && mime !== "application/xhtml+xml") return content;
   if (format === "html") return content;
   if (format === "text") return extractTextFromHTML(content);
   return convertHTMLToMarkdown(content);
@@ -354,10 +409,23 @@ function extractTextFromHTML(html: string): string {
       } else if (!token.endsWith("/>") && !/^<\s*(?:br|hr)\b/i.test(token)) {
         skipDepth++;
       }
+
+      continue;
+    }
+
+    if (
+      skipDepth === 0 &&
+      BLOCK_HTML_ELEMENTS.has(tag) &&
+      !text.endsWith("\n")
+    ) {
+      text += "\n";
     }
   }
 
-  return text.trim();
+  return text
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 function convertHTMLToMarkdown(html: string): string {
@@ -421,27 +489,27 @@ function inlineMarkdown(value: string): string {
 }
 
 function decodeHtmlEntities(value: string): string {
-  const named: Record<string, string> = {
-    amp: "&",
-    apos: "'",
-    gt: ">",
-    lt: "<",
-    nbsp: " ",
-    quot: '"',
-  };
-
   return value.replace(
     /&(#x?[0-9a-f]+|amp|apos|gt|lt|nbsp|quot);/gi,
-    (entity, value: string) => {
-      if (value.toLowerCase().startsWith("#x")) {
-        return String.fromCodePoint(Number.parseInt(value.slice(2), 16));
+    (entity, reference: string) => {
+      if (reference.toLowerCase().startsWith("#x")) {
+        return codePoint(reference.slice(2), 16) ?? entity;
       }
 
-      if (value.startsWith("#")) {
-        return String.fromCodePoint(Number.parseInt(value.slice(1), 10));
+      if (reference.startsWith("#")) {
+        return codePoint(reference.slice(1), 10) ?? entity;
       }
 
-      return named[value.toLowerCase()] ?? entity;
+      return NAMED_HTML_ENTITIES[reference.toLowerCase()] ?? entity;
     },
   );
+}
+
+function codePoint(digits: string, radix: number): string | undefined {
+  const value = Number.parseInt(digits, radix);
+  if (!Number.isInteger(value) || value < 0 || value > MAX_CODE_POINT) {
+    return undefined;
+  }
+
+  return String.fromCodePoint(value);
 }

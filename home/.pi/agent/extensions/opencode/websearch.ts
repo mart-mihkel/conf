@@ -55,6 +55,7 @@ type WebSearchDetails = {
 };
 
 type McpContent = { type?: unknown; text?: unknown };
+type SearchPayload = { text: string } | { error: string };
 
 export default function (pi: ExtensionAPI) {
   pi.registerTool({
@@ -62,7 +63,7 @@ export default function (pi: ExtensionAPI) {
     label: "Web Search",
     description: `Search the web using Exa or Parallel for current information beyond the model's knowledge cutoff. Search results include relevant web content.
 
-The current year is ${new Date().getFullYear()}. Include it when searching for recent information or current events. Supports result count, live crawling, search type, and context length controls. Responses are truncated to ${DEFAULT_MAX_LINES} lines or ${formatSize(DEFAULT_MAX_BYTES)} when necessary.`,
+The current year is ${new Date().getFullYear()}. Include it when searching for recent information or current events. The provider is picked per session; result count, live crawling, search type, and context length apply to Exa and are ignored by Parallel. Responses are truncated to ${DEFAULT_MAX_LINES} lines or ${formatSize(DEFAULT_MAX_BYTES)} when necessary.`,
     promptSnippet:
       "Search the web for current information and relevant sources",
     promptGuidelines: [
@@ -114,9 +115,7 @@ function selectProvider(sessionId: string): Provider {
     hash = Math.imul(hash, 0x01000193);
   }
 
-  return Number.parseInt((hash >>> 0).toString(36), 36) % 2 === 0
-    ? "exa"
-    : "parallel";
+  return (hash >>> 0) % 2 === 0 ? "exa" : "parallel";
 }
 
 async function callProvider(
@@ -187,17 +186,25 @@ async function callProvider(
     }
 
     const body = await readBody(response, requestSignal);
-    return parseResponse(new TextDecoder().decode(body));
+    const payload = parseResponse(new TextDecoder().decode(body));
+    if (payload && "error" in payload) throw new Error(payload.error);
+    return payload?.text;
   } catch (error) {
     if (timeoutController.signal.aborted && !signal?.aborted) {
-      throw new Error(`${tool} request timed out`);
+      throw new Error(
+        `${tool} request timed out after ${REQUEST_TIMEOUT_SECONDS}s`,
+      );
     }
 
     if (signal?.aborted) throw error;
-    throw new Error(`Unable to search the web for ${params.query}`);
+    throw new Error(`Web search via ${provider} failed: ${message(error)}`);
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function message(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 function exaUrl(): string {
@@ -224,19 +231,23 @@ async function readBody(
   const chunks: Uint8Array[] = [];
   let size = 0;
 
-  while (true) {
-    signal.throwIfAborted();
-    const { done, value } = await reader.read();
-    if (done) break;
-    if (!value) continue;
+  try {
+    while (true) {
+      signal.throwIfAborted();
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (!value) continue;
 
-    size += value.byteLength;
-    if (size > MAX_RESPONSE_BYTES) {
-      await reader.cancel();
-      throw new Error("Search response exceeded the byte limit");
+      size += value.byteLength;
+      if (size > MAX_RESPONSE_BYTES) {
+        throw new Error("Search response exceeded the byte limit");
+      }
+
+      chunks.push(value);
     }
-
-    chunks.push(value);
+  } catch (error) {
+    await reader.cancel().catch(() => {});
+    throw error;
   }
 
   const body = new Uint8Array(size);
@@ -249,7 +260,7 @@ async function readBody(
   return body;
 }
 
-function parseResponse(body: string): string | undefined {
+function parseResponse(body: string): SearchPayload | undefined {
   const direct = parsePayload(body);
   if (direct) return direct;
 
@@ -262,7 +273,7 @@ function parseResponse(body: string): string | undefined {
   return undefined;
 }
 
-function parsePayload(payload: string): string | undefined {
+function parsePayload(payload: string): SearchPayload | undefined {
   const trimmed = payload.trim();
   if (!trimmed.startsWith("{")) return undefined;
 
@@ -273,17 +284,26 @@ function parsePayload(payload: string): string | undefined {
     return undefined;
   }
 
-  if (
-    !isRecord(value) ||
-    !isRecord(value.result) ||
-    !Array.isArray(value.result.content)
-  ) {
+  if (!isRecord(value)) return undefined;
+
+  if (isRecord(value.error)) {
+    const message = value.error.message;
+    return {
+      error:
+        typeof message === "string" ? message : JSON.stringify(value.error),
+    };
+  }
+
+  if (!isRecord(value.result) || !Array.isArray(value.result.content)) {
     return undefined;
   }
 
   const content = value.result.content as McpContent[];
   const item = content.find((entry) => typeof entry.text === "string");
-  return typeof item?.text === "string" ? item.text : undefined;
+  if (typeof item?.text !== "string") return undefined;
+  return value.result.isError === true
+    ? { error: item.text }
+    : { text: item.text };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

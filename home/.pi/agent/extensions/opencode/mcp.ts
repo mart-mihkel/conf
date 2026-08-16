@@ -10,7 +10,10 @@ import {
   truncateHead,
 } from "@earendil-works/pi-coding-agent";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import {
+  getDefaultEnvironment,
+  StdioClientTransport,
+} from "@modelcontextprotocol/sdk/client/stdio.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import type { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 import {
@@ -21,7 +24,30 @@ import {
 import { runEffect, tryPromise } from "../lib/effect.js";
 
 const DEFAULT_REQUEST_TIMEOUT = 5_000;
+const DEFAULT_STARTUP_TIMEOUT = 60_000;
 const MAX_LIST_PAGES = 1_000;
+
+const INHERITED_ENVIRONMENT = [
+  "COLORTERM",
+  "HTTPS_PROXY",
+  "HTTP_PROXY",
+  "LANG",
+  "LC_ALL",
+  "LC_CTYPE",
+  "NODE_EXTRA_CA_CERTS",
+  "NO_PROXY",
+  "SSL_CERT_DIR",
+  "SSL_CERT_FILE",
+  "TMPDIR",
+  "TZ",
+  "XDG_CACHE_HOME",
+  "XDG_CONFIG_HOME",
+  "XDG_DATA_HOME",
+  "http_proxy",
+  "https_proxy",
+  "no_proxy",
+];
+
 const CLIENT_NAME = "pi-opencode-mcp";
 const CLIENT_VERSION = "1.0.0";
 
@@ -59,6 +85,12 @@ type McpDetails = {
   fullOutputPath?: string;
 };
 
+type ConfigFile = { path: string; text: string };
+type ConfigLoad = {
+  configs: Record<string, ServerConfig>;
+  errors: string[];
+};
+
 type TextBlock = { type: "text"; text: string };
 type ImageBlock = { type: "image"; data: string; mimeType: string };
 type PiBlock = TextBlock | ImageBlock;
@@ -73,7 +105,11 @@ export default function (pi: ExtensionAPI) {
   pi.on("session_start", async (_event, ctx) => {
     instructions = [];
 
-    const configs = await loadServerConfigs(ctx.cwd);
+    const { configs, errors } = await loadServerConfigs(ctx.cwd);
+    for (const error of errors) {
+      if (ctx.hasUI) ctx.ui.notify(`MCP config skipped — ${error}`, "warning");
+    }
+
     const results = await Promise.all(
       Object.entries(configs).map(async ([name, config]) =>
         connectServer(name, config, ctx.cwd),
@@ -409,7 +445,7 @@ async function connectServer(
 function createTransport(config: ServerConfig, cwd: string): Transport {
   if (config.type === "remote") {
     return new StreamableHTTPClientTransport(new URL(resolveEnv(config.url)), {
-      requestInit: { headers: resolveHeaders(config.headers) },
+      requestInit: { headers: resolveValues(config.headers) },
     });
   }
 
@@ -419,7 +455,7 @@ function createTransport(config: ServerConfig, cwd: string): Transport {
     command,
     args,
     cwd: config.cwd ? resolve(cwd, resolveEnv(config.cwd)) : cwd,
-    env: { ...processEnvironment(), ...resolveHeaders(config.environment) },
+    env: serverEnvironment(config.environment),
   });
 }
 
@@ -598,22 +634,28 @@ async function closeConnections(
   );
 }
 
-async function loadServerConfigs(
-  cwd: string,
-): Promise<Record<string, ServerConfig>> {
+async function loadServerConfigs(cwd: string): Promise<ConfigLoad> {
   const configs: Record<string, ServerConfig> = {};
-  for (const filepath of await configFiles(cwd)) {
-    const parsed = parseJsonc(await readFile(filepath, "utf8"));
-    const entries = mcpEntries(parsed);
-    for (const [name, value] of Object.entries(entries)) {
+  const errors: string[] = [];
+
+  for (const file of await configFiles(cwd)) {
+    let parsed: unknown;
+    try {
+      parsed = parseJsonc(file.text);
+    } catch (error) {
+      errors.push(`${file.path}: ${errorMessage(error)}`);
+      continue;
+    }
+
+    for (const [name, value] of Object.entries(mcpEntries(parsed))) {
       if (isServerConfig(value)) configs[name] = value;
     }
   }
 
-  return configs;
+  return { configs, errors };
 }
 
-async function configFiles(cwd: string): Promise<string[]> {
+async function configFiles(cwd: string): Promise<ConfigFile[]> {
   const paths: string[] = [];
   const globalDirectory =
     process.env.OPENCODE_CONFIG_DIR ??
@@ -642,15 +684,17 @@ async function configFiles(cwd: string): Promise<string[]> {
     }
   }
 
-  const existing: string[] = [];
+  const files: ConfigFile[] = [];
+  const seen = new Set<string>();
   for (const filepath of paths) {
+    if (seen.has(filepath)) continue;
+    seen.add(filepath);
     try {
-      await readFile(filepath, "utf8");
-      if (!existing.includes(filepath)) existing.push(filepath);
+      files.push({ path: filepath, text: await readFile(filepath, "utf8") });
     } catch {}
   }
 
-  return existing;
+  return files;
 }
 
 function mcpEntries(value: unknown): Record<string, unknown> {
@@ -675,12 +719,76 @@ function isServerConfig(value: unknown): value is ServerConfig {
 }
 
 function parseJsonc(text: string): unknown {
-  return JSON.parse(
-    text
-      .replace(/\/\*[\s\S]*?\*\//g, "")
-      .replace(/^\s*\/\/.*$/gm, "")
-      .replace(/,\s*([}\]])/g, "$1"),
-  );
+  return JSON.parse(removeTrailingCommas(removeComments(text)));
+}
+
+function removeComments(text: string): string {
+  let output = "";
+  let inString = false;
+
+  for (let index = 0; index < text.length; index++) {
+    const character = text[index];
+    if (inString) {
+      output += character;
+      if (character === "\\") output += text[++index] ?? "";
+      else if (character === '"') inString = false;
+      continue;
+    }
+
+    if (character === '"') {
+      inString = true;
+      output += character;
+      continue;
+    }
+
+    if (character === "/" && text[index + 1] === "/") {
+      while (index < text.length && text[index] !== "\n") index++;
+      output += "\n";
+      continue;
+    }
+
+    if (character === "/" && text[index + 1] === "*") {
+      index += 2;
+      while (index < text.length && !isCommentEnd(text, index)) index++;
+      index++;
+      continue;
+    }
+
+    output += character;
+  }
+
+  return output;
+}
+
+function isCommentEnd(text: string, index: number): boolean {
+  return text[index] === "*" && text[index + 1] === "/";
+}
+
+function removeTrailingCommas(text: string): string {
+  let output = "";
+  let inString = false;
+
+  for (let index = 0; index < text.length; index++) {
+    const character = text[index];
+    if (inString) {
+      output += character;
+      if (character === "\\") output += text[++index] ?? "";
+      else if (character === '"') inString = false;
+      continue;
+    }
+
+    if (character === '"') inString = true;
+    if (character === "," && closesNext(text, index)) continue;
+    output += character;
+  }
+
+  return output;
+}
+
+function closesNext(text: string, index: number): boolean {
+  let next = index + 1;
+  while (next < text.length && /\s/.test(text[next] ?? "")) next++;
+  return text[next] === "}" || text[next] === "]";
 }
 
 function resolveEnv(value: string): string {
@@ -690,7 +798,7 @@ function resolveEnv(value: string): string {
   );
 }
 
-function resolveHeaders(
+function resolveValues(
   values: Record<string, string> | undefined,
 ): Record<string, string> {
   return Object.fromEntries(
@@ -701,12 +809,16 @@ function resolveHeaders(
   );
 }
 
-function processEnvironment(): Record<string, string> {
-  return Object.fromEntries(
-    Object.entries(process.env).filter(
-      (entry): entry is [string, string] => entry[1] !== undefined,
-    ),
-  );
+function serverEnvironment(
+  environment: Record<string, string> | undefined,
+): Record<string, string> {
+  const inherited: Record<string, string> = getDefaultEnvironment();
+  for (const name of INHERITED_ENVIRONMENT) {
+    const value = process.env[name];
+    if (value !== undefined) inherited[name] = value;
+  }
+
+  return { ...inherited, ...resolveValues(environment) };
 }
 
 function timeoutValue(
@@ -715,7 +827,7 @@ function timeoutValue(
 ): number {
   if (typeof timeout === "number") return timeout;
   if (timeout && typeof timeout[key] === "number") return timeout[key];
-  return DEFAULT_REQUEST_TIMEOUT;
+  return key === "startup" ? DEFAULT_STARTUP_TIMEOUT : DEFAULT_REQUEST_TIMEOUT;
 }
 
 function sanitize(value: string): string {
