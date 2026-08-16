@@ -3,5 +3,5 @@
 For Debian Forky
 
 ```bash
-./install.sh
+just install
 ```

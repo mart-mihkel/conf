@@ -102,9 +102,6 @@ NVIM_STABLE="https://github.com/neovim/neovim/releases/download/stable/nvim-linu
 GRIMBLAST_PERMALINK="https://raw.githubusercontent.com/hyprwm/contrib/bf1a7cdb086587e6bed6e8ecd285a81c01a11c54/grimblast/grimblast" 
 AWWW_REPO="https://codeberg.org/LGFae/awww.git"
 
-# TODO: install ghostty from
-# https://deb.griffo.io/install-latest-ghostty-in-debian.html
-
 log "installing apt packages..."
 sudo apt update
 sudo apt install -y "${PKGS_APT[@]}"
