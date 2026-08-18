@@ -1,33 +1,9 @@
-# Development Rules
-
-- **NEVER** run `git` commands unless explicitly asked to.
-- If the user has modified the code after your changes, do not change it back.
-- Make code changes with the edit tools, not shell scripts. Reach for `sed -i` or a `python` heredoc only for bulk mechanical transforms.
-- Composition over inheritance.
-- Use early `return` or `continue` instead of deeply nesting if-statements.
-- If a method or function has more than three levels of indentation, consider refactoring it into smaller parts.
-- Do not dynamically loop over fields of an object.
-- Inline single-line helpers that have only one call site.
-
-## Python Rules
-
-- Use `uv` for python commands and project management (`uv run python`, `uv sync`).
-- If the project uses linters, formatters, typecheckers and other tools, use them to verify your changes (`uv run --no-sync ruff format --check`, `uv run --no-sync ruff check`, `uv run --no-sync ty check`).
-- Always add type annotations to every function.
-- Do not use `Any` or `object` as type annotations unless absolutely necessary.
-- Do not ignore type or linter erros (`# type: ignore`, `# ty: ignore`, `# noqa`) unless explicitly told to; if you must then also add an explanation.
-- Do not use `getattr`, `setattr`, `__import__`.
-- Use type casting if you know the correct type (`eval_dataset = cast(Dataset, data.get("eval"))`).
-- Use exhaustive types, use `NamedTuple` when returning multiple values, write out dictionaries as `TypedDict`.
-- Add type aliases for magic structures (`type Vec3 = tuple[float, float, float]`).
-- Use the `type` keyword for type aliases (`type Backend = Literal["cu130", "cpu"]`).
-- Add non-null assertions where you know a variable is not `None`.
-
-## Typescript Rules
-
-- No `any` unless absolutely necessary.
-- No inline imports (`await import()`, `import("pkg").Type`, dynamic type imports).
-- Top-level imports only.
-- Check node_modules for external API types; don't guess.
-- Use only erasable TypeScript syntax (Node strip-only mode); no parameter properties, `enum`, `namespace`/`module`, `import =`, `export =`, or other constructs needing JS emit.
-- Use explicit fields with constructor assignments.
+- **Never** run git commands.
+- Do not silence linter or typechecker errors without permission.
+- Don't use comments to narrate code, but do use them to explain invariants and why something unusual was done a particular way. Make sure that a comment will make sense to somebody who's reading the code for the first time. Prefer plain language, avoid jargon, and don't be afraid to be more verbose if it's necessary to explain something well.
+- Try hard to avoid patterns that require metaprogramming. Instead, try to encode those constraints in the type system. Don't be afraid to write code that's more verbose or requires largeish refactors if it enables you to avoid these unsafe calls.
+- Before writing significant amounts of new code, look for existing utilities or mechanisms that could solve the problem. Avoid expanding the task to unrelated issues, but do not confuse keeping the task focused with minimizing the size of the implementation. Prefer addressing the underlying architectural problem over adding a localized workaround, even when doing so requires a substantial refactor or rearchitecture. Ask the user for guidance if in doubt about whether to attempt a larger refactor or not.
+- Follow existing code style. Check neighboring files for patterns.
+- All significant changes must be tested. Add or update focused tests for semantic changes when existing coverage does not already establish the intended behavior.
+- Look to see if your tests could go in an existing file before adding a new file for your tests.
+- Get your tests to pass. If you didn't run the tests, your code does not work.
