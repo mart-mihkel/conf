@@ -234,7 +234,11 @@ do
 	require("blink.cmp").setup({
 		signature = { enabled = true },
 		snippets = { preset = "luasnip" },
-		completion = { menu = { scrollbar = false } },
+		completion = {
+			menu = { scrollbar = false },
+			ghost_text = { enabled = true },
+			documentation = { auto_show = true, auto_show_delay_ms = 0 },
+		},
 	})
 end
 
