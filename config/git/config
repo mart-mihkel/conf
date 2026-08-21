@@ -14,6 +14,8 @@
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
-	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED
+	cmd = nvim -d $LOCAL $MERGED $REMOTE
+[mergetool]
+	keepBackup = false
 [format]
 	pretty = %C(auto)%h %d %s
