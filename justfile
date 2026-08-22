@@ -8,9 +8,9 @@
 [group('build')]
 install:
     #!/usr/bin/env bash
-    bash ./scripts/install-deps.sh
-    bash ./scripts/install-configs.sh
-    bash ./scripts/install-grub.sh
+    for script in ./scripts/install/*; do
+        bash $script
+    done
 
 [doc('run pre-commit shellchecks')]
 [group('lint')]

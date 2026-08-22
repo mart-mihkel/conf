@@ -6,9 +6,11 @@
 #workspaces,
 #wireplumber,
 #workspaces button.active {
-  color: #ffffff;
+  /* color: #ffffff; */
+  color: #000000;
 }
 
 #workspaces button {
-  color: #d0d0d0;
+  /* color: #d0d0d0; */
+  color: #808080;
 }

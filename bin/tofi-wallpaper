@@ -18,5 +18,5 @@ if [[ -z $PICK ]]; then
 fi
 
 log "setting wallpaper"
-awww img "$IMG" -t none
+awww img "$IMG" -t random --transition-fps 60
 cp "$IMG" $WALLS/current

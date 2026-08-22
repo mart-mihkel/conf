@@ -1,3 +1,7 @@
-text-color       = #d0d0d0
-selection-color  = #ffffff
 background-color = #ffffff00
+
+# text-color       = #d0d0d0
+# selection-color  = #ffffff
+
+text-color       = #808080
+selection-color  = #000000
