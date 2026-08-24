@@ -26,11 +26,11 @@ PKGS_APT=(
     hyprland
     hyprlock
     hyprpicker
+    hyprsunset
     hyprland-guiutils
     tofi
     rofi
     waybar
-    gammastep
     grim
     playerctl
     slurp
