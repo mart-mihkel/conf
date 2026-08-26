@@ -101,7 +101,7 @@ do
 		gh("nvim-lualine/lualine.nvim"),
 		gh("nvim-tree/nvim-web-devicons"),
 		gh("projekt0n/github-nvim-theme"),
-		-- gh("shortcuts/no-neck-pain.nvim"),
+		gh("MeanderingProgrammer/render-markdown.nvim.git"),
 	})
 
 	vim.cmd.colorscheme("github_light")
@@ -122,6 +122,18 @@ do
 
 	require("guess-indent").setup()
 	require("todo-comments").setup({ signs = false })
+	require("render-markdown").setup({
+		dash = { width = 79 },
+		code = { inline_pad = 1, border = "thick" },
+		heading = {
+			backgrounds = { "None", "None", "None", "None", "None", "None" },
+		},
+		overrides = {
+			buftype = {
+				nofile = { enabled = false },
+			},
+		},
+	})
 end
 
 -- git
