@@ -1,0 +1,40 @@
+onboarding = false
+
+[theme.custom]
+panel_bg = "#ffffff"
+sidebar_bg = "#ffffff"
+selection_bg = "#d0d0d0"
+active_row_bg = "#d0d0d0"
+
+surface0 = "#ffffff"
+surface1 = "#d0d0d0"
+surface_dim = "#f5f5f5"
+
+overlay0 = "#8e908c"
+overlay1 = "#000000"
+
+text = "#4d4d4c"
+subtext0 = "#8e908c"
+
+accent = "#6a9fb5"
+
+green = "#90a959"
+yellow = "#f4bf75"
+red = "#ac4142"
+blue = "#6a9fb5"
+teal = "#75b5aa"
+mauve = "#aa759f"
+peach = "#f5871f"
+
+[ui]
+confirm_close = false
+pane_scrollbars = false
+prompt_new_tab_name = false
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+
+[ui.sound]
+enabled = false
+
+[experimental]
+kitty_graphics = true

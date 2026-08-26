@@ -35,9 +35,8 @@ zstyle ":completion::complete:*" gain-privileges yes
 setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
 eval "$(direnv hook zsh)"
-
+eval "$(herdr completion zsh)"
 eval "$(just --completions zsh)"
-
 eval "$(fnm env --shell zsh)"
 eval "$(fnm completions --shell zsh)"
 
@@ -49,8 +48,8 @@ alias ..="cd .."
 alias ...="cd ../.."
 
 alias ls="eza --icons always"
-alias ll="eza --long --all --icons always "
-alias l="eza --long --all --no-permissions --no-user --icons always "
+alias ll="eza --long --all --icons always"
+alias l="eza --long --all --no-permissions --no-user --icons always"
 
 alias fd="fdfind"
 alias bat="batcat --theme light"

@@ -87,7 +87,7 @@ hl.bind("SUPER + W", hl.dsp.exec_cmd("tofi-wallpaper"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("tofi-emoji"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd("tofi-drun"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd("hyprlock"))
-hl.bind("SUPER + Q", hl.dsp.exec_cmd("foot"))
+hl.bind("SUPER + Q", hl.dsp.exec_cmd("ghostty"))
 
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen())

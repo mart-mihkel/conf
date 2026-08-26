@@ -175,6 +175,14 @@ else
     log "neovim already installed"
 fi
 
+if ! command -v herdr &>/dev/null; then
+    log "installing herdr..."
+    curl -fsSL https://herdr.dev/install.sh | sh
+    log "herdr installed"
+else
+    log "herdr already installed"
+fi
+
 if ! command -v grimblast &>/dev/null; then
     log "installing grimblast..."
     mkdir -p ~/.local/bin

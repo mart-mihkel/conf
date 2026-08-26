@@ -1,11 +1,10 @@
 font-family = JetBrainsMono NerdFont
 font-size = 12
 
+theme = Tomorrow
+
 window-inherit-working-directory = false
 window-padding-balance = true
 
 confirm-close-surface = false
 app-notifications = false
-
-term = xterm-256color
-theme = Tomorrow
