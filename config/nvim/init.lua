@@ -95,13 +95,18 @@ end
 
 -- ui
 do
-	vim.pack.add({ gh("projekt0n/github-nvim-theme") })
+	vim.pack.add({
+		gh("folke/todo-comments.nvim"),
+		gh("nmac427/guess-indent.nvim"),
+		gh("nvim-lualine/lualine.nvim"),
+		gh("nvim-tree/nvim-web-devicons"),
+		gh("projekt0n/github-nvim-theme"),
+		-- gh("shortcuts/no-neck-pain.nvim"),
+	})
 
 	vim.cmd.colorscheme("github_light")
 	vim.api.nvim_set_hl(0, "Normal", {})
 	vim.api.nvim_set_hl(0, "NormalFloat", {})
-
-	vim.pack.add({ gh("nvim-lualine/lualine.nvim") })
 
 	require("lualine").setup({
 		options = { section_separators = "", component_separators = "" },
@@ -115,16 +120,8 @@ do
 		},
 	})
 
-	vim.pack.add({
-		gh("folke/todo-comments.nvim"),
-		gh("nmac427/guess-indent.nvim"),
-		gh("nvim-tree/nvim-web-devicons"),
-	})
-
 	require("guess-indent").setup()
 	require("todo-comments").setup({ signs = false })
-
-	vim.pack.add({ gh("shortcuts/no-neck-pain.nvim") })
 end
 
 -- git
@@ -278,32 +275,12 @@ end
 do
 	vim.pack.add({
 		gh("3rd/image.nvim"),
-		gh("jmbuhr/otter.nvim"),
 		gh("GCBallesteros/jupytext.nvim"),
+		{ src = gh("benlubas/molten-nvim"), version = vim.version.range("1.*") },
 	})
 
 	require("image").setup()
-	require("jupytext").setup({
-		style = "markdown",
-		force_ft = "markdown",
-		output_extension = "md",
-	})
-
-	local otter = require("otter")
-	otter.setup()
-
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "markdown",
-		callback = function(e)
-			if vim.bo[e.buf].buftype ~= "" then
-				return
-			end
-
-			otter.activate()
-		end,
-	})
-
-	vim.pack.add({ { src = gh("benlubas/molten-nvim"), version = vim.version.range("1.*") } })
+	require("jupytext").setup({})
 
 	vim.g.molten_image_provider = "image.nvim"
 	vim.g.molten_output_win_max_height = 20
