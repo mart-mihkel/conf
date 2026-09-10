@@ -101,6 +101,7 @@ do
 		gh("nvim-lualine/lualine.nvim"),
 		gh("nvim-tree/nvim-web-devicons"),
 		gh("projekt0n/github-nvim-theme"),
+		gh("shortcuts/no-neck-pain.nvim"),
 		gh("MeanderingProgrammer/render-markdown.nvim.git"),
 	})
 
@@ -124,14 +125,10 @@ do
 	require("todo-comments").setup({ signs = false })
 	require("render-markdown").setup({
 		dash = { width = 79 },
+		pipe_table = { style = "normal" },
 		code = { inline_pad = 1, border = "thick" },
 		heading = {
 			backgrounds = { "None", "None", "None", "None", "None", "None" },
-		},
-		overrides = {
-			buftype = {
-				nofile = { enabled = false },
-			},
 		},
 	})
 end
@@ -262,7 +259,6 @@ do
 		formatters = {
 			typstyle = { prepend_args = { "--wrap-text" } },
 			["tex-fmt"] = { prepend_args = { "--format-tables" } },
-			prettier = { prepend_args = { "--prose-wrap", "always", "--print-width", "80" } },
 		},
 		formatters_by_ft = {
 			css = { "biome" },
