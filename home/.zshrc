@@ -36,7 +36,9 @@ setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
 
 eval "$(direnv hook zsh)"
 eval "$(herdr completion zsh)"
+eval "$(typst completions zsh)"
 eval "$(just --completions zsh)"
+
 eval "$(fnm env --shell zsh)"
 eval "$(fnm completions --shell zsh)"
 
@@ -63,6 +65,5 @@ alias fetch="fastfetch"
 alias diff="diff --color"
 alias glow="glow --style light"
 
-alias nvm="fnm"
 alias venv="source .venv/bin/activate"
 alias follow="tail --follow --lines +0"
