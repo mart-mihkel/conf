@@ -1,7 +1,3 @@
 # Dotfiles
 
-For Debian Forky
-
-```bash
-just install
-```
+For MacOS Tahoe 🤢

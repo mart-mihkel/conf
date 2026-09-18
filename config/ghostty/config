@@ -5,6 +5,10 @@ theme = Tomorrow
 
 window-inherit-working-directory = false
 window-padding-balance = true
+window-decoration = false
+
+quit-after-last-window-closed = true
+macos-titlebar-style = hidden
 
 confirm-close-surface = false
 app-notifications = false

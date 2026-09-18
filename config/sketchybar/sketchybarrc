@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+CONFIG_DIR="$HOME/.config/sketchybar"
+# shellcheck source=/dev/null
+source "$CONFIG_DIR/colors.sh"
+NAMES=(one two three four five six seven eight nine ten)
+
+# -----------------------------------------------------------------------------
+# Bar
+# -----------------------------------------------------------------------------
+
+sketchybar --bar \
+    height=28 \
+    position=top \
+    sticky=on \
+    display=all \
+    padding_left=10 \
+    padding_right=10 \
+    color="$BAR_COLOR"
+
+# -----------------------------------------------------------------------------
+# Defaults
+# -----------------------------------------------------------------------------
+
+sketchybar --default \
+    icon.font="JetBrainsMono Nerd Font:Regular:12" \
+    label.font="JetBrainsMono Nerd Font:Regular:12" \
+    icon.color="$FOREGROUND" \
+    label.color="$FOREGROUND" \
+    padding_left=5 \
+    padding_right=5
+
+# -----------------------------------------------------------------------------
+# Yabai spaces
+# -----------------------------------------------------------------------------
+
+for i in "${!NAMES[@]}"; do
+    sid=$((i + 1))
+
+    sketchybar --add item space.$sid left \
+               --set space.$sid \
+                   icon="${NAMES[$i]}" \
+                   label.drawing=off \
+                   click_script="yabai -m space --focus $sid" \
+                   script="$PLUGIN_DIR/space.sh $sid" \
+               --subscribe space.$sid space_change
+done
+
+# -----------------------------------------------------------------------------
+# Right side
+# -----------------------------------------------------------------------------
+
+sketchybar --add item clock right
+sketchybar --set clock \
+    script="$PLUGIN_DIR/clock.sh" \
+    update_freq=10
+
+sketchybar --add item battery right
+sketchybar --set battery \
+    script="$PLUGIN_DIR/battery.sh" \
+    update_freq=30
+
+# -----------------------------------------------------------------------------
+# Events
+# -----------------------------------------------------------------------------
+
+sketchybar --subscribe volume volume_change
+
+# -----------------------------------------------------------------------------
+# Initial update
+# -----------------------------------------------------------------------------
+
+sketchybar --update

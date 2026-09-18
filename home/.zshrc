@@ -26,7 +26,7 @@ precmd_functions+=(_prompt)
 
 autoload -Uz compinit && compinit
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 zstyle ":completion:*" menu yes select
 zstyle ":completion:*" special-dirs yes
@@ -53,14 +53,12 @@ alias ls="eza --icons always"
 alias ll="eza --long --all --icons always"
 alias l="eza --long --all --no-permissions --no-user --icons always"
 
-alias fd="fdfind"
 alias bat="batcat --theme light"
 alias cat="batcat --theme light --plain"
 
 alias vim="nvim"
 alias vimdiff="nvim -d"
 
-alias cal="ncal -Mb"
 alias fetch="fastfetch"
 alias diff="diff --color"
 alias glow="glow --style light"
