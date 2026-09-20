@@ -266,6 +266,7 @@ do
 			json = { "biome" },
 			lua = { "stylua" },
 			tex = { "tex-fmt" },
+			sql = { "sqlfluff" },
 			typst = { "typstyle" },
 			javascript = { "biome" },
 			typescript = { "biome" },

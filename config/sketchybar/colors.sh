@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-BAR_COLOR="0x00000000"
-FOREGROUND="0xff4d4d4c"
-FOREGROUND_DIM="0x804d4d4c"
