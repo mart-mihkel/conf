@@ -1,10 +1,10 @@
 ## Guidelines
 
-- Do not ignore linter or typechecker errors without permission.
-- Use type casting or asserts if needed instead of loosening a type.
+- **NEVER** run git commands.
+- Ask for permission when you need to ignore linter or typechecker diagnostics.
+- Use type casts or assertions if needed instead of loosening a type.
 - Always add precise and exhaustive type annotations to everything.
-- Prefer exhaustive types over bare containers, a pandera-typed `DataFrame[Schema]` over a plain `DataFrame`. Use precise generics or designated typing classes over bare `list`/`tuple`/`dict`, don't be afraid of creating an entire `NamedTuple`, `TypedDict` or `Protocol` for small use cases. For bigger use cases use dataclasses or pydantic models.
-- Avoid writing walls of text with rich markdown syntax when documenting code objects. Prefer using numpy docstrings with appropriate attribute, parameter, raise and return sections.
+- Use exhaustive types over bare containers. Always us precise generics or designated typing classes instead of bare containers (`NamedTuple` or `TypedDict` instead of `tuple` or `dict`). When runtime validation is needed use pydantic models.
 - All significant changes must be tested. Add or update focused tests for semantic changes when existing coverage does not already establish the intended behavior.
 - Look to see if your tests could go in an existing file before adding a new file for your tests.
 - Get your tests to pass. If you didn't run the tests, your code does not work.
@@ -28,9 +28,7 @@ page = [
 if len(page) < page_size:
     return
 offset += page_size
-```
 
-```python
 # correct
 page = [
     ...,
@@ -40,4 +38,37 @@ if len(page) < page_size:
     return
 
 offset += page_size
+```
+
+**Vertical code**:
+
+```python
+# incorrect
+def do(
+    param_1: int, param_2: int, param_3: int
+) -> int:
+    ...
+
+# correct
+def do(
+    param_1: int,
+    param_2: int,
+    param_3: int,
+) -> int:
+    ...
+```
+
+**Exhaustive types**:
+
+```python
+# incorrect
+def do(things: Mapping[str, Any]) -> None:
+    ...
+
+# correct
+class Things(TypedDict):
+    ...
+
+def do(things: Things) -> None:
+    ...
 ```
