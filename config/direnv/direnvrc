@@ -16,12 +16,15 @@ layout_uv() {
 
 layout_jupyter() {
     layout_uv
-    uv pip install --quiet ipykernel
+    uv pip install --quiet ipykernel jupytext pynvim
 
     local name
     name=$(basename "$PWD")
 
     if [[ ! -d "${HOME}/.local/share/jupyter/kernels/${name}" ]]; then
-        python -m ipykernel install --user --name "$name" --display-name "$name"
+        uv run python -m ipykernel install \
+            --display-name "$name" \
+            --name "$name" \
+            --user
     fi
 }
