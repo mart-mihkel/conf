@@ -1,0 +1,33 @@
+{
+  "name": "SAPU Dark",
+  "comment": "Alacritty default terminal colors",
+  "foreground-color": "#d8d8d8",
+  "background-color": "#181818",
+  "use-theme-colors": false,
+  "use-highlight-color": false,
+  "highlight-foreground-color": "#181818",
+  "highlight-background-color": "#d8d8d8",
+  "use-cursor-color": false,
+  "cursor-foreground-color": "#181818",
+  "cursor-background-color": "#d8d8d8",
+  "use-badge-color": false,
+  "badge-color": "#d8d8d8",
+  "palette": [
+    "#181818",
+    "#ac4242",
+    "#90a959",
+    "#f4bf75",
+    "#6a9fb5",
+    "#aa759f",
+    "#75b5aa",
+    "#d8d8d8",
+    "#6b6b6b",
+    "#c55555",
+    "#aac474",
+    "#feca88",
+    "#82b8c8",
+    "#c28cb8",
+    "#93d3c3",
+    "#f8f8f8"
+  ]
+}

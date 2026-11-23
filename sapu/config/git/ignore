@@ -1,0 +1,5 @@
+.direnv
+.envrc
+
+postgres-language-server.jsonc
+**/.claude/settings.local.json

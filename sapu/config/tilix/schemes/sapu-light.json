@@ -1,0 +1,33 @@
+{
+  "name": "SAPU Light",
+  "comment": "Alacritty default colors with foreground and background swapped",
+  "foreground-color": "#181818",
+  "background-color": "#d8d8d8",
+  "use-theme-colors": false,
+  "use-highlight-color": false,
+  "highlight-foreground-color": "#d8d8d8",
+  "highlight-background-color": "#181818",
+  "use-cursor-color": false,
+  "cursor-foreground-color": "#d8d8d8",
+  "cursor-background-color": "#181818",
+  "use-badge-color": false,
+  "badge-color": "#181818",
+  "palette": [
+    "#181818",
+    "#ac4242",
+    "#90a959",
+    "#f4bf75",
+    "#6a9fb5",
+    "#aa759f",
+    "#75b5aa",
+    "#d8d8d8",
+    "#6b6b6b",
+    "#c55555",
+    "#aac474",
+    "#feca88",
+    "#82b8c8",
+    "#c28cb8",
+    "#93d3c3",
+    "#f8f8f8"
+  ]
+}

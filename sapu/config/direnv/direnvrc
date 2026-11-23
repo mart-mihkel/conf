@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+use_conda() {
+    PATH_add "${HOME}/miniconda3/bin"
+    eval "$(conda shell.bash hook)"
+    conda activate "$1"
+}
+
+layout_uv() {
+    VIRTUAL_ENV=$(pwd)/.venv
+
+    # shellcheck disable=1091
+    source "${VIRTUAL_ENV}/bin/activate"
+    export UV_ACTIVE=1
+}
+
+layout_jupyter() {
+    layout_uv
+    uv pip install --quiet ipykernel jupytext pynvim
+
+    local name
+    name=$(basename "$PWD")
+
+    if [[ ! -d "${HOME}/.local/share/jupyter/kernels/${name}" ]]; then
+        uv run python -m ipykernel install \
+            --display-name "$name" \
+            --name "$name" \
+            --user
+    fi
+}

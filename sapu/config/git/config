@@ -1,0 +1,21 @@
+[user]
+	name = mart-mihkel
+	email = mart.mihkel.aun@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+[push]
+	autoSetupRemote = true
+[merge]
+	tool = vimdiff
+[mergetool "vimdiff"]
+	cmd = vim -d $LOCAL $MERGED $REMOTE
+[mergetool]
+	keepBackup = false
+[format]
+	pretty = %C(auto)%h %d %s

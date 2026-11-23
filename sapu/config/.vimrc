@@ -1,0 +1,52 @@
+let mapleader=' '
+let g:netrw_banner=0
+let g:netrw_preview=1
+
+set nocompatible
+set encoding=utf-8
+
+let s:state_dir = $HOME.'/.local/state/vim'
+
+if !isdirectory(s:state_dir)
+  call mkdir(s:state_dir, 'p')
+endif
+
+execute 'set viminfofile=' . s:state_dir . '/info'
+execute 'set backupdir=' . s:state_dir
+execute 'set directory=' . s:state_dir
+execute 'set undodir=' . s:state_dir
+
+set relativenumber
+set termguicolors
+set shiftwidth=4
+set scrolloff=4
+set autoindent
+set ignorecase
+set noswapfile
+set splitright
+set splitbelow
+set expandtab
+set smartcase
+set incsearch
+set tabstop=4
+set smarttab
+set undofile
+set path+=**
+set number
+set hidden
+set nowrap
+
+syntax on
+filetype plugin on
+
+noremap <space> <nop>
+
+noremap Y y$
+noremap D d$
+noremap j gj
+noremap k gk
+
+nnoremap <leader>e  :Explore<cr>
+nnoremap <leader>ff :find<space>
+nnoremap <leader>fo :browse oldfiles<cr>
+nnoremap <leader>gf :%s/\s\+$//e<cr>

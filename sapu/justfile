@@ -1,0 +1,59 @@
+set dotenv-load
+
+[doc('list recipes')]
+[private]
+@help:
+    just --list --unsorted
+
+[doc('run shellcheck on shell scripts')]
+[group('dev')]
+@shellcheck:
+    find scripts -type f -name '*.sh' -exec shellcheck {} +
+
+[doc('download latest Linux x86_64 binaries into build/bin')]
+[group('fetch')]
+@fetch-bin:
+    bash scripts/local/fetch-binaries.sh
+
+[doc('download Linux x86-64 GNU Python versions from uv’s catalog')]
+[group('fetch')]
+@fetch-python +versions:
+    bash scripts/local/fetch-python.sh {{ versions }}
+
+[doc('download pi, llama.cpp, ble.sh and bundle x86-64 tmux')]
+[group('fetch')]
+@fetch-vendor:
+    bash scripts/local/fetch-vendor.sh
+    bash scripts/local/build-tmux-bundle.sh
+
+[arg('alias', long, help='minio client host alias')]
+[arg('prefix', long, help='object storage target path')]
+[doc('upload downloaded binaries to the MinIO bin directory')]
+[group('upload')]
+@upload-bin alias=env('MC_ALIAS') prefix=env('MC_PREFIX'):
+    bash scripts/local/upload-binaries.sh '{{ alias }}' '{{ prefix }}'
+
+[arg('alias', long, help='minio client host alias')]
+[arg('prefix', long, help='object storage target path')]
+[doc('upload Python archives to the MinIO python directory')]
+[group('upload')]
+@upload-python alias=env('MC_ALIAS') prefix=env('MC_PREFIX'):
+    bash scripts/local/upload-python.sh '{{ alias }}' '{{ prefix }}'
+
+[arg('alias', long, help='minio client host alias')]
+[arg('prefix', long, help='object storage target path')]
+[doc('upload vendor files to the MinIO vendor directory')]
+[group('upload')]
+@upload-vendor alias=env('MC_ALIAS') prefix=env('MC_PREFIX'):
+    bash scripts/local/upload-vendor.sh '{{ alias }}' '{{ prefix }}'
+
+[arg('prefix', help='input path')]
+[doc('install apps and configs')]
+[group('sapu')]
+@install prefix:
+    bash scripts/sapu/install-configs.sh
+    bash scripts/sapu/install-binaries.sh '{{ prefix }}/bin'
+    bash scripts/sapu/install-tmux-bundle.sh '{{ prefix }}/vendor/tmux-bundle.tar.gz'
+    bash scripts/sapu/install-blesh.sh '{{ prefix }}/vendor/ble.tar.gz'
+    bash scripts/sapu/install-pi.sh '{{ prefix }}/vendor/pi-linux-x64.tar.gz'
+    bash scripts/sapu/install-python.sh '{{ prefix }}/python'

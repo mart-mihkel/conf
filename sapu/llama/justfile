@@ -1,0 +1,46 @@
+[doc('list recipes')]
+[group('meta')]
+[private]
+@help:
+    just --list --unsorted
+
+[arg('prefix', help='input path')]
+[doc('install')]
+[group('build')]
+@install prefix:
+    bash ../scripts/sapu/build-llama.sh '{{ prefix }}/vendor/llama.cpp.tar.gz'
+    bash ../scripts/sapu/link-models.sh '{{ prefix }}/models'
+
+[doc('serve in router mode')]
+[group('serve')]
+serve-router:
+    #!/usr/bin/env bash
+    module load cuda
+
+    export LD_LIBRARY_PATH="$CUDA_HOME/lib64:${LD_LIBRARY_PATH:-}"
+    export PATH="$HOME/git/llama.cpp/build/bin:${PATH:-}"
+
+    llama serve --models-preset models.ini --models-max 1 --metrics
+
+[arg('model', help='model name from models.ini')]
+[doc('collect Prometheus metrics for a model')]
+[group('serve')]
+collect-metrics model:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    log() { printf "\\033[1;34minfo    \\033[0m %s\\n" "$*"; }
+
+    metrics-dir="metrics/{{ model }}"
+    mkdir -p "$metrics-dir"
+
+    timestamp="$(date -u +%Y-%m-%dT%H-%M-%SZ)"
+    output="$metrics-dir/$timestamp.prom"
+
+    if curl --fail --silent --show-error \
+        "http://127.0.0.1:9931/metrics?model={{ model }}" > "$output"; then
+        log "saved metrics to $output"
+    else
+        rm -f "$output"
+        log "metrics scrape failed"
+    fi
