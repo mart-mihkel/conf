@@ -77,6 +77,7 @@ PKGS_APT=(
     zip
     zsh
     zsh-autosuggestions
+    zsh-syntax-highlighting
 
     # libs
     liblz4-dev
