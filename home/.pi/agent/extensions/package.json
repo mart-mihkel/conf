@@ -12,10 +12,10 @@
     "@earendil-works/pi-ai": "^0.84.4",
     "@earendil-works/pi-coding-agent": "^0.84.4",
     "@modelcontextprotocol/sdk": "1.29.0",
-    "effect": "^3.22.4"
+    "effect": "^3.22.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.4",
+    "@biomejs/biome": "^2.6.9",
     "@types/node": "^24.19.2",
     "typescript": "^5.9.3"
   }
